@@ -1,10 +1,18 @@
 ---
 name: bug_report
 about: bug report
-title: "[Bug]"
+title: "[BUG]"
 labels: bug
 assignees: hyemimi
 
+---
+
+---
+name: 버그 리포트
+description: 버그를 신고할 때 사용하는 템플릿입니다.
+title: "[BUG]"
+labels: [bug]
+assignees: @hyemimi
 ---
 
 ## 🐞 버그 설명
