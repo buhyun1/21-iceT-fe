@@ -1,5 +1,5 @@
-import './App.css';
-import RootRoutes from './routes/RootRoutes';
+import '@/App.css';
+import RootRoutes from '@/routes/RootRoutes';
 
 const App = () => {
   return <RootRoutes />;

@@ -1,7 +1,11 @@
 {
   "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+  "compilerOptions": {
+    "baseUrl": ".", // 현재 프로젝트 루트 기준
+    "paths": {
+      "@/*": ["src/*"] //"@/components/Button" → "src/components/Button"
+    }
+  }
+  // tsconfig.json
 }
