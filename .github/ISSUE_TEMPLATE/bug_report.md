@@ -1,3 +1,12 @@
+---
+name: bug_report
+about: bug report
+title: "[Bug]"
+labels: bug
+assignees: hyemimi
+
+---
+
 ## 🐞 버그 설명
 어떤 문제가 발생했는지 명확하고 간결하게 설명해주세요.
 
