@@ -18,12 +18,13 @@ export default {
         'semibold-16': ['16px', { lineHeight: '24px', fontWeight: '600' }],
 
         'bold-12': ['12px', { lineHeight: '18px', fontWeight: '700' }],
-        'bold-14': ['14px', { lineHeight: '20px', fontWeight: '700' }],
+        'bold-14': ['20px', { lineHeight: '20px', fontWeight: '700' }],
         'bold-16': ['16px', { lineHeight: '24px', fontWeight: '700' }],
       },
       colors: {
         background: '#FEFEFE', // 전체 배경
         surface: '#FFFFFF', // 카드 배경
+        input: '#F9F9F6', // input 배경
 
         primary: {
           DEFAULT: '#FF993A', // 메인 주색 (오렌지)
