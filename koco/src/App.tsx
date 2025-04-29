@@ -1,4 +1,4 @@
-import '@/App.css';
+import '@/styles/index.css';
 import RootRoutes from '@/routes/RootRoutes';
 
 const App = () => {
