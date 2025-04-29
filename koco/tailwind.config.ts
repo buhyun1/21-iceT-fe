@@ -22,7 +22,7 @@ export default {
         'bold-16': ['16px', { lineHeight: '24px', fontWeight: '700' }],
       },
       colors: {
-        background: '#F8F8F8', // 전체 배경
+        background: '#FEFEFE', // 전체 배경
         surface: '#FFFFFF', // 카드 배경
 
         primary: {

@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from '@/pages/Login';
+import AppLayout from '@/components/layout/AppLayout';
 
 const RootRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
+        <Route element={<AppLayout />}>
           <Route index element={<Login />} />
         </Route>
       </Routes>
