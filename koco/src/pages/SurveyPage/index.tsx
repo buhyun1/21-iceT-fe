@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import QuestionCard from './components/QuestionCard';
 import MOCK_DATA from '@/temp/mock/dateProblem.json';
 import Button from '@/components/ui/Button';
-import backArrowIc from '@/assets/backArrowIc.svg';
 import { useNavigate } from 'react-router-dom';
+import PageHeader from '@/components/layout/PageHeader';
 //import { useGetProblemList } from '@/hooks/useGetProblemList';
 
 interface ISurveyData {
@@ -64,12 +64,8 @@ const SurveyPage = () => {
   }, [problems]);
 
   return (
-    <div className="bg-background min-h-screen px-4 py-6">
-      <div className="flex gap-6 mb-10">
-        <img src={backArrowIc} onClick={() => navigate(-1)} />
-        <h1 className="text-xl mb-4">문제 해설</h1>
-      </div>
-
+    <div className="bg-background min-h-screen">
+      <PageHeader title="설문" />
       {problems.map((problem: Problem) => (
         <QuestionCard
           key={problem.problemId}
