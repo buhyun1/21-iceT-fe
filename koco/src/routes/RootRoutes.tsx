@@ -4,6 +4,7 @@ import LoginPage from '@/pages/Login';
 import FirstLoginPage from '@/pages/FirstLoginPage';
 import MainPage from '@/pages/MainPage';
 import SurveyPage from '@/pages/SurveyPage';
+import ProblemListPage from '@/pages/ProblemListPage';
 
 const RootRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const RootRoutes = () => {
           <Route path="/complete-profile" element={<FirstLoginPage />} />
           <Route path="/home" element={<MainPage />} />
           <Route path="/survey" element={<SurveyPage />} />
+          <Route path="/problems" element={<ProblemListPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
