@@ -12,7 +12,7 @@ export const useKakaoLogin = () => {
   return useMutation({
     mutationFn: (code: string) => loginWithKakao(code),
     onSuccess: response => {
-      if (response.data.isRegistered === false) {
+      if (response.isRegistered === false) {
         navigate('/complete-profile');
       } else {
         navigate('/home');
@@ -38,8 +38,8 @@ export const useLogout = () => {
       localStorage.removeItem('koco_auth_status');
 
       // 로그인 페이지로 리다이렉트
-      if (data.data.redirectUrl) {
-        window.location.href = data.data.redirectUrl;
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
       } else {
         navigate('/');
       }

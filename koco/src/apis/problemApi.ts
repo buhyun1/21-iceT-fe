@@ -13,7 +13,7 @@ export const registerSurvey = async (data: IProblemSurveyRequest) => {
     data
   );
 
-  return response.data;
+  return response.data.data;
 };
 
 /**

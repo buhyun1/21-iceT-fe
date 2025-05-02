@@ -1,5 +1,4 @@
 import BottomNav from '@/components/layout/BottomNav';
-import ContinuousDayCard from './components/ContinuousCard';
 import GameBannerCard from './components/GameBannerCard';
 import ProfileCard from './components/ProfileCard';
 import TotalStudyCard from './components/TotalStudyCard';
@@ -7,8 +6,6 @@ import Header from '@/components/layout/Header';
 import { useUserDashboard } from '@/hooks/queries/useUserQueries';
 
 const MainPage = () => {
-  // const { studyStats, profileImgUrl, nickname, statusMessage, continuousAttendance } =
-  //   MOCK_DASHBOARD_DATA;
   const todayDate = new Date().toISOString().split('T')[0];
   const { data: dashboardData } = useUserDashboard(todayDate);
 
@@ -19,8 +16,8 @@ const MainPage = () => {
         profileImgUrl={dashboardData.profileImgUrl}
         nickname={dashboardData.nickname}
         statusMessage={dashboardData.statusMessage}
+        problemSetId={dashboardData.todayProblemSetId}
       />
-      <ContinuousDayCard continuousAttendance={dashboardData.continuousAttendance} />
       <TotalStudyCard studyStats={dashboardData.studyStats} />
       <GameBannerCard />
       <BottomNav />

@@ -10,7 +10,7 @@ const V1_SUB_URL = '/api/v1/users';
  * @request_body nickname, profileImgUrl, statusMsg
  */
 
-interface ICompleteProfileRequest {
+export interface ICompleteProfileRequest {
   nickname: string;
   profileImgUrl: string;
   statusMsg: string;
@@ -27,7 +27,7 @@ export const completeProfile = async ({
     statusMsg,
   });
 
-  return response.data;
+  return response.data.data;
 };
 
 /**
@@ -49,5 +49,5 @@ export const getUserDashboard = async (date: string) => {
 export const deleteUser = async () => {
   const response = await axios.delete<IApiResponse<null>>(`${V1_SUB_URL}/me`);
 
-  return response.data;
+  return response.data.data;
 };
