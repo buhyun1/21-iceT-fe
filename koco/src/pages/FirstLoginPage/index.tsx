@@ -1,8 +1,8 @@
 import { useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DEFAULT_IMG from '@/assets/defaultProfileImage.svg';
-import useInput from '@/hooks/useInput';
-import useFileInput from '@/hooks/useFileInput';
+import useInput from '@/hooks/custom/useInput';
+import useFileInput from '@/hooks/custom/useFileInput';
 import Button from '@/components/ui/Button';
 
 export default function FirstLoginPage() {
