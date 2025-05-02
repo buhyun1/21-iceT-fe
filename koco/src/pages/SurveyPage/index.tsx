@@ -1,7 +1,7 @@
 // pages/SurveyPage.tsx
 import React, { useEffect, useState } from 'react';
 import QuestionCard from './components/QuestionCard';
-import MOCK_DATA from '@/temp/mock/dateProblem.json';
+import MOCK_DATA from '@/temp/mock/dateProblem';
 import Button from '@/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '@/components/layout/PageHeader';

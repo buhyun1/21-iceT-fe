@@ -1,4 +1,4 @@
-import { IProblemSurveyRequest } from '@/@types/problem';
+import { IProblemSurveyRequest, IGetProblemSetResponse } from '@/@types/problem';
 import axios from './axios';
 import { IApiResponse } from '@/@types/api';
 
@@ -7,7 +7,6 @@ const V1_SUB_URL = '/api/v1/problem-set';
 /**
  * POST) 설문 등록
  */
-
 export const registerSurvey = async (data: IProblemSurveyRequest) => {
   const response = await axios.post<IApiResponse<{ surveyId: number[] }>>(
     `${V1_SUB_URL}/surveys`,
@@ -21,25 +20,12 @@ export const registerSurvey = async (data: IProblemSurveyRequest) => {
  * GET) 특정 날짜에 출제된 출제문제집 조회
  * @param date
  */
-interface IProblemItem {
-  problemId: number;
-  problemNumber: number;
-  title: string;
-  tier: string;
-}
-
-interface IGetProblemSetResponse {
-  date: string;
-  problemSetId: number;
-  isAnswered: boolean;
-  problems: IProblemItem[];
-}
 export const getProblem = async (date: string) => {
   const response = await axios.get<IApiResponse<IGetProblemSetResponse>>(
     `${V1_SUB_URL}?date=${date}`
   );
 
-  return response.data;
+  return response.data.data;
 };
 
 /**
@@ -53,7 +39,7 @@ interface ISolutionCode {
   python: string;
 }
 
-interface IProblemSolutionResponse {
+export interface IGetProblemSolutionResponse {
   problemNumber: number;
   tier: string;
   title: string;
@@ -75,9 +61,9 @@ interface IProblemSolutionResponse {
 }
 
 export const getProblemSolution = async (problemNumber: number) => {
-  const response = await axios.get<IApiResponse<IProblemSolutionResponse>>(
+  const response = await axios.get<IApiResponse<IGetProblemSolutionResponse>>(
     `${V1_SUB_URL}/${problemNumber}/solution`
   );
 
-  return response.data;
+  return response.data.data;
 };

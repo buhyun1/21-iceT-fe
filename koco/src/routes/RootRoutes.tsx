@@ -6,6 +6,7 @@ import MainPage from '@/pages/MainPage';
 import SurveyPage from '@/pages/SurveyPage';
 import ProblemListPage from '@/pages/ProblemListPage';
 import ProblemSolutionPage from '@/pages/ProblemSolutionPage';
+import KakaoCallback from '@/pages/KakaoCallbackPage';
 
 const RootRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const RootRoutes = () => {
           <Route path="/survey" element={<SurveyPage />} />
           <Route path="/problems" element={<ProblemListPage />} />
           <Route path="/problems/:id" element={<ProblemSolutionPage />} />
+          <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
         </Route>
       </Routes>
     </BrowserRouter>
