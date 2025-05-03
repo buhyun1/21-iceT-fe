@@ -1,8 +1,8 @@
 import { useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DEFAULT_IMG from '@/assets/defaultProfileImage.svg';
-import useInput from '@/hooks/useInput';
-import useFileInput from '@/hooks/useFileInput';
+import useInput from '@/hooks/custom/useInput';
+import useFileInput from '@/hooks/custom/useFileInput';
 import Button from '@/components/ui/Button';
 
 export default function FirstLoginPage() {
@@ -11,7 +11,9 @@ export default function FirstLoginPage() {
 
   const { value: nickname, onChange: onChangeNickname } = useInput();
   const { value: statusMessage, onChange: onChangeStatusMessage } = useInput();
-  const { file, preview, onChange: onChangeFile } = useFileInput();
+  const { preview, onChange: onChangeFile } = useFileInput();
+
+  //const completeProfileMutation = useCompleteProfile();
 
   /* 유효성 검사 로직 */
   const nicknameErr = useMemo(() => {
@@ -36,8 +38,8 @@ export default function FirstLoginPage() {
     // if (file) form.append('profile', file);
     // form.append('nickname', nickname);
     // form.append('status', status);
-    // await api.post('/users', form);
-    console.log(file);
+
+    // completeProfileMutation(form);
     navigate('/home');
   };
 

@@ -1,18 +1,28 @@
 import PageHeader from '@/components/layout/PageHeader';
 import Calendar from './components/Calendar';
 import ProblemItem from './components/ProblemItem';
-import MOCK_PROBLEM_DATA from '@/temp/mock/dateProblem.json';
+import { useProblemSet } from '@/hooks/queries/useProblemQueries';
+import { useState } from 'react';
 
 const ProblemListPage = () => {
+  const todayDate = new Date().toISOString().split('T')[0];
+  const [date, setDate] = useState(todayDate);
+
+  const { data: problemListData } = useProblemSet(date);
+
+  const handleDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(e.target.value);
+  };
+
   return (
     <div className="bg-background min-h-screen">
       <PageHeader title="문제 해설" />
-      <Calendar />
+      <Calendar date={date} handleDate={handleDate} />
       <hr className="border-border" />
-      {MOCK_PROBLEM_DATA.problems.map(problem => (
+      {problemListData.problems.map(problem => (
         <ProblemItem
           key={problem.problemId}
-          problemId={problem.problemId}
+          problemNumber={problem.problemNumber}
           title={problem.tier}
           tier={problem.tier}
         />

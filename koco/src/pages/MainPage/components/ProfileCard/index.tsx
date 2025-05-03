@@ -6,9 +6,15 @@ interface IProfileCardProps {
   profileImgUrl: string;
   nickname: string;
   statusMessage: string;
+  problemSetId: number;
 }
 
-const ProfileCard = ({ profileImgUrl, nickname, statusMessage }: IProfileCardProps) => {
+const ProfileCard = ({
+  profileImgUrl,
+  nickname,
+  statusMessage,
+  problemSetId,
+}: IProfileCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -25,14 +31,13 @@ const ProfileCard = ({ profileImgUrl, nickname, statusMessage }: IProfileCardPro
             <p className=" text-text-secondary text-regular-14">{statusMessage}</p>
           </div>
         </div>
-
-        <div className="w-full border-2 border-border border-t my-3" />
         <Button
           className="bg-secondary hover:bg-secondary-hover w-full"
-          onClick={() => navigate('/survey')}
+          onClick={() => navigate('/survey', { state: { problemSetId: problemSetId } })}
         >
           오늘의 학습 설문하고 해설보기
         </Button>
+        <div className="w-full border-2 border-border border-t my-3" />
       </div>
     </Card>
   );
