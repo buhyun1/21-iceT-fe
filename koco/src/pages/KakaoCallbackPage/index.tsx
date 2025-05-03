@@ -5,18 +5,18 @@ import { useKakaoLogin } from '@/hooks/mutations/useAuthMutations';
 
 const KakaoCallback = () => {
   const location = useLocation();
-  const kakaoLoginMutation = useKakaoLogin();
+  const { mutate, isSuccess, isError } = useKakaoLogin();
 
   useEffect(() => {
     // URL에서 인가 코드 추출
     const params = new URLSearchParams(location.search);
     const code = params.get('code');
+    //const navigate = useNavigate();
 
-    if (code) {
-      // 인가 코드로 로그인 처리
-      kakaoLoginMutation.mutate(code);
+    if (code && !isSuccess && !isError) {
+      mutate(code);
     }
-  }, [location, kakaoLoginMutation]);
+  }, [location, mutate]);
 
   // 로딩 UI
   return (

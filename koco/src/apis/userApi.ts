@@ -36,9 +36,10 @@ export const completeProfile = async ({
  */
 
 export const getUserDashboard = async (date: string) => {
-  const response = await axios.post<IApiResponse<IGetUserDashboardResponse>>(
+  const response = await axios.get<IApiResponse<IGetUserDashboardResponse>>(
     `${V1_SUB_URL}/dashboard?date=${date}`
   );
+  console.log(response.data);
 
   return response.data.data;
 };
