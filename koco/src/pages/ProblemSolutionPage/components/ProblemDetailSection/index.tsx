@@ -9,7 +9,7 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
         <span>다음 문제 &gt;</span>
       </div>
       <h1 className="text-xl font-bold">
-        {data.problemNumber}번 {data.title}
+        {data?.problemNumber}번 {data.title}
       </h1>
 
       {/* 제한 조건 테이블 */}

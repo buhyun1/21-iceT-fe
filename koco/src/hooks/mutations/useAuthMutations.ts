@@ -12,7 +12,8 @@ export const useKakaoLogin = () => {
   return useMutation({
     mutationFn: (code: string) => loginWithKakao(code),
     onSuccess: response => {
-      if (response.registered === false) {
+      console.log(response);
+      if (response.isRegistered === false) {
         navigate('/complete-profile');
       } else {
         navigate('/home');

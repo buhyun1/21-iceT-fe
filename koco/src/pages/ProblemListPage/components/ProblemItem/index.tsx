@@ -4,13 +4,25 @@ interface IProblemItemProps {
   problemNumber: number;
   title: string;
   tier: string;
+  isAnswered: boolean;
+  problemSetId: number;
 }
 
-const ProblemItem = ({ problemNumber, title, tier }: IProblemItemProps) => {
+const ProblemItem = ({
+  problemNumber,
+  title,
+  tier,
+  isAnswered,
+  problemSetId,
+}: IProblemItemProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/problems/${problemNumber}`);
+    if (isAnswered) {
+      navigate(`/problems/${problemNumber}`);
+    } else {
+      navigate('/survey', { state: { problemSetId: problemSetId } });
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 // src/hooks/mutations/useUserMutations.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { completeProfile, deleteUser, ICompleteProfileRequest } from '@/apis/userApi';
+import { completeProfile, deleteUser } from '@/apis/userApi';
 
 /**
  * 사용자 프로필 완성 뮤테이션 훅
@@ -9,10 +9,10 @@ export const useCompleteProfile = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: ICompleteProfileRequest) => completeProfile(data),
+    mutationFn: (data: FormData) => completeProfile(data),
     onSuccess: () => {
       // 성공 시 관련 쿼리 무효화
-      queryClient.invalidateQueries({ queryKey: ['userDashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['complete-profile'] });
     },
   });
 };
@@ -27,7 +27,7 @@ export const useDeleteUser = () => {
     mutationFn: deleteUser,
     onSuccess: () => {
       // 성공 시 모든 사용자 관련 쿼리 무효화
-      queryClient.invalidateQueries({ queryKey: ['userDashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['delete-user'] });
     },
   });
 };

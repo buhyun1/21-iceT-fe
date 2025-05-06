@@ -4,9 +4,9 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
   timeout: 10000, // 10초로 증가
   withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // headers: {
+  //   'Content-Type': 'application/json',
+  // },
 });
 
 // 토큰 갱신 전용 axios 인스턴스
@@ -32,7 +32,11 @@ const refreshToken = async () => {
 // 요청 인터셉터 - 로깅 및 요청 전 추가 처리
 axiosInstance.interceptors.request.use(
   config => {
-    // 요청 전 로깅 또는 추가 헤더 설정 가능
+    // 파일을 포함한 요청인 경우 자동으로 'Content-Type'을 설정하지 않음
+    if (config.data instanceof FormData) {
+      // FormData는 axios가 자동으로 처리하도록 설정
+      delete config.headers['Content-Type']; // 'Content-Type' 헤더를 제거
+    }
     console.log(`[Request] ${config.method?.toUpperCase()} ${config.url}`);
 
     return config;

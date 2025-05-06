@@ -78,7 +78,7 @@ const SurveyPage = () => {
   };
 
   useEffect(() => {
-    if (problemListData.problems.length > 0) {
+    if (problemListData?.problems) {
       const initialSurveyData = problemListData.problems.map((problem: Problem) => ({
         problemId: problem.problemId,
         isSolved: null,
@@ -86,12 +86,12 @@ const SurveyPage = () => {
       }));
       setSurveyData(initialSurveyData);
     }
-  }, [problemListData.problems]);
+  }, [problemListData?.problems]);
 
   return (
     <div className="bg-background min-h-screen">
       <PageHeader title="설문" />
-      {problemListData.problems.map((problem: Problem) => (
+      {problemListData?.problems.map((problem: Problem) => (
         <QuestionCard
           key={problem.problemId}
           problemId={problem.problemId}

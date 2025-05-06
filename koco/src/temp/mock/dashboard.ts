@@ -5,7 +5,7 @@ const MOCK_DASHBOARD_DATA: IGetUserDashboardResponse = {
   nickname: '지연우',
   statusMessage: '솔브닥 스트릭 100일 채우자',
   profileImgUrl: '../../../assets/defaultProfileImage.png',
-  todayProblemSetId: 32,
+  todayProblemSetId: 1,
   continuousAttendance: 5,
   studyStats: [
     {

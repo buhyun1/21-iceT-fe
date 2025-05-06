@@ -10,7 +10,7 @@ const BottomNav = () => {
       <nav className="w-full max-w-xl bg-white shadow-[0_-2px_4px_rgba(0,0,0,0.06)] flex justify-around items-center py-2 px-6 rounded-t-xl">
         <div className="group flex flex-col items-center text-xs text-text- gap-1 hover:text-primary-hover transition-colors duration-200">
           <img
-            onClick={() => navigate('/survey')}
+            onClick={() => navigate('/problems')}
             src={solutionIc}
             width={18}
             height={18}

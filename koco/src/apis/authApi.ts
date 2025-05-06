@@ -14,7 +14,7 @@ const refreshAxios = axios.create({
  */
 export const loginWithKakao = async (code: string) => {
   const response = await axios.get<
-    IApiResponse<{ email: string; name: string; registered: boolean }>
+    IApiResponse<{ email: string; name: string; isRegistered: boolean }>
   >(`/api/v1/auth/callback?code=${code}`);
 
   return response.data.data;
