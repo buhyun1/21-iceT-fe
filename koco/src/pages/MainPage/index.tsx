@@ -9,6 +9,15 @@ const MainPage = () => {
   const todayDate = new Date().toISOString().split('T')[0];
   const { data: dashboardData } = useUserDashboard(todayDate);
 
+  if (!dashboardData) {
+    return (
+      <div className="flex flex-col gap-6 p-6 pb-30">
+        <Header />
+        <p className="text-center">유저 데이터가 없습니다</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6 p-6 pb-30">
       <Header />
