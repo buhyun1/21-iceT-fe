@@ -13,7 +13,7 @@ const refreshAxios = axios.create({
  * @param code
  */
 export const loginWithKakao = async (code: string) => {
-  const response = await axios.post<
+  const response = await axios.get<
     IApiResponse<{ email: string; name: string; isRegistered: boolean }>
   >(`/api/v1/auth/callback?code=${code}`);
 

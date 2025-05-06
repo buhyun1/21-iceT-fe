@@ -4,16 +4,17 @@ import DEFAULT_IMG from '@/assets/defaultProfileImage.svg';
 import useInput from '@/hooks/custom/useInput';
 import useFileInput from '@/hooks/custom/useFileInput';
 import Button from '@/components/ui/Button';
+import { useCompleteProfile } from '@/hooks/mutations/useUserMutations';
 
 export default function FirstLoginPage() {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
 
   const { value: nickname, onChange: onChangeNickname } = useInput();
-  const { value: statusMessage, onChange: onChangeStatusMessage } = useInput();
+  const { value: statusMsg, onChange: onChangeStatusMessage } = useInput();
   const { preview, onChange: onChangeFile } = useFileInput();
 
-  //const completeProfileMutation = useCompleteProfile();
+  const completeProfileMutation = useCompleteProfile();
 
   /* 유효성 검사 로직 */
   const nicknameErr = useMemo(() => {
@@ -25,8 +26,7 @@ export default function FirstLoginPage() {
     return null;
   }, [nickname]);
 
-  const statusErr =
-    statusMessage.length > 50 ? '상태메세지는 최대 50자까지 작성 가능합니다.' : null;
+  const statusErr = statusMsg.length > 50 ? '상태메세지는 최대 50자까지 작성 가능합니다.' : null;
 
   const canSubmit = !nicknameErr && !statusErr && nickname;
 
@@ -34,13 +34,25 @@ export default function FirstLoginPage() {
   const handleSubmit = () => {
     if (!canSubmit) return;
 
-    // const form = new FormData();
-    // if (file) form.append('profile', file);
-    // form.append('nickname', nickname);
-    // form.append('status', status);
+    const formData = new FormData();
 
-    // completeProfileMutation(form);
-    navigate('/home');
+    if (fileRef.current?.files?.[0]) {
+      formData.append('profileImg', fileRef.current.files[0]);
+    }
+
+    if (nickname) {
+      formData.append('nickname', nickname);
+    }
+
+    if (statusMsg) {
+      formData.append('statusMsg', statusMsg);
+    }
+
+    completeProfileMutation.mutate(formData, {
+      onSuccess: () => {
+        navigate('/home');
+      },
+    });
   };
 
   return (
@@ -84,7 +96,7 @@ export default function FirstLoginPage() {
       {/* 상태메시지 */}
       <label className="mt-4 mb-4 w-full max-w-md text-bold-14">상태 메시지 (선택)</label>
       <input
-        value={statusMessage}
+        value={statusMsg}
         onChange={onChangeStatusMessage}
         placeholder="상태메세지를 작성해주세요"
         className="bg-input w-full max-w-md rounded-lg py-3 px-4 outline-none text-sm "

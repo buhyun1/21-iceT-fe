@@ -7,24 +7,20 @@ const V1_SUB_URL = '/api/v1/users';
 
 /**
  * POST) 사용자 추가 정보 등록
- * @request_body nickname, profileImgUrl, statusMsg
+ * @request_body nickname, profileImg, statusMsg
  */
 
 export interface ICompleteProfileRequest {
   nickname: string;
-  profileImgUrl: string;
+  profileImg: string;
   statusMsg: string;
 }
 
-export const completeProfile = async ({
-  nickname,
-  profileImgUrl,
-  statusMsg,
-}: ICompleteProfileRequest) => {
-  const response = await axios.post<IApiResponse<null>>(`${V1_SUB_URL}/me`, {
-    nickname,
-    profileImgUrl,
-    statusMsg,
+export const completeProfile = async (formData: FormData) => {
+  const response = await axios.post<IApiResponse<null>>(`${V1_SUB_URL}/me`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
   return response.data.data;
@@ -36,9 +32,10 @@ export const completeProfile = async ({
  */
 
 export const getUserDashboard = async (date: string) => {
-  const response = await axios.post<IApiResponse<IGetUserDashboardResponse>>(
+  const response = await axios.get<IApiResponse<IGetUserDashboardResponse>>(
     `${V1_SUB_URL}/dashboard?date=${date}`
   );
+  console.log(response.data);
 
   return response.data.data;
 };

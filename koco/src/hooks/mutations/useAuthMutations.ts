@@ -12,15 +12,12 @@ export const useKakaoLogin = () => {
   return useMutation({
     mutationFn: (code: string) => loginWithKakao(code),
     onSuccess: response => {
+      console.log(response);
       if (response.isRegistered === false) {
         navigate('/complete-profile');
       } else {
         navigate('/home');
       }
-    },
-    onError: () => {
-      console.log('로그인 실패, 홈 이동 (개발모드)');
-      navigate('/home');
     },
   });
 };

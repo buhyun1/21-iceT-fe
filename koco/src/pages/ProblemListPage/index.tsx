@@ -19,9 +19,11 @@ const ProblemListPage = () => {
       <PageHeader title="문제 해설" />
       <Calendar date={date} handleDate={handleDate} />
       <hr className="border-border" />
-      {problemListData.problems.map(problem => (
+      {problemListData?.problems.map(problem => (
         <ProblemItem
           key={problem.problemId}
+          problemSetId={problemListData?.problemSetId}
+          isAnswered={problemListData?.isAnswered}
           problemNumber={problem.problemNumber}
           title={problem.tier}
           tier={problem.tier}

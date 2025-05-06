@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 interface ISolutionProps {
-  explanation: string;
-  solutionCode: { cpp: string; java: string; python: string };
+  explanation?: string;
+  solutionCode?: { cpp?: string; java?: string; python?: string };
 }
 
 const ProblemSolutionSection = ({ explanation, solutionCode }: ISolutionProps) => {
@@ -28,10 +28,10 @@ const ProblemSolutionSection = ({ explanation, solutionCode }: ISolutionProps) =
         </div>
         <div className="bg-black text-white text-sm rounded-md overflow-x-auto p-4 font-mono">
           {selectedLanguage === 'cpp'
-            ? solutionCode.cpp
+            ? solutionCode?.cpp
             : selectedLanguage === 'java'
-              ? solutionCode.java
-              : solutionCode.python}
+              ? solutionCode?.java
+              : solutionCode?.python}
         </div>
       </div>
     </section>
