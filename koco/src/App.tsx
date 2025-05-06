@@ -5,7 +5,7 @@ import QueryProvider from './provider/QueryProvider';
 const App = () => {
   return (
     <QueryProvider>
-      <RootRoutes />
+      <RootRoutes />;
     </QueryProvider>
   );
 };
