@@ -7,8 +7,16 @@ import { useUserDashboard } from '@/hooks/queries/useUserQueries';
 
 const MainPage = () => {
   const todayDate = new Date().toISOString().split('T')[0];
-  const { data: dashboardData } = useUserDashboard(todayDate);
+  const { data: dashboardData, isLoading } = useUserDashboard(todayDate);
 
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-6 p-6 pb-30">
+        <Header />
+        <p className="text-center">로딩 중...</p>
+      </div>
+    );
+  }
   if (!dashboardData) {
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
