@@ -24,6 +24,7 @@ const refreshToken = async () => {
     return response.status === 200;
   } catch (error) {
     console.error('토큰 갱신 실패:', error);
+    localStorage.removeItem('koco_auth_flag');
 
     return false;
   }
