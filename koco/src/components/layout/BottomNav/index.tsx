@@ -40,7 +40,7 @@ const BottomNav = () => {
             width={16}
             height={16}
             className="group-hover:scale-150 transition-transform duration-200 cursor-pointer"
-            alt=""
+            alt="Logout icon"
           />
           <p>로그아웃</p>
         </div>
