@@ -32,7 +32,6 @@ export const refreshAccessToken = async () => {
 
 /**
  *  POST) 로그아웃
- * @returns redirectUrl
  */
 export const logout = async () => {
   const response = await axios.post<IApiResponse<{ redirectUrl: string }>>(`${V1_SUB_URL}/logout`);
