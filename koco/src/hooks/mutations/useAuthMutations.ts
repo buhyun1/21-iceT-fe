@@ -30,21 +30,20 @@ export const useLogout = () => {
 
   return useMutation({
     mutationFn: logout,
-    onSuccess: data => {
+    onSuccess: () => {
       // 로그아웃 성공 시 로컬 스토리지 인증 상태 제거
-      localStorage.removeItem('koco_auth_status');
+      //localStorage.removeItem('koco_auth_status');
 
       // 로그인 페이지로 리다이렉트
-      if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
-      } else {
-        navigate('/');
-      }
+      navigate('/');
+      console.log('로그아웃 성공');
     },
     onError: () => {
       // 로그아웃 실패해도 로컬 상태는 초기화
-      localStorage.removeItem('koco_auth_status');
-      navigate('/');
+      //localStorage.removeItem('koco_auth_status');
+      //navigate('/');
+      console.log('로그아웃 실패');
+      alert('로그아웃에 실패하였습니다.');
     },
   });
 };
