@@ -2,7 +2,7 @@
 name: bug_report
 about: bug report
 title: "[BUG]"
-labels: bug
+labels: ''
 assignees: hyemimi
 
 ---

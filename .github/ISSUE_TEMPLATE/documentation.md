@@ -2,7 +2,7 @@
 name: documentation
 about: 문서 작업
 title: "[DOCUMENT]"
-labels: documentation
+labels: ''
 assignees: hyemimi
 
 ---

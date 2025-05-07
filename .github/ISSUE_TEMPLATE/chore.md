@@ -2,7 +2,7 @@
 name: chore
 about: 기타 잡무 (빌드 설정, 리팩토링)
 title: "[CHORE]"
-labels: chore
+labels: ''
 assignees: hyemimi
 
 ---

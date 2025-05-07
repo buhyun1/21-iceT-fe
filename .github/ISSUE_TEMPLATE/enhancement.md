@@ -2,7 +2,7 @@
 name: enhancement
 about: 기존 기능 개선
 title: "[ENHANCEMENT]"
-labels: enhancement
+labels: ''
 assignees: hyemimi
 
 ---

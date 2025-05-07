@@ -2,7 +2,7 @@
 name: feature
 about: 새로운 기능 제안
 title: "[FEATURE]"
-labels: feature
+labels: ''
 assignees: hyemimi
 
 ---

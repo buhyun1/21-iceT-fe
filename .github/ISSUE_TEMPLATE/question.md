@@ -2,7 +2,7 @@
 name: Question
 about: 질문/논의사항
 title: "[Question]"
-labels: question
+labels: ''
 assignees: hyemimi
 
 ---
