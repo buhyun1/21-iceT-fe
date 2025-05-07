@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useKakaoLogin } from '@/hooks/mutations/useAuthMutations';
+import Spinner from '@/components/ui/Spinner';
 
 const KakaoCallback = () => {
   const location = useLocation();
@@ -19,12 +20,7 @@ const KakaoCallback = () => {
   }, [location, mutate]);
 
   // 로딩 UI
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="text-xl mb-4">로그인 처리 중...</div>
-      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary" />
-    </div>
-  );
+  return <Spinner text="로그인 처리중..." />;
 };
 
 export default KakaoCallback;

@@ -2,17 +2,19 @@
 import { useMutation } from '@tanstack/react-query';
 import { loginWithKakao, logout } from '@/apis/authApi';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 /**
  * 카카오 로그인 뮤테이션 훅
  */
 export const useKakaoLogin = () => {
   const navigate = useNavigate();
+  const { loginUserContext } = useAuth();
 
   return useMutation({
     mutationFn: (code: string) => loginWithKakao(code),
     onSuccess: response => {
-      console.log(response);
+      loginUserContext();
       if (response.isRegistered === false) {
         navigate('/complete-profile');
       } else {
@@ -27,21 +29,16 @@ export const useKakaoLogin = () => {
  */
 export const useLogout = () => {
   const navigate = useNavigate();
+  const { logoutUserContext } = useAuth();
 
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      // 로그아웃 성공 시 로컬 스토리지 인증 상태 제거
-      //localStorage.removeItem('koco_auth_status');
-
-      // 로그인 페이지로 리다이렉트
+      logoutUserContext();
       navigate('/');
       console.log('로그아웃 성공');
     },
     onError: () => {
-      // 로그아웃 실패해도 로컬 상태는 초기화
-      //localStorage.removeItem('koco_auth_status');
-      //navigate('/');
       console.log('로그아웃 실패');
       alert('로그아웃에 실패하였습니다.');
     },
