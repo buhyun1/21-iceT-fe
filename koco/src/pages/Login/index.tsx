@@ -1,19 +1,19 @@
 import LoginCard from '@/pages/Login/components/LoginCard';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // 로컬 스토리지에서 인증 플래그 확인
-    const authFlag = localStorage.getItem('koco_auth_flag');
+  const { isAuthenticated } = useAuth();
 
-    if (authFlag === 'true') {
+  useEffect(() => {
+    if (isAuthenticated) {
       // 이미 로그인된 상태라면 홈으로 리디렉션
       navigate('/home');
     }
-  }, [navigate]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="flex w-full items-center justify-center min-h-screen">
