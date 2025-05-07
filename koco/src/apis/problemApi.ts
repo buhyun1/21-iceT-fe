@@ -2,7 +2,7 @@ import { IProblemSurveyRequest, IGetProblemSetResponse } from '@/@types/problem'
 import axios from './axios';
 import { IApiResponse } from '@/@types/api';
 
-const V1_SUB_URL = '/api/v1/problem-set';
+const V1_SUB_URL = '/api/backend/v1/problem-set';
 
 /**
  * POST) 설문 등록

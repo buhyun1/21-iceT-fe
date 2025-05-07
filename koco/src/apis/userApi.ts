@@ -3,7 +3,7 @@ import { IGetUserDashboardResponse } from '@/@types/user';
 import axios from './axios';
 import { IApiResponse } from '@/@types/api';
 
-const V1_SUB_URL = '/api/v1/users';
+const V1_SUB_URL = '/api/backend/v1/users';
 
 /**
  * POST) 사용자 추가 정보 등록

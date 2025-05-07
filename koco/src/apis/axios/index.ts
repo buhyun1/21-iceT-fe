@@ -19,7 +19,7 @@ const refreshAxios = axios.create({
 // 토큰 갱신 함수
 const refreshToken = async () => {
   try {
-    const response = await refreshAxios.post('/api/v1/auth/refresh');
+    const response = await refreshAxios.post('/api/backend/v1/auth/refresh');
 
     return response.status === 200;
   } catch (error) {
