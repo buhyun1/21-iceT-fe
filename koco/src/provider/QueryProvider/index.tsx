@@ -12,12 +12,12 @@ const QueryProvider = ({ children }: { children: React.ReactNode }) => {
             // 데이터가 신선한 상태로 유지되는 시간
             staleTime: 1000 * 60 * 5, // 5분
             gcTime: 1000 * 60 * 10, // 10분
-            retry: 3,
+            retry: false,
             refetchOnWindowFocus: false,
             refetchOnMount: false,
           },
           mutations: {
-            retry: 2,
+            retry: false,
           },
         },
       })
