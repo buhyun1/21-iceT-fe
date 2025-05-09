@@ -103,10 +103,16 @@ const SurveyPage = () => {
           }
         />
       ))}
-
-      <Button className="mt-6 w-full" disabled={!allAnswered} onClick={handleSubmitSurvey}>
-        오늘의 해설집 확인하기
-      </Button>
+      {problemListData?.problems?.length > 0 && (
+        <Button className="mt-6 w-full" disabled={!allAnswered} onClick={handleSubmitSurvey}>
+          오늘의 해설집 확인하기
+        </Button>
+      )}
+      {!(problemListData?.problems?.length > 0) && (
+        <div className="flex flex-col items-center justify-center p-10">
+          <p>오늘의 문제가 존재하지 않습니다</p>
+        </div>
+      )}
     </div>
   );
 };
