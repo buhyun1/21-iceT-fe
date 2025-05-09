@@ -15,7 +15,7 @@ export default LoginCard;
 const KakaoButton = () => {
   const handleLogin = () => {
     //navigate('/complete-profile');
-    const link = `https://kauth.kakao.com/oauth/authorize?redirect_uri=${import.meta.env.VITE_REDIRECT_URL}&client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&response_type=code`;
+    const link = `https://kauth.kakao.com/oauth/authorize?redirect_uri=${import.meta.env.VITE_REDIRECT_URL}&client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&response_type=code&prompt=login`;
     window.location.href = link;
   };
 
