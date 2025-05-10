@@ -4,10 +4,6 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   return (
     <section className="p-6 sh">
       {/* 문제 제목 */}
-      <div className="flex justify-between items-center mb-4 text-sm text-gray-500">
-        <span>&lt; 이전 문제</span>
-        <span>다음 문제 &gt;</span>
-      </div>
       <h1 className="text-xl font-bold">
         {data?.problemNumber}번 {data.title}
       </h1>

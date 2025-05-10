@@ -41,7 +41,9 @@ const ProblemSolutionPage = () => {
       <div className="shadow-md">
         <ProblemDetailSection {...solutionData} />
         <ProblemSolutionSection
-          explanation={solutionData.problemCheck}
+          problemCheck={solutionData.problemCheck}
+          algorithm={solutionData.algorithm}
+          problemSolving={solutionData.problemSolving}
           solutionCode={solutionData.solutionCode}
         />
       </div>
