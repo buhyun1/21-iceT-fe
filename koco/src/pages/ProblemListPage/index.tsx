@@ -25,7 +25,7 @@ const ProblemListPage = () => {
           problemSetId={problemListData?.problemSetId}
           isAnswered={problemListData?.isAnswered}
           problemNumber={problem.problemNumber}
-          title={problem.tier}
+          title={problem.title}
           tier={problem.tier}
         />
       ))}

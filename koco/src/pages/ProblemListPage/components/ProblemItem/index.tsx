@@ -17,6 +17,17 @@ const ProblemItem = ({
 }: IProblemItemProps) => {
   const navigate = useNavigate();
 
+  // 티어에서 백준 랭크명 추출
+  const getTierRank = (tier: string): string => {
+    if (!tier) return 'unrated';
+    const [rank] = tier.split(' ');
+
+    return rank?.toLowerCase() || 'unrated';
+  };
+
+  const tierRank = getTierRank(tier);
+  const tierClassName = `bg-tier-${tierRank}`;
+
   const handleClick = () => {
     if (isAnswered) {
       navigate(`/problems/${problemNumber}`);
@@ -31,7 +42,9 @@ const ProblemItem = ({
       className="flex items-center justify-between cursor-pointer p-4 hover:bg-gray-100 rounded-md"
     >
       <div className="flex items-center gap-2">
-        <div className="bg-[#A0522D] text-white text-xs px-2 py-1 rounded-md font-bold">{tier}</div>
+        <div className={`${tierClassName} text-white text-xs px-2 py-1 rounded-md font-bold`}>
+          {tier}
+        </div>
         <div className="flex flex-col">
           <span className="font-bold text-sm">#{problemNumber}번</span>
           <span className="text-sm">{title}</span>

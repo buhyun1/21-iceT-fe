@@ -63,6 +63,16 @@ export default {
           DEFAULT: '#EBEBEB', // 기본 테두리 #EBEBEB
           focused: '#3AB0FF', // 포커스시 테두리 (secondary 색 사용) #3AB0FF
         },
+        tier: {
+          bronze: '#AD5600', // 브론즈 #AD5600
+          silver: '#435F7A', // 실버 #435F7A
+          gold: '#EC9A00', // 골드 #EC9A00
+          platinum: '#27E2A4', // 플래티넘 #27E2A4
+          diamond: '#00B4FC', // 다이아몬드 #00B4FC
+          ruby: '#FF0062', // 루비 #FF0062
+          master: '#9D0191', // 마스터 #9D0191
+          unrated: '#777777', // 무등급 #777777
+        },
       },
     },
   },
