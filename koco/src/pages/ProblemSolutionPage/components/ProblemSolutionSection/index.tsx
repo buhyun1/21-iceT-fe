@@ -46,14 +46,14 @@ const ProblemSolutionSection = ({
 
   return (
     <section className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md space-y-6 mb-30">
-      <h2 className="text-xl font-bold mb-2">| 문제 요약</h2>
+      <h2 className="text-xl font-bold mb-4">| 문제 요약</h2>
       <p>{problemCheck}</p>
-      <h2 className="text-xl font-bold mb-2">| 알고리즘</h2>
+      <h2 className="text-xl font-bold mb-4">| 알고리즘</h2>
       <p>{algorithm}</p>
-      <h2 className="text-xl font-bold mb-2">| 풀이</h2>
+      <h2 className="text-xl font-bold mb-4">| 풀이</h2>
       <p>{problemSolving}</p>
       <div>
-        <h2 className="text-xl font-bold mb-2">| Solution Code</h2>
+        <h2 className="text-xl font-bold mb-4">| 솔루션 코드</h2>
         <div className="flex justify-between items-center mb-2">
           <select
             value={selectedLanguage}
