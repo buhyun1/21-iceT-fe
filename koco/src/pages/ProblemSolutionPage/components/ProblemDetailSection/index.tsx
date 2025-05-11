@@ -2,7 +2,7 @@ import { IGetProblemSolutionResponse } from '@/apis/problemApi';
 
 const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   return (
-    <section className="p-6 sh">
+    <section className="p-6 sh bg-surface">
       {/* 문제 제목 */}
       <h1 className="text-xl font-bold">
         {data?.problemNumber}번 {data.title}
