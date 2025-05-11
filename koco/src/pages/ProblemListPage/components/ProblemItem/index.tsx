@@ -1,3 +1,4 @@
+import { formatBaekjoonTier } from '@/utils/converter/convertTier';
 import { useNavigate } from 'react-router-dom';
 
 interface IProblemItemProps {
@@ -24,29 +25,27 @@ const ProblemItem = ({
     if (!tier) return 'unrated';
     const [rank] = tier.split(' ');
 
-    return rank?.toLowerCase() || 'unrated';
+    return rank || 'unrated';
   };
-
-  const tierRank = getTierRank(tier);
-  // const tierClassName = `bg-tier-${tierRank}`;
-  // console.log(tierRank, tierClassName);
+  const tierWithSublevel = formatBaekjoonTier(tier);
+  const tierRank = getTierRank(tierWithSublevel);
 
   // 티어 색상 가져오기 함수
   const getTierColor = (rank: string): string => {
     switch (rank) {
-      case 'bronze':
+      case 'Bronze':
         return '#AD5600';
-      case 'silver':
+      case 'Silver':
         return '#435F7A';
-      case 'gold':
+      case 'Gold':
         return '#EC9A00';
-      case 'platinum':
+      case 'Platinum':
         return '#27E2A4';
-      case 'diamond':
+      case 'Diamond':
         return '#00B4FC';
-      case 'ruby':
+      case 'Ruby':
         return '#FF0062';
-      case 'master':
+      case 'Master':
         return '#9D0191';
       default:
         return '#777777'; // unrated
@@ -54,8 +53,6 @@ const ProblemItem = ({
   };
 
   const tierColor = getTierColor(tierRank);
-
-  console.log(isAnswered);
 
   const handleClick = () => {
     if (isAnswered) {
@@ -76,7 +73,7 @@ const ProblemItem = ({
           className="text-white text-xs px-2 py-1 rounded-md font-bold"
           style={{ backgroundColor: tierColor }}
         >
-          {tier}
+          {tierWithSublevel}
         </div>
         {/* <div className={`${tierClassName} text-white text-xs px-2 py-1 rounded-md font-bold`}>
           {tier}
