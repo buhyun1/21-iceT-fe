@@ -58,7 +58,7 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
         </div>
         <div>
           <h3 className="font-semibold mb-1">예시 출력</h3>
-          <pre className="bg-gray-100 p-3 rounded">{data.outputExample}</pre>
+          <pre className="bg-gray-100 p-3 rounded whitespace-pre-line">{data.outputExample}</pre>
         </div>
       </div>
     </section>
