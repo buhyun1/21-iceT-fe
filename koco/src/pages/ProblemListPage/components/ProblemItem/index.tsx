@@ -6,6 +6,7 @@ interface IProblemItemProps {
   tier: string;
   isAnswered: boolean;
   problemSetId: number;
+  date: string;
 }
 
 const ProblemItem = ({
@@ -14,6 +15,7 @@ const ProblemItem = ({
   tier,
   isAnswered,
   problemSetId,
+  date,
 }: IProblemItemProps) => {
   const navigate = useNavigate();
 
@@ -53,11 +55,14 @@ const ProblemItem = ({
 
   const tierColor = getTierColor(tierRank);
 
+  console.log(isAnswered);
+
   const handleClick = () => {
     if (isAnswered) {
       navigate(`/problems/${problemNumber}`);
     } else {
-      navigate('/survey', { state: { problemSetId: problemSetId } });
+      alert('설문이 기록되지 않았습니다. 설문페이지로 이동합니다');
+      navigate('/survey', { state: { problemSetId: problemSetId, date: date } });
     }
   };
 

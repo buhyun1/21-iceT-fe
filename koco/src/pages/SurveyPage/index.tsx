@@ -29,13 +29,12 @@ export interface IProblemSetResponse {
 const SurveyPage = () => {
   const location = useLocation();
   const problemSetId = Number(location.state?.problemSetId);
+  const targetDate = location.state?.date;
 
   const navigate = useNavigate();
   const [surveyData, setSurveyData] = useState<ISurveyData[]>([]);
   const registerSurveyMutation = useRegisterSurvey();
-
-  const todayDate = new Date().toISOString().split('T')[0];
-  const { data: problemListData } = useProblemSet(todayDate);
+  const { data: problemListData } = useProblemSet(targetDate);
 
   const allAnswered = surveyData.every(
     item => item.isSolved !== null && item.difficultyLevel !== ''
@@ -70,11 +69,12 @@ const SurveyPage = () => {
 
     registerSurveyMutation.mutate(requestData, {
       onSuccess: () => {
-        navigate('/problems');
+        window.location.href = '/problems';
       },
       onError: () => {
         console.log(requestData);
-        navigate('/problems');
+        alert('설문 등록에 실패하였습니다');
+        window.location.href = '/problems';
       },
     });
   };
