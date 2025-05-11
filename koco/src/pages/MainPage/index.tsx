@@ -1,9 +1,9 @@
 import BottomNav from '@/components/layout/BottomNav';
-import GameBannerCard from './components/GameBannerCard';
 import ProfileCard from './components/ProfileCard';
 import TotalStudyCard from './components/TotalStudyCard';
 import Header from '@/components/layout/Header';
 import { useUserDashboard } from '@/hooks/queries/useUserQueries';
+import ChunsikCard from './components/ChunsikCard';
 
 const MainPage = () => {
   const todayDate = new Date().toISOString().split('T')[0];
@@ -36,7 +36,7 @@ const MainPage = () => {
         problemSetId={dashboardData.todayProblemSetId}
       />
       <TotalStudyCard studyStats={dashboardData.studyStats} />
-      <GameBannerCard />
+      <ChunsikCard />
       <BottomNav />
     </div>
   );

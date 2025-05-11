@@ -21,7 +21,7 @@ const ProfileCard = ({
   return (
     <Card className="p-4">
       <div className="flex flex-col gap-2">
-        <div className="flex gap-8">
+        <div className="flex gap-8 p-2">
           <img
             src={profileImgUrl}
             alt=""

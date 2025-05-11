@@ -45,7 +45,7 @@ const ProblemSolutionSection = ({
   };
 
   return (
-    <section className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md space-y-6 mb-30">
+    <section className="max-w-2xl mx-auto p-6 bg-surface rounded-lg shadow-md space-y-6 mb-30">
       <h2 className="text-xl font-bold mb-4">| 문제 요약</h2>
       <p>{problemCheck}</p>
       <h2 className="text-xl font-bold mb-4">| 알고리즘</h2>
