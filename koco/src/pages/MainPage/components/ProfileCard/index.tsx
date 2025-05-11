@@ -16,6 +16,7 @@ const ProfileCard = ({
   problemSetId,
 }: IProfileCardProps) => {
   const navigate = useNavigate();
+  const todayDate = new Date().toISOString().split('T')[0];
 
   return (
     <Card className="p-4">
@@ -33,7 +34,9 @@ const ProfileCard = ({
         </div>
         <Button
           className="bg-secondary hover:bg-secondary-hover w-full"
-          onClick={() => navigate('/survey', { state: { problemSetId: problemSetId } })}
+          onClick={() =>
+            navigate('/survey', { state: { problemSetId: problemSetId, date: todayDate } })
+          }
         >
           오늘의 학습 설문하고 해설보기
         </Button>

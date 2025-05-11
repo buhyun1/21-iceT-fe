@@ -22,6 +22,7 @@ const ProblemListPage = () => {
       {problemListData?.problems.map(problem => (
         <ProblemItem
           key={problem.problemId}
+          date={problemListData?.date}
           problemSetId={problemListData?.problemSetId}
           isAnswered={problemListData?.isAnswered}
           problemNumber={problem.problemNumber}

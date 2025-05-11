@@ -29,18 +29,18 @@ export interface IProblemSetResponse {
 const SurveyPage = () => {
   const location = useLocation();
   const problemSetId = Number(location.state?.problemSetId);
+  const targetDate = location.state?.date;
 
   const navigate = useNavigate();
   const [surveyData, setSurveyData] = useState<ISurveyData[]>([]);
   const registerSurveyMutation = useRegisterSurvey();
-
-  const todayDate = new Date().toISOString().split('T')[0];
-  const { data: problemListData } = useProblemSet(todayDate);
+  const { data: problemListData } = useProblemSet(targetDate);
 
   const allAnswered = surveyData.every(
     item => item.isSolved !== null && item.difficultyLevel !== ''
   );
 
+  // 설문 데이터를 저장합니다
   const handleQuestionChange = (
     problemId: number,
     data: { isSolved?: boolean; difficultyLevel?: string }
@@ -50,12 +50,13 @@ const SurveyPage = () => {
     );
   };
 
+  // api를 호출해 설문 데이터를 전송합니다
   const handleSubmitSurvey = () => {
     const requestData: IProblemSurveyRequest = {
       problemSetId: problemSetId,
-      responses: surveyData.map((item, index) => ({
+      responses: surveyData.map(item => ({
         problemId: item.problemId,
-        problemNumber: index + 1,
+        //problemNumber: index + 1,
         isSolved: item.isSolved === null ? false : item.isSolved,
         difficultyLevel:
           item.difficultyLevel === '쉬웠어요'
@@ -68,17 +69,24 @@ const SurveyPage = () => {
 
     registerSurveyMutation.mutate(requestData, {
       onSuccess: () => {
-        navigate('/problems');
+        window.location.href = '/problems';
       },
       onError: () => {
         console.log(requestData);
-        navigate('/problems');
+        alert('설문 등록에 실패하였습니다');
+        window.location.href = '/problems';
       },
     });
   };
 
   useEffect(() => {
     if (problemListData?.problems) {
+      if (problemListData?.isAnswered) {
+        alert('이미 완료한 설문입니다');
+        navigate('/');
+
+        return;
+      }
       const initialSurveyData = problemListData.problems.map((problem: Problem) => ({
         problemId: problem.problemId,
         isSolved: null,
@@ -103,12 +111,12 @@ const SurveyPage = () => {
           }
         />
       ))}
-      {problemListData?.problems?.length > 0 && (
+      {problemListData && problemListData.problems.length > 0 && (
         <Button className="mt-6 w-full" disabled={!allAnswered} onClick={handleSubmitSurvey}>
           오늘의 해설집 확인하기
         </Button>
       )}
-      {!(problemListData?.problems?.length > 0) && (
+      {problemListData && problemListData.problems.length === 0 && (
         <div className="flex flex-col items-center justify-center p-10">
           <p>오늘의 문제가 존재하지 않습니다</p>
         </div>
