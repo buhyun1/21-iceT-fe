@@ -52,7 +52,7 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     // 401 (인증 실패) 처리
-    if (error.response?.status === 403 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
