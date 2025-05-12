@@ -29,14 +29,12 @@ export interface IProblemSetResponse {
 
 const SurveyPage = () => {
   const location = useLocation();
-  const problemSetId = Number(location.state?.problemSetId);
-  const targetDate = location.state?.date;
 
+  const targetDate = location.state?.date;
   const navigate = useNavigate();
   const [surveyData, setSurveyData] = useState<ISurveyData[]>([]);
   const registerSurveyMutation = useRegisterSurvey();
   const { data: problemListData, error } = useProblemSet(targetDate);
-
   const allAnswered = surveyData.every(
     item => item.isSolved !== null && item.difficultyLevel !== ''
   );
@@ -53,8 +51,14 @@ const SurveyPage = () => {
 
   // api를 호출해 설문 데이터를 전송합니다
   const handleSubmitSurvey = () => {
+    if (!problemListData?.problemSetId) {
+      return;
+    }
+
+    console.log(problemListData?.problemSetId);
+
     const requestData: IProblemSurveyRequest = {
-      problemSetId: problemSetId,
+      problemSetId: problemListData.problemSetId,
       responses: surveyData.map(item => ({
         problemId: item.problemId,
         //problemNumber: index + 1,

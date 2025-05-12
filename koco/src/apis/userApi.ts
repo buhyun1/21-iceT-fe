@@ -1,5 +1,9 @@
 // src/apis/userApi.ts
-import { IGetUserDashboardResponse } from '@/@types/user';
+import {
+  IGetUserDashboardResponse,
+  IGetUserProfileResponse,
+  IStudyStatsResponse,
+} from '@/@types/user';
 import axios from './axios';
 import { IApiResponse } from '@/@types/api';
 
@@ -40,6 +44,28 @@ export const getUserDashboard = async (date: string) => {
   return response.data.data;
 };
 
+/**
+ * GET) 사용자 정보 조회
+ * @returns userId, nickname, statusMessage, profileImageUrl
+ */
+export const getUserProfile = async () => {
+  const response = await axios.get<IApiResponse<IGetUserProfileResponse>>(`${V1_SUB_URL}/me`);
+  console.log(response.data);
+
+  return response.data.data;
+};
+
+/**
+ * Get) 사용자 알고리즘 스탯 조회
+ * @returns studyStats
+ */
+export const getUserStudyStats = async () => {
+  const response = await axios.get<IApiResponse<IStudyStatsResponse>>(
+    `${V1_SUB_URL}/algorithm-stats`
+  );
+
+  return response.data.data;
+};
 /**
  * DELETE) 탈퇴하기
  */
