@@ -6,6 +6,7 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useRegisterSurvey } from '@/hooks/mutations/useProblemMutations';
 import { IProblemSurveyRequest } from '@/@types/problem';
 import { useProblemSet } from '@/hooks/queries/useProblemQueries';
+import { AxiosError } from 'axios';
 
 interface ISurveyData {
   problemId: number;
@@ -34,7 +35,7 @@ const SurveyPage = () => {
   const navigate = useNavigate();
   const [surveyData, setSurveyData] = useState<ISurveyData[]>([]);
   const registerSurveyMutation = useRegisterSurvey();
-  const { data: problemListData } = useProblemSet(targetDate);
+  const { data: problemListData, error } = useProblemSet(targetDate);
 
   const allAnswered = surveyData.every(
     item => item.isSolved !== null && item.difficultyLevel !== ''
@@ -96,6 +97,17 @@ const SurveyPage = () => {
     }
   }, [problemListData?.problems]);
 
+  if ((error as AxiosError)?.response?.status === 403) {
+    return (
+      <div className="bg-background min-h-screen">
+        <PageHeader title="설문" />
+        <div className="flex flex-col items-center justify-center p-12">
+          <p>오늘의 문제가 존재하지 않습니다</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-background min-h-screen">
       <PageHeader title="설문" />
@@ -116,7 +128,7 @@ const SurveyPage = () => {
           오늘의 해설집 확인하기
         </Button>
       )}
-      {problemListData && problemListData.problems.length === 0 && (
+      {problemListData && !problemListData.problems && (
         <div className="flex flex-col items-center justify-center p-10">
           <p>오늘의 문제가 존재하지 않습니다</p>
         </div>
