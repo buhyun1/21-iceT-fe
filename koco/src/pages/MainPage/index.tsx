@@ -1,15 +1,33 @@
 import BottomNav from '@/components/layout/BottomNav';
 import ProfileCard from './components/ProfileCard';
-import TotalStudyCard from './components/TotalStudyCard';
 import Header from '@/components/layout/Header';
-import { useUserDashboard } from '@/hooks/queries/useUserQueries';
+import { useUserProfile, useUserStats } from '@/hooks/queries/useUserQueries';
 import ChunsikCard from './components/ChunsikCard';
+import TotalStudyCard from './components/TotalStudyCard';
 
 const MainPage = () => {
-  const todayDate = new Date().toISOString().split('T')[0];
-  const { data: dashboardData, isLoading } = useUserDashboard(todayDate);
+  const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
+  const { data: userStudyStatData, isLoading: isUserStudyStatLoading } = useUserStats();
 
-  if (isLoading) {
+  // 인증 에러 발생 시 로그인 페이지로 리디렉션
+  // useEffect(() => {
+  //   if (error || (!isLoading && !dashboardData)) {
+  //     console.error('데이터 불러오기 실패:', error);
+
+  //     console.log((error as AxiosError)?.response?.status);
+
+  //     if ((error as AxiosError)?.response?.status === 403) {
+  //       console.log('403 에러 발생, 로그인 페이지로 이동합니다');
+  //       // 로컬 스토리지의 인증 플래그 제거
+  //       localStorage.removeItem('koco_auth_flag');
+
+  //       //로그인 페이지로 리디렉션
+  //       window.location.href = '/';
+  //     }
+  //   }
+  // }, [error, dashboardData, isLoading]);
+
+  if (isUserProfileLoading || isUserStudyStatLoading) {
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
         <Header />
@@ -17,11 +35,12 @@ const MainPage = () => {
       </div>
     );
   }
-  if (!dashboardData) {
+
+  if (!userProfileData || !userStudyStatData) {
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
         <Header />
-        <p className="text-center">유저 데이터가 없습니다</p>
+        <p className="text-center">데이터를 불러올 수 없습니다. 다시 로그인해주세요.</p>
       </div>
     );
   }
@@ -30,12 +49,11 @@ const MainPage = () => {
     <div className="flex flex-col gap-6 p-6 pb-30">
       <Header />
       <ProfileCard
-        profileImgUrl={dashboardData.profileImgUrl}
-        nickname={dashboardData.nickname}
-        statusMessage={dashboardData.statusMessage}
-        problemSetId={dashboardData.todayProblemSetId}
+        profileImgUrl={userProfileData.profileImageUrl}
+        nickname={userProfileData.nickname}
+        statusMessage={userProfileData.statusMessage}
       />
-      <TotalStudyCard studyStats={dashboardData.studyStats} />
+      <TotalStudyCard studyStats={userStudyStatData.studyStats} />
       <ChunsikCard />
       <BottomNav />
     </div>

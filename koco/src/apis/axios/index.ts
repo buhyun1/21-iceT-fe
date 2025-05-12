@@ -59,6 +59,8 @@ axiosInstance.interceptors.response.use(
         const success = await refreshToken();
 
         if (success) {
+          console.log('토큰이 리프레쉬 되었습니다');
+
           return axiosInstance(originalRequest);
         } else {
           // 토큰 갱신 실패 시 로그인 페이지로
