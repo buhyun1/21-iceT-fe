@@ -9,7 +9,7 @@ const MainPage = () => {
   const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
   const { data: userStudyStatData, isLoading: isUserStudyStatLoading } = useUserStats();
 
-  // 인증 에러 발생 시 로그인 페이지로 리디렉션
+  //인증 에러 발생 시 로그인 페이지로 리디렉션
   // useEffect(() => {
   //   if (error || (!isLoading && !dashboardData)) {
   //     console.error('데이터 불러오기 실패:', error);
