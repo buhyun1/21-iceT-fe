@@ -70,7 +70,7 @@ const SurveyPage = () => {
 
     registerSurveyMutation.mutate(requestData, {
       onSuccess: () => {
-        window.location.href = '/problems';
+        window.location.href = `/problems?date=${encodeURIComponent(targetDate)}`;
       },
       onError: () => {
         console.log(requestData);
