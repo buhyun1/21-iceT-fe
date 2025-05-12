@@ -14,6 +14,15 @@ const formatCode = (code: string | undefined) => {
   return code.replace(/\\n/g, '\n');
 };
 
+// problemSolving 전용 포맷 함수
+const formatProblemSolving = (text: string | undefined) => {
+  if (!text) return '';
+
+  return text
+    .replace(/\\n/g, '\n') // 문자열 내 \n 처리
+    .replace(/([^\n])(\d+\.\s)/g, '$1\n$2'); // 번호 앞에 줄바꿈 추가
+};
+
 const ProblemSolutionSection = ({
   solutionCode,
   problemCheck,
@@ -47,16 +56,16 @@ const ProblemSolutionSection = ({
   return (
     <section className="max-w-2xl mx-auto p-6 bg-surface rounded-lg shadow-md space-y-6 mb-30">
       <h2 className="text-xl font-bold mb-4">| 문제 요약</h2>
-      <p className="whitespace-pre-line whitespace-pre-line break-words overflow-wrap-anywhere">
+      <p className="whitespace-pre-line break-words overflow-wrap-anywhere">
         {formatCode(problemCheck)}
       </p>
       <h2 className="text-xl font-bold mb-4 ">| 알고리즘</h2>
-      <p className="whitespace-pre-line whitespace-pre-line break-words overflow-wrap-anywhere">
+      <p className="whitespace-pre-line break-words overflow-wrap-anywhere">
         {formatCode(algorithm)}
       </p>
       <h2 className="text-xl font-bold mb-4">| 풀이</h2>
-      <p className="whitespace-pre-line whitespace-pre-line break-words overflow-wrap-anywhere">
-        {formatCode(problemSolving)}
+      <p className="whitespace-pre-line break-words overflow-wrap-anywhere">
+        {formatProblemSolving(problemSolving)}
       </p>
       <div>
         <h2 className="text-xl font-bold mb-4">| 솔루션 코드</h2>
