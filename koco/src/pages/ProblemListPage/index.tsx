@@ -5,6 +5,7 @@ import { useProblemSet } from '@/hooks/queries/useProblemQueries';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import BottomNav from '@/components/layout/BottomNav';
 
 const ProblemListPage = () => {
   const todayDate = new Date().toISOString().split('T')[0];
@@ -41,6 +42,7 @@ const ProblemListPage = () => {
         <Calendar date={date} handleDate={handleDate} />
         <hr className="border-border" />
         <p className="text-center mt-12">해당 날짜의 문제가 존재하지 않습니다</p>
+        <BottomNav />
       </div>
     );
   }
@@ -50,21 +52,18 @@ const ProblemListPage = () => {
       <PageHeader title="문제 해설" />
       <Calendar date={date} handleDate={handleDate} />
       <hr className="border-border" />
-      {problemListData?.problems && problemListData.problems.length > 0 ? (
-        problemListData.problems.map(problem => (
-          <ProblemItem
-            key={problem.problemId}
-            date={problemListData?.date}
-            problemSetId={problemListData?.problemSetId}
-            isAnswered={problemListData?.isAnswered}
-            problemNumber={problem.problemNumber}
-            title={problem.title}
-            tier={problem.tier}
-          />
-        ))
-      ) : (
-        <p className="text-center mt-12">로딩 중이거나 문제가 없습니다</p>
-      )}
+      {problemListData?.problems.map(problem => (
+        <ProblemItem
+          key={problem.problemId}
+          date={problemListData?.date}
+          problemSetId={problemListData?.problemSetId}
+          isAnswered={problemListData?.isAnswered}
+          problemNumber={problem.problemNumber}
+          title={problem.title}
+          tier={problem.tier}
+        />
+      ))}
+      <BottomNav />
     </div>
   );
 };
