@@ -32,7 +32,7 @@ const ProblemListPage = () => {
     navigate(`/problems?date=${encodeURIComponent(newDate)}`, { replace: true });
 
     // 날짜가 변경되면 명시적으로 데이터 다시 가져오기
-    setTimeout(() => refetch(), 0);
+    refetch();
   };
 
   if ((error as AxiosError)?.response?.status === 403) {
