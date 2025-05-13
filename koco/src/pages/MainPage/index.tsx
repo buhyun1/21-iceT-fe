@@ -1,11 +1,14 @@
-import BottomNav from '@/components/layout/BottomNav';
-import ProfileCard from './components/ProfileCard';
-import Header from '@/components/layout/Header';
-import { useUserProfile, useUserStats } from '@/hooks/queries/useUserQueries';
-import ChunsikCard from './components/ChunsikCard';
 import { useEffect } from 'react';
 import { AxiosError } from 'axios';
+import Header from '@/components/layout/Header';
+import BottomNav from '@/components/layout/BottomNav';
+import ProfileCard from './components/ProfileCard';
 import TotalStudyCard from './components/TotalStudyCard';
+import ChunsikCard from './components/ChunsikCard';
+
+import { useUserProfile, useUserStats } from '@/hooks/queries/useUserQueries';
+import { useProblemSet } from '@/hooks/queries/useProblemQueries';
+import ProblemItem from './components/ProblemItem';
 
 const MainPage = () => {
   const {
@@ -13,41 +16,22 @@ const MainPage = () => {
     error: profileError,
     isLoading: isUserProfileLoading,
   } = useUserProfile();
+
   const { data: userStudyStatData, isLoading: isUserStudyStatLoading } = useUserStats();
 
+  const today = new Date().toISOString().split('T')[0];
+  const { data: todayProblemData, isLoading: isTodayProblemLoading } = useProblemSet(today);
+
+  // 🔐 인증 에러 처리
   useEffect(() => {
     if ((profileError as AxiosError)?.response?.status === 403) {
-      console.log((profileError as AxiosError)?.response?.status);
-
-      if ((profileError as AxiosError)?.response?.status === 403) {
-        console.log('403 에러 발생, 로그인 페이지로 이동합니다');
-        // 로컬 스토리지의 인증 플래그 제거
-        localStorage.removeItem('koco_auth_flag');
-
-        //로그인 페이지로 리디렉션
-        window.location.href = '/';
-      }
+      localStorage.removeItem('koco_auth_flag');
+      window.location.href = '/';
     }
   }, [profileError]);
-  //인증 에러 발생 시 로그인 페이지로 리디렉션
-  // useEffect(() => {
-  //   if (error || (!isLoading && !dashboardData)) {
-  //     console.error('데이터 불러오기 실패:', error);
 
-  //     console.log((error as AxiosError)?.response?.status);
-
-  //     if ((error as AxiosError)?.response?.status === 403) {
-  //       console.log('403 에러 발생, 로그인 페이지로 이동합니다');
-  //       // 로컬 스토리지의 인증 플래그 제거
-  //       localStorage.removeItem('koco_auth_flag');
-
-  //       //로그인 페이지로 리디렉션
-  //       window.location.href = '/';
-  //     }
-  //   }
-  // }, [error, dashboardData, isLoading]);
-
-  if (isUserProfileLoading || isUserStudyStatLoading) {
+  // ⏳ 로딩 중
+  if (isUserProfileLoading || isUserStudyStatLoading || isTodayProblemLoading) {
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
         <Header />
@@ -56,6 +40,7 @@ const MainPage = () => {
     );
   }
 
+  // ❌ 데이터 로딩 실패
   if (!userProfileData || !userStudyStatData) {
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
@@ -68,11 +53,30 @@ const MainPage = () => {
   return (
     <div className="flex flex-col gap-6 p-6 pb-30">
       <Header />
+
       <ProfileCard
         profileImgUrl={userProfileData.profileImageUrl}
         nickname={userProfileData.nickname}
         statusMessage={userProfileData.statusMessage}
       />
+
+      {/* ✅ 오늘의 문제 */}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-semibold">오늘의 문제</h2>
+        {Array.isArray(todayProblemData?.problems) && todayProblemData.problems.length > 0 ? (
+          todayProblemData.problems.map(problem => (
+            <ProblemItem
+              key={problem.problemNumber}
+              problemNumber={problem.problemNumber}
+              title={problem.title}
+              tier={problem.tier}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">오늘 출제된 문제가 없습니다.</p>
+        )}
+      </div>
+
       <TotalStudyCard studyStats={userStudyStatData.studyStats} />
       <ChunsikCard />
       <BottomNav />
