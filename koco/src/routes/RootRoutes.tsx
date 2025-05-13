@@ -9,11 +9,13 @@ import ProblemSolutionPage from '@/pages/ProblemSolutionPage';
 import KakaoCallback from '@/pages/KakaoCallbackPage';
 import { ProtectedRoute } from './ProtectedRoute';
 import { AuthProvider } from '@/context/AuthContext';
+import GoogleAnalytics from '@/utils/GoogleAnalytics';
 
 const RootRoutes = () => {
   return (
     <BrowserRouter basename={import.meta.env.NODE_ENV === 'qa' ? '/admin-preview' : '/'}>
       <AuthProvider>
+        <GoogleAnalytics />
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<LoginPage />} />
