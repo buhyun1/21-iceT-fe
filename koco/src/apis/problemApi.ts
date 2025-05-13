@@ -57,6 +57,7 @@ export interface IGetProblemSolutionResponse {
   problemCheck: string;
   algorithm: string;
   problemSolving: string;
+  bojUrl: string;
   solutionCode: ISolutionCode;
 }
 
