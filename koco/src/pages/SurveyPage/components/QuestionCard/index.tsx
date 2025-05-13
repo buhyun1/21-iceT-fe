@@ -4,6 +4,7 @@ import React from 'react';
 
 interface IQuestionCardProps {
   problemId: number;
+  problemNumber: number;
   title: string;
   solvedState: boolean | null;
   difficultyState: string;
@@ -12,6 +13,7 @@ interface IQuestionCardProps {
 
 const QuestionCard: React.FC<IQuestionCardProps> = ({
   problemId,
+  problemNumber,
   title,
   solvedState,
   difficultyState,
@@ -31,10 +33,10 @@ const QuestionCard: React.FC<IQuestionCardProps> = ({
   return (
     <Card className="p-7 mb-4">
       <p className="text-xl mb-4 font-black">
-        문제 {problemId} {title}
+        문제 {problemNumber} {title}
       </p>
       <div className="mt-4">
-        <p>{problemId}번 문제 해결 하셨나요?</p>
+        <p>{problemNumber}번 문제 해결 하셨나요?</p>
         <div className="mt-4 flex gap-2">
           {solvedOptions.map(option => (
             <button
@@ -53,7 +55,7 @@ const QuestionCard: React.FC<IQuestionCardProps> = ({
         </div>
       </div>
       <div className="mt-4">
-        <p className="mb-2">{problemId}번 문제 난이도는 어땠나요?</p>
+        <p className="mb-2">{problemNumber}번 문제 난이도는 어땠나요?</p>
         <div className="flex gap-2 mt-4">
           {difficultyOptions.map(option => (
             <button

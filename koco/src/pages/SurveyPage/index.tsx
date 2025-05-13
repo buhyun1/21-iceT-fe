@@ -16,6 +16,7 @@ interface ISurveyData {
 
 type Problem = {
   problemId: number;
+  problemNumber: number;
   title: string;
   tier: string;
 };
@@ -119,6 +120,7 @@ const SurveyPage = () => {
         <QuestionCard
           key={problem.problemId}
           problemId={problem.problemId}
+          problemNumber={problem.problemNumber}
           title={problem.title}
           onChange={handleQuestionChange}
           solvedState={surveyData.find(d => d.problemId === problem.problemId)?.isSolved ?? null}
