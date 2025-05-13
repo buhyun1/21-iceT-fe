@@ -17,7 +17,7 @@ export const useRegisterSurvey = () => {
 
       const today = new Date().toISOString().split('T')[0];
       queryClient.invalidateQueries({ queryKey: queryKeys.problems.set(today) });
-      queryClient.invalidateQueries({ queryKey: queryKeys.users.dashboard(today) });
+      //queryClient.invalidateQueries({ queryKey: queryKeys.users.dashboard(today) });
     },
   });
 };
