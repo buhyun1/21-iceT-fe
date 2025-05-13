@@ -4,9 +4,22 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   return (
     <section className="p-6 sh bg-surface">
       {/* 문제 제목 */}
-      <h1 className="text-xl font-bold">
-        {data?.problemNumber}번 {data.title}
-      </h1>
+
+      <div className="flex justify-between mb-2">
+        <h1 className="text-xl font-bold">
+          {data?.problemNumber}번 {data.title}
+        </h1>
+        {data.bojUrl && (
+          <a
+            href={data.bojUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="py-2 px-3 bg-secondary text-white rounded-md hover:bg-secondary-hover transition-colors text-sm font-medium"
+          >
+            백준 문제 바로가기 →
+          </a>
+        )}
+      </div>
 
       {/* 제한 조건 테이블 */}
       <table className="w-full mt-4 mb-6 text-sm border border-border">
