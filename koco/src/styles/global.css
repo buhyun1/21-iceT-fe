@@ -1,0 +1,54 @@
+/* 기본 박스 사이징 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 기본 여백 제거 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 기본 폰트 설정 */
+body {
+  font-family: 'Pretendard', sans-serif;
+  line-height: 1.5;
+  background-color: #f8f9fa;
+  color: #111827; /* Tailwind gray-900 */
+}
+
+/* 링크 초기화 */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 버튼 초기화 */
+button {
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+/* 입력창 초기화 */
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* 이미지 초기화 */
+img,
+picture,
+video,
+canvas,
+svg {
+  cursor: pointer;
+  display: block;
+  max-width: 100%;
+}
