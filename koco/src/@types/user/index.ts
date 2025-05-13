@@ -13,3 +13,20 @@ export interface IStudyStat {
   categoryName: string;
   correctRate: number;
 }
+
+export interface IGetUserProfileResponse {
+  userId: number;
+  nickname: string;
+  statusMessage: string;
+  profileImageUrl: string;
+}
+
+export interface IStudyStat {
+  categoryId: number;
+  categoryName: string;
+  correctRate: number;
+}
+
+export interface IStudyStatsResponse {
+  studyStats: IStudyStat[];
+}

@@ -6,15 +6,9 @@ interface IProfileCardProps {
   profileImgUrl: string;
   nickname: string;
   statusMessage: string;
-  problemSetId: number;
 }
 
-const ProfileCard = ({
-  profileImgUrl,
-  nickname,
-  statusMessage,
-  problemSetId,
-}: IProfileCardProps) => {
+const ProfileCard = ({ profileImgUrl, nickname, statusMessage }: IProfileCardProps) => {
   const navigate = useNavigate();
   const todayDate = new Date().toISOString().split('T')[0];
 
@@ -34,9 +28,7 @@ const ProfileCard = ({
         </div>
         <Button
           className="bg-secondary hover:bg-secondary-hover w-full"
-          onClick={() =>
-            navigate('/survey', { state: { problemSetId: problemSetId, date: todayDate } })
-          }
+          onClick={() => navigate('/survey', { state: { date: todayDate } })}
         >
           오늘의 학습 설문하고 해설보기
         </Button>

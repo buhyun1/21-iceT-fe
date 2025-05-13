@@ -1,7 +1,7 @@
 export const queryKeys = {
   users: {
     all: ['users'] as const,
-    dashboard: (date: string) => [...queryKeys.users.all, 'dashboard', date] as const,
+    stats: ['users', 'stats'] as const,
     profile: ['users', 'profile'] as const,
   },
 
