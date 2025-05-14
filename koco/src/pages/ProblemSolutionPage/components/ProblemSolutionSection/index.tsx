@@ -48,9 +48,7 @@ const ProblemSolutionSection = ({
   // 복사 버튼 클릭 시 처리 함수
   const handleCopyClick = () => {
     const code = getCode();
-    navigator.clipboard.writeText(code).catch(err => {
-      console.error('복사 실패:', err);
-    });
+    navigator.clipboard.writeText(code).catch(err => {});
   };
 
   return (

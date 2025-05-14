@@ -66,7 +66,5 @@ export const getProblemSolution = async (problemNumber: number) => {
     `${V1_SUB_URL}/${problemNumber}/solution`
   );
 
-  console.log(response.data.data);
-
   return response?.data?.data;
 };
