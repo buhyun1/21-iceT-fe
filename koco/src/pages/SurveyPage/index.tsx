@@ -56,8 +56,6 @@ const SurveyPage = () => {
       return;
     }
 
-    console.log(problemListData?.problemSetId);
-
     const requestData: IProblemSurveyRequest = {
       problemSetId: problemListData.problemSetId,
       responses: surveyData.map(item => ({
@@ -78,7 +76,6 @@ const SurveyPage = () => {
         window.location.href = `/problems?date=${encodeURIComponent(targetDate)}`;
       },
       onError: () => {
-        console.log(requestData);
         alert('설문 등록에 실패하였습니다');
         window.location.href = '/problems';
       },

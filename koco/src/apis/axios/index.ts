@@ -22,8 +22,7 @@ const refreshToken = async () => {
     const response = await refreshAxios.post('/api/backend/v1/auth/refresh');
 
     return response.status === 200;
-  } catch (error) {
-    console.error('토큰 갱신 실패:', error);
+  } catch {
     localStorage.removeItem('koco_auth_flag');
 
     return false;
@@ -38,7 +37,6 @@ axiosInstance.interceptors.request.use(
       // FormData는 axios가 자동으로 처리하도록 설정
       delete config.headers['Content-Type']; // 'Content-Type' 헤더를 제거
     }
-    console.log(`[Request] ${config.method?.toUpperCase()} ${config.url}`);
 
     return config;
   },
@@ -59,8 +57,6 @@ axiosInstance.interceptors.response.use(
         const success = await refreshToken();
 
         if (success) {
-          console.log('토큰이 리프레쉬 되었습니다');
-
           return axiosInstance(originalRequest);
         } else {
           // 토큰 갱신 실패 시 로그인 페이지로
@@ -77,8 +73,6 @@ axiosInstance.interceptors.response.use(
 
     // 500 에러 처리 - 서버 에러 로깅 및 사용자 알림
     if (error.response?.status === 500) {
-      console.error('서버 내부 에러:', error.response.data);
-
       return Promise.reject(error);
     }
 
