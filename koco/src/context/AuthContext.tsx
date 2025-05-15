@@ -3,9 +3,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 
 interface IAuthContext {
   isAuthenticated: boolean;
-  profileCompleted: boolean;
   loading: boolean;
-  setProfileCompleted: (completed: boolean) => void;
   loginUserContext: () => void;
   logoutUserContext: () => void;
 }
@@ -14,7 +12,6 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [profileCompleted, setProfileCompleted] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
 
   // 로그인 상태 저장
@@ -28,7 +25,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       localStorage.removeItem('koco_auth_flag');
       setIsAuthenticated(false);
-      localStorage.removeItem('koco_profile_completed');
     } catch (error) {
       console.error('로그아웃 실패', error);
     }
@@ -36,10 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const authFlag = localStorage.getItem('koco_auth_flag');
-    const profileFlag = localStorage.getItem('koco_profile_completed');
-
     setIsAuthenticated(!!authFlag);
-    setProfileCompleted(!!profileFlag);
     setLoading(false);
   }, []);
 
@@ -50,8 +43,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         loading,
         loginUserContext,
         logoutUserContext,
-        profileCompleted,
-        setProfileCompleted,
       }}
     >
       {children}
