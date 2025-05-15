@@ -5,10 +5,12 @@ import useInput from '@/hooks/custom/useInput';
 import useFileInput from '@/hooks/custom/useFileInput';
 import Button from '@/components/ui/Button';
 import { useCompleteProfile } from '@/hooks/mutations/useUserMutations';
+import { useAuth } from '@/context/AuthContext';
 
 export default function FirstLoginPage() {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+  const { setProfileCompleted } = useAuth();
 
   const { value: nickname, onChange: onChangeNickname } = useInput();
   const { value: statusMsg, onChange: onChangeStatusMessage } = useInput();
@@ -50,6 +52,8 @@ export default function FirstLoginPage() {
 
     completeProfileMutation.mutate(formData, {
       onSuccess: () => {
+        setProfileCompleted(true);
+        localStorage.setItem('koco_profile_completed', 'true');
         navigate('/home');
       },
     });
