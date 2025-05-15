@@ -14,13 +14,13 @@ const formatCode = (code: string | undefined) => {
   return code.replace(/\\n/g, '\n');
 };
 
-// problemSolving 전용 포맷 함수
+/// problemSolving 전용 포맷 함수
 const formatProblemSolving = (text: string | undefined) => {
   if (!text) return '';
 
   return text
     .replace(/\\n/g, '\n') // 문자열 내 \n 처리
-    .replace(/([^\n])(\d+\.\s)/g, '$1\n$2'); // 번호 앞에 줄바꿈 추가
+    .replace(/다\./g, '다.\n'); // '다.'로 끝나는 문장 뒤에 줄바꿈 추가
 };
 
 const ProblemSolutionSection = ({
