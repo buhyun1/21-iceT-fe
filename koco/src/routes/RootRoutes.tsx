@@ -13,7 +13,7 @@ import GoogleAnalytics from '@/utils/GoogleAnalytics';
 
 const RootRoutes = () => {
   return (
-    <BrowserRouter basename={import.meta.env.NODE_ENV === 'qa' ? '/admin-preview' : '/'}>
+    <BrowserRouter basename={'/'}>
       <AuthProvider>
         <GoogleAnalytics />
         <Routes>

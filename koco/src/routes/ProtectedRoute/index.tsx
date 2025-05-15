@@ -10,5 +10,10 @@ export const ProtectedRoute = () => {
     return <Spinner text="로그인 시도 중..." />;
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+  if (!isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
+  return <Outlet />;
 };
