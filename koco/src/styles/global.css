@@ -52,3 +52,47 @@ svg {
   display: block;
   max-width: 100%;
 }
+
+/* math-styles.css - 이 파일을 생성하고 전역 스타일에 import하거나 직접 global.css에 추가 */
+
+/* MathJax 미리보기 숨김 (중복 방지) */
+.MathJax_Preview {
+  display: none !important;
+}
+
+/* 수식 컨테이너 스타일 */
+.math-content {
+  width: 100%;
+  overflow: visible;
+  line-height: 1.5;
+}
+
+/* 줄바꿈 보존 */
+.math-content .math-line {
+  margin: 0.5em 0;
+  padding: 0;
+}
+
+/* 첫번째 줄은 위 마진 제거 */
+.math-content .math-line:first-child {
+  margin-top: 0;
+}
+
+/* 마지막 줄은 아래 마진 제거 */
+.math-content .math-line:last-child {
+  margin-bottom: 0;
+}
+
+.MathJax {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+/* MathJax 컨테이너 스타일 조정 */
+mjx-container {
+  display: inline-block !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+}
