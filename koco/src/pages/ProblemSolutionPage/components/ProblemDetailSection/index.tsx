@@ -1,6 +1,9 @@
 import { IGetProblemSolutionResponse } from '@/apis/problemApi';
 
 const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
+  console.log(data?.inputExample);
+  console.log(data?.outputExample);
+
   return (
     <section className="p-6 sh bg-surface">
       {/* 문제 제목 */}

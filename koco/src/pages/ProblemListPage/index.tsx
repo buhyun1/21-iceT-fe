@@ -15,7 +15,6 @@ const ProblemListPage = () => {
 
   // 초기 날짜 설정 - URL의 date 파라미터를 우선적으로 사용
   const [date, setDate] = useState(dateFromUrl || todayDate);
-
   const { data: problemListData, error, refetch } = useProblemSet(date);
 
   // URL의 date 파라미터가 변경되면 date 상태도 업데이트
