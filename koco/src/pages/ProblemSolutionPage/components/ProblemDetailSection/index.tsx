@@ -1,6 +1,7 @@
 import { IGetProblemSolutionResponse } from '@/apis/problemApi';
 import { processMathText } from '@/utils/converter/processMathText';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
+import { Fragment } from 'react/jsx-runtime';
 
 const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   // 수식 적용 위한 설정
@@ -93,7 +94,7 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
 
         <div className="space-y-4 text-sm">
           {inputBlocks.map((input, index) => (
-            <React.Fragment key={`example-${index}`}>
+            <Fragment key={`example-${index}`}>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-semibold mb-1">예제 입력 {index + 1}</h3>
@@ -106,7 +107,7 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
                   </pre>
                 </div>
               </div>
-            </>
+            </Fragment>
           ))}
         </div>
       </section>
