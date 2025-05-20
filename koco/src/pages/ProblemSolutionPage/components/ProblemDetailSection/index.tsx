@@ -93,8 +93,8 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
 
         <div className="space-y-4 text-sm">
           {inputBlocks.map((input, index) => (
-            <>
-              <div key={`example-${index}`} className="grid grid-cols-2 gap-4">
+            <React.Fragment key={`example-${index}`}>
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-semibold mb-1">예제 입력 {index + 1}</h3>
                   <pre className="bg-gray-100 p-3 rounded whitespace-pre-line">{input}</pre>
