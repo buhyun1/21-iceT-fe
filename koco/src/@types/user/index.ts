@@ -30,3 +30,9 @@ export interface IStudyStat {
 export interface IStudyStatsResponse {
   studyStats: IStudyStat[];
 }
+
+export interface ICompleteUserProfileRequest {
+  nickname: string;
+  profileImg: string;
+  statusMsg: string;
+}

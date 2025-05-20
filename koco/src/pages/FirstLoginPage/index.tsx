@@ -5,6 +5,8 @@ import useInput from '@/hooks/custom/useInput';
 import useFileInput from '@/hooks/custom/useFileInput';
 import Button from '@/components/ui/Button';
 import { useCompleteProfile } from '@/hooks/mutations/useUserMutations';
+import { useUploadS3 } from '@/hooks/mutations/useImageMutations';
+import { useGetPresignedUrl } from '@/hooks/queries/useImageQueries';
 
 export default function FirstLoginPage() {
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -13,9 +15,10 @@ export default function FirstLoginPage() {
   const { value: nickname, onChange: onChangeNickname } = useInput();
   const { value: statusMsg, onChange: onChangeStatusMessage } = useInput();
   const { preview, onChange: onChangeFile } = useFileInput();
+  const { data: presignedData } = useGetPresignedUrl(fileRef.current?.files?.[0]?.name || '');
 
   const completeProfileMutation = useCompleteProfile();
-
+  const s3UploadMutation = useUploadS3();
   /* 유효성 검사 로직 */
   const nicknameErr = useMemo(() => {
     if (!nickname) return '닉네임을 입력해주세요.';
@@ -34,25 +37,50 @@ export default function FirstLoginPage() {
   const handleSubmit = () => {
     if (!canSubmit) return;
 
-    const formData = new FormData();
+    // S3 업로드 로직
+    if (presignedData && fileRef.current?.files?.[0]) {
+      // 파일이 있는 경우에만 S3 업로드 후 프로필 완성 API 호출
+      s3UploadMutation.mutate(
+        {
+          presignedUrl: presignedData.presignedUrl,
+          file: fileRef.current.files[0],
+        },
+        {
+          onSuccess: () => {
+            // S3 업로드 성공 후 프로필 완성 API 호출
+            const profileData = {
+              profileImg: presignedData?.fileUrl || '',
+              nickname: nickname,
+              statusMsg: statusMsg || '',
+            };
 
-    if (fileRef.current?.files?.[0]) {
-      formData.append('profileImg', fileRef.current.files[0]);
+            completeProfileMutation.mutate(profileData, {
+              onSuccess: () => {
+                //navigate('/home');
+                console.log('프로필 완성 성공, 홈 화면으로 돌아감');
+              },
+            });
+          },
+          onError: error => {
+            console.error('S3 업로드 실패:', error);
+            alert('이미지 업로드에 실패했습니다.');
+          },
+        }
+      );
+    } else {
+      // 파일이 없는 경우 바로 프로필 완성 API 호출
+      const profileData = {
+        profileImg: '',
+        nickname: nickname,
+        statusMsg: statusMsg || '',
+      };
+
+      completeProfileMutation.mutate(profileData, {
+        onSuccess: () => {
+          navigate('/home');
+        },
+      });
     }
-
-    if (nickname) {
-      formData.append('nickname', nickname);
-    }
-
-    if (statusMsg) {
-      formData.append('statusMsg', statusMsg);
-    }
-
-    completeProfileMutation.mutate(formData, {
-      onSuccess: () => {
-        navigate('/home');
-      },
-    });
   };
 
   return (

@@ -20,12 +20,8 @@ export interface ICompleteProfileRequest {
   statusMsg: string;
 }
 
-export const completeProfile = async (formData: FormData) => {
-  const response = await axios.post<IApiResponse<null>>(`${V1_SUB_URL}/me`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+export const completeProfile = async (profileData: ICompleteProfileRequest) => {
+  const response = await axios.post<IApiResponse<null>>(`${V1_SUB_URL}/me`, profileData);
 
   return response.data.data;
 };
