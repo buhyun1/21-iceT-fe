@@ -16,7 +16,15 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
     },
   };
 
-  console.log(processMathText(data.inputDescription));
+  const processText = (text: string) => {
+    if (!text) return [];
+
+    // Split text by double line breaks
+    return text.split(/\n\s*\n/).filter(block => block.trim() !== '');
+  };
+
+  const inputBlocks = processText(data.inputExample);
+  const outputBlocks = processText(data.outputExample);
 
   return (
     <MathJaxContext config={config}>
@@ -82,15 +90,24 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
         </div>
 
         {/* 예시 */}
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <h3 className="font-semibold mb-1">예시 입력</h3>
-            <pre className="bg-gray-100 p-3 rounded whitespace-pre-line">{data.inputExample}</pre>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-1">예시 출력</h3>
-            <pre className="bg-gray-100 p-3 rounded whitespace-pre-line">{data.outputExample}</pre>
-          </div>
+
+        <div className="space-y-4 text-sm">
+          {inputBlocks.map((input, index) => (
+            <React.Fragment key={`example-${index}`}>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="font-semibold mb-1">예제 입력 {index + 1}</h3>
+                  <pre className="bg-gray-100 p-3 rounded whitespace-pre-line">{input}</pre>
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">예제 출력 {index + 1}</h3>
+                  <pre className="bg-gray-100 p-3 rounded whitespace-pre-line ">
+                    {outputBlocks[index] ?? ''}
+                  </pre>
+                </div>
+              </div>
+            </>
+          ))}
         </div>
       </section>
     </MathJaxContext>
