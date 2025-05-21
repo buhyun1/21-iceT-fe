@@ -41,7 +41,7 @@ export const getUserDashboard = async (date: string) => {
 
 /**
  * GET) 사용자 정보 조회
- * @returns userId, nickname, statusMessage, profileImageUrl
+ * @returns userId, nickname, statusMessage, profileImgUrl
  */
 export const getUserProfile = async () => {
   const response = await axios.get<IApiResponse<IGetUserProfileResponse>>(`${V1_SUB_URL}/me`);

@@ -21,7 +21,6 @@ const MainPage = () => {
 
   const today = new Date().toISOString().split('T')[0];
   const { data: todayProblemData, isLoading: isTodayProblemLoading } = useProblemSet(today);
-
   // 🔐 인증 에러 처리
   useEffect(() => {
     if ((profileError as AxiosError)?.response?.status === 403) {
@@ -55,7 +54,7 @@ const MainPage = () => {
       <Header />
 
       <ProfileCard
-        profileImgUrl={userProfileData.profileImageUrl}
+        profileImgUrl={userProfileData.profileImgUrl}
         nickname={userProfileData.nickname}
         statusMessage={userProfileData.statusMessage}
       />
