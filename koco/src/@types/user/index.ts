@@ -33,6 +33,6 @@ export interface IStudyStatsResponse {
 
 export interface ICompleteUserProfileRequest {
   nickname: string;
-  profileImg: string;
+  profileImgUrl: string;
   statusMsg: string;
 }

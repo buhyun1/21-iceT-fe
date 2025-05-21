@@ -29,19 +29,13 @@ const refreshToken = async () => {
   }
 };
 
-// 요청 인터셉터 - 로깅 및 요청 전 추가 처리
-axiosInstance.interceptors.request.use(
-  config => {
-    // 파일을 포함한 요청인 경우 자동으로 'Content-Type'을 설정하지 않음
-    if (config.data instanceof FormData) {
-      // FormData는 axios가 자동으로 처리하도록 설정
-      delete config.headers['Content-Type']; // 'Content-Type' 헤더를 제거
-    }
-
-    return config;
-  },
-  error => Promise.reject(error)
-);
+// // 요청 인터셉터 - 로깅 및 요청 전 추가 처리
+// axiosInstance.interceptors.request.use(
+//   config => {
+//     return config;
+//   },
+//   error => Promise.reject(error)
+// );
 
 // 응답 인터셉터
 axiosInstance.interceptors.response.use(
@@ -71,7 +65,7 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    // 500 에러 처리 - 서버 에러 로깅 및 사용자 알림
+    // 500 에러 처리
     if (error.response?.status === 500) {
       return Promise.reject(error);
     }
