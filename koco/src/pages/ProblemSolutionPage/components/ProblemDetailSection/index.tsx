@@ -1,6 +1,8 @@
 import { IGetProblemSolutionResponse } from '@/apis/problemApi';
+import { processMathHtml } from '@/utils/converter/processMathHtml';
 import { processMathText } from '@/utils/converter/processMathText';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
+import { useEffect } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
@@ -17,15 +19,25 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
     },
   };
 
-  const processText = (text: string) => {
+  const divideExampleText = (text: string) => {
     if (!text) return [];
 
-    // Split text by double line breaks
+    // 두 줄 띄기를 기준으로 블록을 나누어 리턴
     return text.split(/\n\s*\n/).filter(block => block.trim() !== '');
   };
 
-  const inputBlocks = processText(data.inputExample);
-  const outputBlocks = processText(data.outputExample);
+  const inputBlocks = divideExampleText(data.inputExample);
+  const outputBlocks = divideExampleText(data.outputExample);
+  const cleanedHtml = processMathHtml(data.description);
+  useEffect(() => {
+    if (window.MathJax?.typesetPromise) {
+      window.MathJax?.typesetPromise();
+    }
+  }, [data]);
+
+  // useEffect(() => {
+  //   setCleanedHtml(processMathHtml(data.description));
+  // }, []);
 
   return (
     <MathJaxContext config={config}>
@@ -74,19 +86,24 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
 
         {/* 문제 설명 */}
         <div className="mb-6 text-sm leading-relaxed text-gray-800">
-          <h2 className="font-semibold text-base mb-2">문제</h2>
-          <p>{processMathText(data.description)}</p>
+          <h2 className="font-semibold text-xl mb-2">문제</h2>
+          <p>
+            <div
+              className="text-base leading-loose"
+              dangerouslySetInnerHTML={{ __html: cleanedHtml }}
+            />
+          </p>
         </div>
 
         {/* 입력 */}
         <div className="mb-6 text-sm leading-relaxed text-gray-800">
-          <h2 className="font-semibold text-base mb-2">입력</h2>
+          <h2 className="font-semibold text-xl mb-2">입력</h2>
           <MathJax> {processMathText(data.inputDescription)}</MathJax>
         </div>
 
         {/* 출력 */}
         <div className="mb-6 text-sm leading-relaxed text-gray-800">
-          <h2 className="font-semibold text-base mb-2">출력</h2>
+          <h2 className="font-semibold text-xl mb-2">출력</h2>
           <MathJax> {processMathText(data.outputDescription)}</MathJax>
         </div>
 
@@ -97,11 +114,11 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
             <Fragment key={`example-${index}`}>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <h3 className="font-semibold mb-1">예제 입력 {index + 1}</h3>
+                  <h3 className="font-semibold text-base mb-1">예제 입력 {index + 1}</h3>
                   <pre className="bg-gray-100 p-3 rounded whitespace-pre-line">{input}</pre>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">예제 출력 {index + 1}</h3>
+                  <h3 className="font-semibold text-base mb-1">예제 출력 {index + 1}</h3>
                   <pre className="bg-gray-100 p-3 rounded whitespace-pre-line ">
                     {outputBlocks[index] ?? ''}
                   </pre>
