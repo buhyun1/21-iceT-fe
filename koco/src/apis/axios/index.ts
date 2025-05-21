@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
   // },
 });
 
-// 토큰 갱신 전용 axios 인스턴스
+//토큰 갱신 전용 axios 인스턴스
 // const refreshAxios = axios.create({
 //   baseURL: axiosInstance.defaults.baseURL,
 //   withCredentials: true,
@@ -42,6 +42,7 @@ axiosInstance.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
+    //const { loginUserContext } = useAuth();
 
     // 401 (인증 실패) 처리
     if (error.response?.status === 401 && !originalRequest._retry) {

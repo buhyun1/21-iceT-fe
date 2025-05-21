@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { AxiosError } from 'axios';
 import Header from '@/components/layout/Header';
 import BottomNav from '@/components/layout/BottomNav';
 import ProfileCard from './components/ProfileCard';
@@ -9,42 +7,39 @@ import ChunsikCard from './components/ChunsikCard';
 import { useUserProfile, useUserStats } from '@/hooks/queries/useUserQueries';
 import { useProblemSet } from '@/hooks/queries/useProblemQueries';
 import ProblemItem from './components/ProblemItem';
+import Spinner from '@/components/ui/Spinner';
 
 const MainPage = () => {
-  const {
-    data: userProfileData,
-    error: profileError,
-    isLoading: isUserProfileLoading,
-  } = useUserProfile();
+  const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
 
   const { data: userStudyStatData, isLoading: isUserStudyStatLoading } = useUserStats();
 
   const today = new Date().toISOString().split('T')[0];
   const { data: todayProblemData, isLoading: isTodayProblemLoading } = useProblemSet(today);
-  // 🔐 인증 에러 처리
-  useEffect(() => {
-    if ((profileError as AxiosError)?.response?.status === 403) {
-      localStorage.removeItem('koco_auth_flag');
-      window.location.href = '/';
-    }
-  }, [profileError]);
 
   // ⏳ 로딩 중
   if (isUserProfileLoading || isUserStudyStatLoading || isTodayProblemLoading) {
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
-        <Header />
-        <p className="text-center">로딩 중...</p>
+        <Spinner text="로딩중..." />
       </div>
     );
   }
 
-  // ❌ 데이터 로딩 실패
-  if (!userProfileData || !userStudyStatData) {
+  if (!userProfileData) {
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
         <Header />
-        <p className="text-center">데이터를 불러올 수 없습니다. 다시 로그인해주세요.</p>
+        <p className="text-center">프로필 데이터를 불러올 수 없습니다.</p>
+      </div>
+    );
+  }
+
+  if (!userStudyStatData) {
+    return (
+      <div className="flex flex-col gap-6 p-6 pb-30">
+        <Header />
+        <p className="text-center">알고리즘 데이터를 불러올 수 없습니다.</p>
       </div>
     );
   }
