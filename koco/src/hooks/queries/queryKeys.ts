@@ -3,6 +3,7 @@ export const queryKeys = {
     all: ['users'] as const,
     stats: ['users', 'stats'] as const,
     profile: ['users', 'profile'] as const,
+    presignedUrl: ['users', 'profile', 'presigned-url'] as const,
   },
 
   problems: {

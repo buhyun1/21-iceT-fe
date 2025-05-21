@@ -16,16 +16,12 @@ const V1_SUB_URL = '/api/backend/v1/users';
 
 export interface ICompleteProfileRequest {
   nickname: string;
-  profileImg: string;
+  profileImgUrl: string;
   statusMsg: string;
 }
 
-export const completeProfile = async (formData: FormData) => {
-  const response = await axios.post<IApiResponse<null>>(`${V1_SUB_URL}/me`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+export const completeProfile = async (profileData: ICompleteProfileRequest) => {
+  const response = await axios.post<IApiResponse<null>>(`${V1_SUB_URL}/me`, profileData);
 
   return response.data.data;
 };

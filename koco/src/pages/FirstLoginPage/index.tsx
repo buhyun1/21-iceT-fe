@@ -1,10 +1,12 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DEFAULT_IMG from '@/assets/defaultProfileImage.svg';
 import useInput from '@/hooks/custom/useInput';
 import useFileInput from '@/hooks/custom/useFileInput';
 import Button from '@/components/ui/Button';
 import { useCompleteProfile } from '@/hooks/mutations/useUserMutations';
+import { useUploadS3 } from '@/hooks/mutations/useImageMutations';
+import { getPresignedUrl } from '@/apis/imageApi';
 
 export default function FirstLoginPage() {
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -13,9 +15,12 @@ export default function FirstLoginPage() {
   const { value: nickname, onChange: onChangeNickname } = useInput();
   const { value: statusMsg, onChange: onChangeStatusMessage } = useInput();
   const { preview, onChange: onChangeFile } = useFileInput();
+  //const { data: presignedData } = useGetPresignedUrl(fileRef.current?.files?.[0]?.name || '');
 
   const completeProfileMutation = useCompleteProfile();
+  const s3UploadMutation = useUploadS3();
 
+  const [isLoading, setIsLoading] = useState(false);
   /* 유효성 검사 로직 */
   const nicknameErr = useMemo(() => {
     if (!nickname) return '닉네임을 입력해주세요.';
@@ -31,28 +36,54 @@ export default function FirstLoginPage() {
   const canSubmit = !nicknameErr && !statusErr && nickname;
 
   /* 제출 */
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!canSubmit) return;
 
-    const formData = new FormData();
+    const file = fileRef.current?.files?.[0];
 
-    if (fileRef.current?.files?.[0]) {
-      formData.append('profileImg', fileRef.current.files[0]);
+    try {
+      setIsLoading(true);
+
+      // S3 업로드 로직
+      let profileImgUrl = '';
+
+      if (file) {
+        // 파일이 있는 경우에만 S3 업로드 후 프로필 완성 API 호출
+
+        const presignedData = await getPresignedUrl(file.name);
+
+        if (presignedData) {
+          try {
+            await s3UploadMutation.mutateAsync({
+              presignedUrl: presignedData.presignedUrl,
+              file: file,
+            });
+
+            // 업로드 성공 시 URL 저장
+            profileImgUrl = presignedData.fileUrl;
+          } catch (error) {
+            console.error('S3 업로드 실패:', error);
+            alert('이미지 업로드에 실패했습니다.');
+
+            return;
+          }
+        }
+      }
+
+      // 파일이 없는 경우 바로 프로필 완성 API 호출
+      const profileData = {
+        profileImgUrl: profileImgUrl,
+        nickname: nickname,
+        statusMsg: statusMsg || '',
+      };
+
+      await completeProfileMutation.mutateAsync(profileData);
+      navigate('/home');
+    } catch {
+      alert('프로필 등록에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsLoading(false);
     }
-
-    if (nickname) {
-      formData.append('nickname', nickname);
-    }
-
-    if (statusMsg) {
-      formData.append('statusMsg', statusMsg);
-    }
-
-    completeProfileMutation.mutate(formData, {
-      onSuccess: () => {
-        navigate('/home');
-      },
-    });
   };
 
   return (
@@ -105,12 +136,12 @@ export default function FirstLoginPage() {
 
       {/* 가입 버튼 */}
       <Button
-        disabled={!canSubmit}
+        disabled={!canSubmit || isLoading}
         onClick={handleSubmit}
         className={`mt-14 w-40 py-3 rounded-md text-white text-sm
-          ${canSubmit ? 'bg-primary hover:brightness-90' : 'bg-primary-disabled cursor-not-allowed'}`}
+           ${!canSubmit || isLoading ? 'bg-primary-disabled cursor-not-allowed' : 'bg-primary hover:brightness-90'}`}
       >
-        가입하기
+        {isLoading ? '처리중입니다...' : '가입하기'}
       </Button>
     </div>
   );
