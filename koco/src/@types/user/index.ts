@@ -18,7 +18,7 @@ export interface IGetUserProfileResponse {
   userId: number;
   nickname: string;
   statusMessage: string;
-  profileImageUrl: string;
+  profileImgUrl: string;
 }
 
 export interface IStudyStat {
