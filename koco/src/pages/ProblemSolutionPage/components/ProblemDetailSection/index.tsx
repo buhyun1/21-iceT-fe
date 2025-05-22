@@ -74,12 +74,12 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
           </thead>
           <tbody>
             <tr className="text-center">
-              <td className="border-border px-3 py-2">{data.timeLimit}</td>
+              <td className="border-border px-3 py-2">{data.timeLimit} 초</td>
               <td className="border-border px-3 py-2">{data.memoryLimit} MB</td>
-              <td className="border-border px-3 py-2">{data.submissionCnt}</td>
-              <td className="border-border px-3 py-2">{data.answerCnt}</td>
-              <td className="border-border px-3 py-2">{data.answerCnt}</td>
-              <td className="border-border px-3 py-2">{data.correctPplCnt}</td>
+              <td className="border-border px-3 py-2">{data.submissionCnt} 개</td>
+              <td className="border-border px-3 py-2">{data.answerCnt} 개</td>
+              <td className="border-border px-3 py-2">{data.correctPplCnt} 명</td>
+              <td className="border-border px-3 py-2">{data.correctRate} %</td>
             </tr>
           </tbody>
         </table>
