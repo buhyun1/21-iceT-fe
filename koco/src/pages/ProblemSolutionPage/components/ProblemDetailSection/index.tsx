@@ -87,12 +87,11 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
         {/* 문제 설명 */}
         <div className="mb-6 text-sm leading-relaxed text-gray-800">
           <h2 className="font-semibold text-xl mb-2">문제</h2>
-          <p>
-            <div
-              className="text-base leading-loose"
-              dangerouslySetInnerHTML={{ __html: cleanedHtml }}
-            />
-          </p>
+
+          <div
+            className="text-base leading-loose"
+            dangerouslySetInnerHTML={{ __html: cleanedHtml }}
+          />
         </div>
 
         {/* 입력 */}

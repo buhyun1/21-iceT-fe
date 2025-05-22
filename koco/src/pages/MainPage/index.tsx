@@ -8,8 +8,10 @@ import { useUserProfile, useUserStats } from '@/hooks/queries/useUserQueries';
 import { useProblemSet } from '@/hooks/queries/useProblemQueries';
 import ProblemItem from './components/ProblemItem';
 import Spinner from '@/components/ui/Spinner';
+import { useAuth } from '@/context/AuthContext';
 
 const MainPage = () => {
+  const { logoutUserContext } = useAuth();
   const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
 
   const { data: userStudyStatData, isLoading: isUserStudyStatLoading } = useUserStats();
@@ -27,6 +29,8 @@ const MainPage = () => {
   }
 
   if (!userProfileData) {
+    logoutUserContext();
+
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
         <Header />
@@ -36,6 +40,8 @@ const MainPage = () => {
   }
 
   if (!userStudyStatData) {
+    logoutUserContext();
+
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
         <Header />
