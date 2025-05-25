@@ -19,24 +19,25 @@ const RootRoutes = () => {
     <BrowserRouter basename={'/'}>
       <AuthProvider>
         <GoogleAnalytics />
-        <Suspense fallback={<Spinner text="로딩중..." />}>
-          <Routes>
-            <Route element={<AppLayout />}>
-              <Route index element={<LoginPage />} />
-              <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<LoginPage />} />
+            <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
 
-              {/* 로그인 시 접근 가능한 페이지들 */}
+            {/* 로그인 시 접근 가능한 페이지들 */}
 
-              <Route element={<ProtectedRoute />}>
-                <Route path="/complete-profile" element={<FirstLoginPage />} />
-                <Route path="/home" element={<MainPage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/complete-profile" element={<FirstLoginPage />} />
+              <Route path="/home" element={<MainPage />} />
+              <Suspense fallback={<Spinner text="로딩중..." />}>
+                {' '}
                 <Route path="/survey" element={<SurveyPage />} />
                 <Route path="/problems" element={<ProblemListPage />} />
                 <Route path="/problems/:id" element={<ProblemSolutionPage />} />
-              </Route>
+              </Suspense>
             </Route>
-          </Routes>
-        </Suspense>
+          </Route>
+        </Routes>
       </AuthProvider>
     </BrowserRouter>
   );
