@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DEFAULT_IMG from '@/assets/defaultProfileImage.svg';
+import DEFAULT_IMG from '@/assets/defaultProfileImage.png';
 import useInput from '@/hooks/custom/useInput';
 import useFileInput from '@/hooks/custom/useFileInput';
 import Button from '@/components/ui/Button';

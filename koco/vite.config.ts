@@ -1,18 +1,21 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { analyzer } from 'vite-bundle-analyzer';
 import tailwindcss from '@tailwindcss/vite';
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  // Load env file based on `mode` in the current directory.
-  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
+  const plugins = [react(), tsconfigPaths(), tailwindcss()];
   const env = loadEnv(mode, process.cwd(), '');
 
-  const isQA = env.VITE_IS_QA === 'qa';
+  const isAnalyze = env.VITE_IS_ANALYZE === 'true';
+
+  if (isAnalyze) {
+    plugins.push(analyzer());
+  }
 
   return {
-    plugins: [react(), tsconfigPaths(), tailwindcss()],
-    base: isQA ? '/admin-preview/' : '/',
+    plugins,
+    base: '/',
   };
 });
