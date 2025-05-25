@@ -1,4 +1,4 @@
-import KocoImage from '@/assets/kocoImage.svg';
+import KocoImage from '@/assets/kocoImage.png';
 
 const Header = () => {
   return (
