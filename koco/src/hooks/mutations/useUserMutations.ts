@@ -2,6 +2,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { completeProfile, deleteUser } from '@/apis/userApi';
 import { ICompleteUserProfileRequest } from '@/@types/user';
+import { queryKeys } from '../queries/queryKeys';
 
 /**
  * 사용자 프로필 완성 뮤테이션 훅
@@ -13,7 +14,7 @@ export const useCompleteProfile = () => {
     mutationFn: (data: ICompleteUserProfileRequest) => completeProfile(data),
     onSuccess: () => {
       // 성공 시 관련 쿼리 무효화
-      queryClient.invalidateQueries({ queryKey: ['complete-profile'] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.users.profile, type: 'all' });
     },
   });
 };

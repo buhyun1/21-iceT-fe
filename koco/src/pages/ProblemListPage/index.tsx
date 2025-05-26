@@ -15,7 +15,7 @@ const ProblemListPage = () => {
 
   // 초기 날짜 설정 - URL의 date 파라미터를 우선적으로 사용
   const [date, setDate] = useState(dateFromUrl || todayDate);
-  const { data: problemListData, error, refetch } = useProblemSet(date);
+  const { data: problemListData, error } = useProblemSet(date);
 
   // URL의 date 파라미터가 변경되면 date 상태도 업데이트
   useEffect(() => {
@@ -29,9 +29,6 @@ const ProblemListPage = () => {
     setDate(newDate);
 
     navigate(`/problems?date=${encodeURIComponent(newDate)}`, { replace: true });
-
-    // 날짜가 변경되면 명시적으로 데이터 다시 가져오기
-    refetch();
   };
 
   if ((error as AxiosError)?.response?.status === 403) {
