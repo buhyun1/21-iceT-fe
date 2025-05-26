@@ -53,7 +53,7 @@ jobs:
 
       - name: Archive build to versioned S3 bucket (koco-frontend-builds)
         run: |
-          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          TIMESTAMP=$(TZ=Asia/Seoul date +%Y%m%d-%H%M%S)
           aws s3 sync ./koco/dist s3://koco-frontend-builds/$TIMESTAMP/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
