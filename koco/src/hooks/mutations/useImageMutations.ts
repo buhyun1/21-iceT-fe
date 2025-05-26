@@ -5,8 +5,5 @@ import { useMutation } from '@tanstack/react-query';
 export const useUploadS3 = () => {
   return useMutation({
     mutationFn: (data: IS3UploadRequest) => uploadToS3(data),
-    onSuccess: () => {
-      // 성공 시 관련 쿼리 무효화
-    },
   });
 };

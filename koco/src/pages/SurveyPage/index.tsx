@@ -7,7 +7,8 @@ import { useRegisterSurvey } from '@/hooks/mutations/useProblemMutations';
 import { IProblemSurveyRequest } from '@/@types/problem';
 import { useProblemSet } from '@/hooks/queries/useProblemQueries';
 import { AxiosError } from 'axios';
-
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/hooks/queries/queryKeys';
 interface ISurveyData {
   problemId: number;
   isSolved: boolean | null;
@@ -39,6 +40,7 @@ const SurveyPage = () => {
   const allAnswered = surveyData.every(
     item => item.isSolved !== null && item.difficultyLevel !== ''
   );
+  const queryClient = useQueryClient();
 
   // 설문 데이터를 저장합니다
   const handleQuestionChange = (
@@ -72,12 +74,25 @@ const SurveyPage = () => {
     };
 
     registerSurveyMutation.mutate(requestData, {
-      onSuccess: () => {
-        window.location.href = `/problems?date=${encodeURIComponent(targetDate)}`;
+      onSuccess: async () => {
+        // 설문 등록 성공 시 문제 리스트 조회 페이지 이동
+
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.problems.set(targetDate),
+          type: 'all',
+        });
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.users.stats,
+          type: 'all',
+        });
+        navigate(`/problems?date=${encodeURIComponent(targetDate)}`);
       },
-      onError: () => {
+      onError: async () => {
         alert('설문 등록에 실패하였습니다');
-        window.location.href = '/problems';
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.problems.set(targetDate),
+        });
+        navigate(`/problems?date=${encodeURIComponent(targetDate)}`);
       },
     });
   };

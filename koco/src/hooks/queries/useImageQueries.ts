@@ -9,7 +9,8 @@ export const useGetPresignedUrl = (fileName: string) => {
   return useQuery({
     queryKey: queryKeys.users.presignedUrl,
     queryFn: () => getPresignedUrl(fileName),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0,
+    gcTime: 0,
     enabled: !!fileName,
   });
 };
