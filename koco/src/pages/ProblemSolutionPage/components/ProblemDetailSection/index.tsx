@@ -29,15 +29,17 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   const inputBlocks = divideExampleText(data.inputExample);
   const outputBlocks = divideExampleText(data.outputExample);
   const cleanedHtml = processMathHtml(data.description);
+
   useEffect(() => {
     if (window.MathJax?.typesetPromise) {
-      window.MathJax?.typesetPromise();
+      window.MathJax.typesetPromise().then(() => {
+        //MathJax 렌더링 완료 후 강제 리플로우
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'));
+        }, 0);
+      });
     }
   }, [data]);
-
-  // useEffect(() => {
-  //   setCleanedHtml(processMathHtml(data.description));
-  // }, []);
 
   return (
     <MathJaxContext config={config}>
