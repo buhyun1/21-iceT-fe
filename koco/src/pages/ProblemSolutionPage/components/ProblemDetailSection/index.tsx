@@ -9,6 +9,7 @@ import { Fragment } from 'react/jsx-runtime';
 const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   // 수식 적용 위한 설정
   const config = {
+    loader: { load: ['input/tex', 'output/svg'] }, // svg 렌더러 명시
     tex: {
       inlineMath: [['$', '$']], // 인라인 수학 표현식을 구분하는 기호를 정의
     },
