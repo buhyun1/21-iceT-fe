@@ -32,12 +32,7 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
 
   useEffect(() => {
     if (window.MathJax?.typesetPromise) {
-      window.MathJax.typesetPromise().then(() => {
-        //MathJax 렌더링 완료 후 강제 리플로우
-        setTimeout(() => {
-          window.dispatchEvent(new Event('resize'));
-        }, 0);
-      });
+      window.MathJax.typesetPromise();
     }
   }, [data]);
 
