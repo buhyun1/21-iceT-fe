@@ -1,7 +1,6 @@
 on:
   push:
-    branches:
-      - dev    
+    branches:   
       - main
   workflow_dispatch:  # 수동 실행도 가능
 
