@@ -37,12 +37,11 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   // }, [data]);
 
   useEffect(() => {
-    // 예시로 DOM이 완전히 그려진 뒤 실행
-    setTimeout(() => {
+    document.fonts.ready.then(() => {
       if (window.MathJax?.typesetPromise) {
         window.MathJax.typesetPromise();
       }
-    }, 0);
+    });
   }, [data]);
 
   return (
