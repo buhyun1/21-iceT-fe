@@ -95,10 +95,10 @@ mjx-container {
   white-space: normal !important;
   overflow-wrap: break-word !important;
   word-wrap: break-word !important;
-  position: static !important;
+  /* position: static !important; */
 }
 
-.MathJax_Display,
+/* .MathJax_Display,
 .math-content {
   position: static !important;
-}
+} */
