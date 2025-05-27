@@ -30,10 +30,19 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   const outputBlocks = divideExampleText(data.outputExample);
   const cleanedHtml = processMathHtml(data.description);
 
+  // useEffect(() => {
+  //   if (window.MathJax?.typesetPromise) {
+  //     window.MathJax.typesetPromise();
+  //   }
+  // }, [data]);
+
   useEffect(() => {
-    if (window.MathJax?.typesetPromise) {
-      window.MathJax.typesetPromise();
-    }
+    // 예시로 DOM이 완전히 그려진 뒤 실행
+    setTimeout(() => {
+      if (window.MathJax?.typesetPromise) {
+        window.MathJax.typesetPromise();
+      }
+    }, 0);
   }, [data]);
 
   return (
