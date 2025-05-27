@@ -3,6 +3,7 @@ import { processMathHtml } from '@/utils/converter/processMathHtml';
 import { processMathText } from '@/utils/converter/processMathText';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { useEffect } from 'react';
+//import { useEffect } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
@@ -30,18 +31,17 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   const outputBlocks = divideExampleText(data.outputExample);
   const cleanedHtml = processMathHtml(data.description);
 
-  // useEffect(() => {
-  //   if (window.MathJax?.typesetPromise) {
-  //     window.MathJax.typesetPromise();
-  //   }
-  // }, [data]);
-
   useEffect(() => {
-    document.fonts.ready.then(() => {
-      if (window.MathJax?.typesetPromise) {
-        window.MathJax.typesetPromise();
-      }
-    });
+    const delayMathJax = async () => {
+      await document.fonts.ready;
+      requestAnimationFrame(() => {
+        if (window.MathJax?.typesetPromise) {
+          window.MathJax.typesetPromise();
+        }
+      });
+    };
+
+    delayMathJax();
   }, [data]);
 
   return (
