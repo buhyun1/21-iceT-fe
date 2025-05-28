@@ -1,6 +1,6 @@
 import { IGetProblemSolutionResponse } from '@/features/problemSet/api/getProblemSolution';
-import { processMathHtml } from '@/utils/converter/processMathHtml';
-import { processMathText } from '@/utils/converter/processMathText';
+import { processMathHtml } from '@/features/problemSet/utils/processMathHtml';
+import { processMathText } from '@/features/problemSet/utils/processMathText';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { useEffect } from 'react';
 //import { useEffect } from 'react';

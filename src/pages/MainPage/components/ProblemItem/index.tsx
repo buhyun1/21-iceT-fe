@@ -1,4 +1,4 @@
-import { formatBaekjoonTier } from '@/utils/converter/convertTier';
+import { formatBaekjoonTier } from '@/features/problemSet/utils/convertTier';
 
 interface IProblemItemProps {
   problemNumber: number;
