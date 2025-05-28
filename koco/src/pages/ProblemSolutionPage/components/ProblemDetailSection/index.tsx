@@ -32,37 +32,11 @@ const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {
   const outputBlocks = divideExampleText(data.outputExample);
   const cleanedHtml = processMathHtml(data.description);
 
-  // useEffect(() => {
-  //   const delayMathJax = async () => {
-  //     await document.fonts.ready;
-  //     requestAnimationFrame(() => {
-  //       if (window.MathJax?.typesetPromise) {
-  //         window.MathJax.typesetPromise();
-  //       }
-  //     });
-  //   };
-
   useEffect(() => {
-    const waitForCSS = () => {
-      const styleSheets = Array.from(document.styleSheets);
-      const loaded = styleSheets.every(s => {
-        try {
-          return !!s.cssRules;
-        } catch {
-          return false;
-        }
-      });
-
-      if (!loaded) {
-        setTimeout(waitForCSS, 50);
-      } else {
-        // CSS가 다 로딩됐을 때 MathJax 실행
-        window.MathJax?.typesetPromise?.();
-      }
-    };
-
-    waitForCSS();
-  }, []);
+    if (window.MathJax?.typesetPromise) {
+      window.MathJax.typesetPromise();
+    }
+  }, [data]);
 
   return (
     <MathJaxContext config={config}>
