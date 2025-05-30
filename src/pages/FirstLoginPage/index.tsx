@@ -31,13 +31,13 @@ export default function FirstLoginPage() {
   }, [nickname]);
 
   const statusErr = statusMsg.length > 50 ? '상태메세지는 최대 50자까지 작성 가능합니다.' : null;
-  const canSubmit = !nicknameErr && !statusErr && nickname;
+  const submitErr = nicknameErr || statusErr;
   const [isLoading, setIsLoading] = useState(false);
-  const { isDisabled, buttonText } = useSubmitButton({ canSubmit, isLoading });
+  const { isDisabled, buttonText } = useSubmitButton({ submitErr, isLoading });
 
   /* 제출 */
   const handleSubmit = async () => {
-    if (!canSubmit) return;
+    if (submitErr) return;
 
     const file = fileRef.current?.files?.[0];
 

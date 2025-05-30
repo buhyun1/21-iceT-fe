@@ -1,11 +1,18 @@
 interface ISubmitButtonProps {
-  canSubmit: string | false;
+  submitErr: string | null;
   isLoading: boolean;
+  submitText?: string;
+  loadingText?: string;
 }
 
-const useSubmitButton = ({ canSubmit, isLoading }: ISubmitButtonProps) => {
-  const isDisabled = !canSubmit || isLoading;
-  const buttonText = isLoading ? '처리중입니다...' : '가입하기';
+const useSubmitButton = ({
+  submitErr,
+  isLoading,
+  submitText = '제출하기',
+  loadingText = '제출 중...',
+}: ISubmitButtonProps) => {
+  const isDisabled = !!submitErr || isLoading;
+  const buttonText = isLoading ? loadingText : submitText;
 
   return { isDisabled, buttonText };
 };
