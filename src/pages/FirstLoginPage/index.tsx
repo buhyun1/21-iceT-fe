@@ -7,6 +7,7 @@ import Button from '@/shared/ui/Button';
 import { useCompleteProfile } from '@/features/user/hooks/useCompleteProfile';
 import { useUploadS3 } from '@/features/user/hooks/useUploadS3';
 import { getPresignedUrl } from '@/features/user/api/getPresignedUrl';
+import useSubmitButton from '@/shared/hooks/useSubmitButton';
 
 export default function FirstLoginPage() {
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -15,13 +16,11 @@ export default function FirstLoginPage() {
   const { value: nickname, onChange: onChangeNickname } = useInput();
   const { value: statusMsg, onChange: onChangeStatusMessage } = useInput();
   const { preview, onChange: onChangeFile } = useFileInput();
-  //const { data: presignedData } = useGetPresignedUrl(fileRef.current?.files?.[0]?.name || '');
 
   const completeProfileMutation = useCompleteProfile();
   const s3UploadMutation = useUploadS3();
 
-  const [isLoading, setIsLoading] = useState(false);
-  /* 유효성 검사 로직 */
+  /** 제출 전 검사 */
   const nicknameErr = useMemo(() => {
     if (!nickname) return '닉네임을 입력해주세요.';
     if (/\s/.test(nickname)) return '띄어쓰기를 없애주세요.';
@@ -32,8 +31,9 @@ export default function FirstLoginPage() {
   }, [nickname]);
 
   const statusErr = statusMsg.length > 50 ? '상태메세지는 최대 50자까지 작성 가능합니다.' : null;
-
   const canSubmit = !nicknameErr && !statusErr && nickname;
+  const [isLoading, setIsLoading] = useState(false);
+  const { isDisabled, buttonText } = useSubmitButton({ canSubmit, isLoading });
 
   /* 제출 */
   const handleSubmit = async () => {
@@ -136,12 +136,11 @@ export default function FirstLoginPage() {
 
       {/* 가입 버튼 */}
       <Button
-        disabled={!canSubmit || isLoading}
+        disabled={isDisabled}
         onClick={handleSubmit}
-        className={`mt-14 w-40 py-3 rounded-md text-white text-sm
-           ${!canSubmit || isLoading ? 'bg-primary-disabled cursor-not-allowed' : 'bg-primary hover:brightness-90'}`}
+        className={`mt-14 w-40 py-3 rounded-md text-white text-sm`}
       >
-        {isLoading ? '처리중입니다...' : '가입하기'}
+        {buttonText}
       </Button>
     </div>
   );
