@@ -17,5 +17,18 @@ export default defineConfig(({ mode }) => {
   return {
     plugins,
     base: '/',
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            router: ['react-router-dom'],
+            query: ['@tanstack/react-query', '@tanstack/react-query-devtools'],
+            charts: ['chart.js', 'react-chartjs-2'],
+            mathjax: ['better-react-mathjax'],
+          },
+        },
+      },
+    },
   };
 });
