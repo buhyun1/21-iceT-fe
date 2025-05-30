@@ -10,7 +10,6 @@ const LoginCard = () => {
     </div>
   );
 };
-export default LoginCard;
 
 const KakaoButton = () => {
   const handleLogin = () => {
@@ -28,3 +27,5 @@ const KakaoButton = () => {
     </button>
   );
 };
+
+export default LoginCard;
