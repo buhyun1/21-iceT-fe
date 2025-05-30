@@ -1,11 +1,11 @@
 import PageHeader from '@/shared/layout/PageHeader';
-import Calendar from './components/Calendar';
-import ProblemItem from './components/ProblemItem';
+import Calendar from '@/shared/ui/Calendar';
 import { useProblemSet } from '@/features/problemSet/hooks/useProblemSet';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import BottomNav from '@/shared/layout/BottomNav';
+import ProblemItem from '@/features/problemSet/components/ProblemItem';
 
 const ProblemListPage = () => {
   const todayDate = new Date().toISOString().split('T')[0];
