@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import QuestionCard from './components/QuestionCard';
+import QuestionCard from '../../features/survey/components/QuestionCard';
 import Button from '@/shared/ui/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PageHeader from '@/shared/layout/PageHeader';
@@ -9,6 +9,7 @@ import { queryKeys } from '@/constants/queryKeys';
 import { useRegisterSurvey } from '@/features/survey/hooks/useRegisterSurvey';
 import { useProblemSet } from '@/features/problemSet/hooks/useProblemSet';
 import { IProblemSurveyRequest } from '@/features/survey/api/registerSurvey';
+import useSubmitButton from '@/shared/hooks/useSubmitButton';
 interface ISurveyData {
   problemId: number;
   isSolved: boolean | null;
@@ -29,18 +30,34 @@ export interface IProblemSetResponse {
   problems: Problem[];
 }
 
+const difficultyLevelMap: Record<string, 'EASY' | 'MEDIUM' | 'HARD'> = {
+  쉬웠어요: 'EASY',
+  적당했어요: 'MEDIUM',
+  어려웠어요: 'HARD',
+};
+
 const SurveyPage = () => {
+  const queryClient = useQueryClient();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const targetDate = location.state?.date;
-  const navigate = useNavigate();
   const [surveyData, setSurveyData] = useState<ISurveyData[]>([]);
+
   const registerSurveyMutation = useRegisterSurvey();
   const { data: problemListData, error } = useProblemSet(targetDate);
+
   const allAnswered = surveyData.every(
     item => item.isSolved !== null && item.difficultyLevel !== ''
   );
-  const queryClient = useQueryClient();
+  const isLoading = registerSurveyMutation.isPending;
+  const submitErr = !allAnswered ? '모든 설문을 완료해주세요.' : null;
+  const { isDisabled, buttonText } = useSubmitButton({
+    submitErr,
+    isLoading,
+    submitText: '오늘의 해설집 확인하기',
+    loadingText: '제출 중...',
+  });
 
   // 설문 데이터를 저장합니다
   const handleQuestionChange = (
@@ -62,14 +79,8 @@ const SurveyPage = () => {
       problemSetId: problemListData.problemSetId,
       responses: surveyData.map(item => ({
         problemId: item.problemId,
-        //problemNumber: index + 1,
-        isSolved: item.isSolved === null ? false : item.isSolved,
-        difficultyLevel:
-          item.difficultyLevel === '쉬웠어요'
-            ? 'EASY'
-            : item.difficultyLevel === '어려웠어요'
-              ? 'HARD'
-              : 'MEDIUM', // Default value if empty
+        isSolved: item.isSolved!,
+        difficultyLevel: difficultyLevelMap[item.difficultyLevel],
       })),
     };
 
@@ -142,8 +153,8 @@ const SurveyPage = () => {
         />
       ))}
       {problemListData && problemListData.problems.length > 0 && (
-        <Button className="mt-6 w-full" disabled={!allAnswered} onClick={handleSubmitSurvey}>
-          오늘의 해설집 확인하기
+        <Button className="mt-6 w-full" disabled={isDisabled} onClick={handleSubmitSurvey}>
+          {buttonText}
         </Button>
       )}
       {problemListData && !problemListData.problems && (
