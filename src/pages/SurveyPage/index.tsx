@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import QuestionCard from './components/QuestionCard';
+import QuestionCard from '../../features/survey/components/QuestionCard';
 import Button from '@/shared/ui/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PageHeader from '@/shared/layout/PageHeader';
@@ -28,6 +28,12 @@ export interface IProblemSetResponse {
   isAnswered: boolean;
   problems: Problem[];
 }
+
+const difficultyLevelMap: Record<string, 'EASY' | 'MEDIUM' | 'HARD'> = {
+  쉬웠어요: 'EASY',
+  적당했어요: 'MEDIUM',
+  어려웠어요: 'HARD',
+};
 
 const SurveyPage = () => {
   const location = useLocation();
@@ -62,14 +68,8 @@ const SurveyPage = () => {
       problemSetId: problemListData.problemSetId,
       responses: surveyData.map(item => ({
         problemId: item.problemId,
-        //problemNumber: index + 1,
-        isSolved: item.isSolved === null ? false : item.isSolved,
-        difficultyLevel:
-          item.difficultyLevel === '쉬웠어요'
-            ? 'EASY'
-            : item.difficultyLevel === '어려웠어요'
-              ? 'HARD'
-              : 'MEDIUM', // Default value if empty
+        isSolved: item.isSolved!,
+        difficultyLevel: difficultyLevelMap[item.difficultyLevel],
       })),
     };
 
