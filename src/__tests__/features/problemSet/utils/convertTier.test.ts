@@ -1,4 +1,3 @@
-// src/features/problemSet/utils/__tests__/convertTier.test.ts
 import { formatBaekjoonTier } from '@/features/problemSet/utils/convertTier';
 import { describe, it, expect } from 'vitest';
 
@@ -204,7 +203,9 @@ describe('formatBaekjoonTier 함수', () => {
   });
 
   it('null이나 undefined 같은 값도 처리한다', () => {
-    expect(formatBaekjoonTier(null as undefined)).toBe('Unrated');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(formatBaekjoonTier(null as any)).toBe('Unrated');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(formatBaekjoonTier(undefined as any)).toBe('Unrated');
   });
 });
