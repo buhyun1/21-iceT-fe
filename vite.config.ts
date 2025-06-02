@@ -16,6 +16,11 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins,
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: ['./src/__tests__/setup/setupTests.ts'],
+    },
     base: '/',
     build: {
       rollupOptions: {
