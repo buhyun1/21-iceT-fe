@@ -8,7 +8,7 @@
 
 export const formatBaekjoonTier = (tierValue: string): string => {
   // 입력값이 없거나 "0"인 경우 Unrated 반환
-  if (!tierValue || tierValue === '0') return 'Unrated';
+  if (!tierValue || tierValue === '0' || tierValue === '0.0') return 'Unrated';
 
   try {
     // 소수점으로 분리
