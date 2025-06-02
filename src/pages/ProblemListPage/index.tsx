@@ -51,12 +51,19 @@ const ProblemListPage = () => {
       {problemListData?.problems.map(problem => (
         <ProblemItem
           key={problem.problemId}
-          date={problemListData?.date}
-          problemSetId={problemListData?.problemSetId}
-          isAnswered={problemListData?.isAnswered}
-          problemNumber={problem.problemNumber}
           title={problem.title}
           tier={problem.tier}
+          problemNumber={problem.problemNumber}
+          onClick={() => {
+            if (problemListData?.isAnswered) {
+              navigate(`/problems/${problem.problemNumber}`);
+            } else {
+              alert('설문이 기록되지 않았습니다. 설문페이지로 이동합니다');
+              navigate('/survey', {
+                state: { problemSetId: problemListData?.problemSetId, date: date },
+              });
+            }
+          }}
         />
       ))}
       <BottomNav />

@@ -23,7 +23,7 @@ interface ITotalStudyCardProps {
   studyStats: IStudyStat[];
 }
 
-const RadarChart = ({ studyStats }: ITotalStudyCardProps) => {
+const StudyStatsRadarChart = ({ studyStats }: ITotalStudyCardProps) => {
   const data: ChartData<'radar'> = {
     labels: studyStats.map(stat => stat.categoryName),
     datasets: [
@@ -68,4 +68,4 @@ const RadarChart = ({ studyStats }: ITotalStudyCardProps) => {
   return <Radar data={data} options={options} />;
 };
 
-export default RadarChart;
+export default StudyStatsRadarChart;
