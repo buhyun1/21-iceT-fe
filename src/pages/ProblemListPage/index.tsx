@@ -1,11 +1,11 @@
 import PageHeader from '@/shared/layout/PageHeader';
-import Calendar from './components/Calendar';
-import ProblemItem from './components/ProblemItem';
+import Calendar from '@/shared/ui/Calendar';
 import { useProblemSet } from '@/features/problemSet/hooks/useProblemSet';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import BottomNav from '@/shared/layout/BottomNav';
+import ProblemItem from '@/features/problemSet/components/ProblemItem';
 
 const ProblemListPage = () => {
   const todayDate = new Date().toISOString().split('T')[0];
@@ -51,12 +51,19 @@ const ProblemListPage = () => {
       {problemListData?.problems.map(problem => (
         <ProblemItem
           key={problem.problemId}
-          date={problemListData?.date}
-          problemSetId={problemListData?.problemSetId}
-          isAnswered={problemListData?.isAnswered}
-          problemNumber={problem.problemNumber}
           title={problem.title}
           tier={problem.tier}
+          problemNumber={problem.problemNumber}
+          onClick={() => {
+            if (problemListData?.isAnswered) {
+              navigate(`/problems/${problem.problemNumber}`);
+            } else {
+              alert('설문이 기록되지 않았습니다. 설문페이지로 이동합니다');
+              navigate('/survey', {
+                state: { problemSetId: problemListData?.problemSetId, date: date },
+              });
+            }
+          }}
         />
       ))}
       <BottomNav />

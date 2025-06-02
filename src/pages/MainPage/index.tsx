@@ -1,10 +1,10 @@
 import Header from '@/shared/layout/Header';
 import BottomNav from '@/shared/layout/BottomNav';
-import ProfileCard from './components/ProfileCard';
+import ProfileCard from '../../features/user/components/ProfileCard';
 import TotalStudyCard from './components/TotalStudyCard';
 import ChunsikCard from './components/ChunsikCard';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
-import ProblemItem from './components/ProblemItem';
+import ProblemItem from '@/features/problemSet/components/ProblemItem';
 import Spinner from '@/shared/ui/Spinner';
 import { useAuth } from '@/app/providers/AuthContext';
 import { useUserStats } from '@/features/user/hooks/useUserStats';
@@ -67,6 +67,10 @@ const MainPage = () => {
           todayProblemData.problems.map(problem => (
             <ProblemItem
               key={problem.problemNumber}
+              onClick={() => {
+                const url = `https://www.acmicpc.net/problem/${problem.problemNumber}`;
+                window.open(url, '_blank');
+              }}
               problemNumber={problem.problemNumber}
               title={problem.title}
               tier={problem.tier}

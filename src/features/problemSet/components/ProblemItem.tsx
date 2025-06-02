@@ -1,25 +1,13 @@
 import { formatBaekjoonTier } from '@/features/problemSet/utils/convertTier';
-import { useNavigate } from 'react-router-dom';
 
 interface IProblemItemProps {
   problemNumber: number;
   title: string;
   tier: string;
-  isAnswered: boolean;
-  problemSetId: number;
-  date: string;
+  onClick: () => void;
 }
 
-const ProblemItem = ({
-  problemNumber,
-  title,
-  tier,
-  isAnswered,
-  problemSetId,
-  date,
-}: IProblemItemProps) => {
-  const navigate = useNavigate();
-
+const ProblemItem = ({ problemNumber, title, tier, onClick }: IProblemItemProps) => {
   // 티어에서 백준 랭크명 추출
   const getTierRank = (tier: string): string => {
     if (!tier) return 'unrated';
@@ -54,18 +42,9 @@ const ProblemItem = ({
 
   const tierColor = getTierColor(tierRank);
 
-  const handleClick = () => {
-    if (isAnswered) {
-      navigate(`/problems/${problemNumber}`);
-    } else {
-      alert('설문이 기록되지 않았습니다. 설문페이지로 이동합니다');
-      navigate('/survey', { state: { problemSetId: problemSetId, date: date } });
-    }
-  };
-
   return (
     <div
-      onClick={handleClick}
+      onClick={onClick}
       className="flex items-center justify-between cursor-pointer p-4 hover:bg-gray-100 rounded-md"
     >
       <div className="flex items-center gap-2">

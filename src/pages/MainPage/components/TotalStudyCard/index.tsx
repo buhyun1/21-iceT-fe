@@ -12,7 +12,7 @@ interface ITotalStudyCardProps {
   studyStats: IStudyStat[];
 }
 
-const RadarChart = lazy(() => import('./components/RadarChart'));
+const RadarChart = lazy(() => import('../../../../features/user/components/StudyStatsRadarChart'));
 
 const TotalStudyCard = ({ studyStats }: ITotalStudyCardProps) => (
   <Card className="p-4 flex justify-between">
