@@ -51,8 +51,7 @@ export default {
           hover: '#16A34A', // #16A34A
         },
         warning: {
-          DEFAULT: '#FACC15', // 경고 색 #FACC15
-          hover: '#EAB308', // #EAB308
+          DEFAULT: '#EAB308', // #EAB308
         },
         error: {
           DEFAULT: '#EF4444', // 에러 색 #EF4444
