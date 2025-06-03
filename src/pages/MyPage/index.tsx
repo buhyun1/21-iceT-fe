@@ -7,6 +7,7 @@ import PageHeader from '@/shared/layout/PageHeader';
 import BottomNav from '@/shared/layout/BottomNav';
 import Spinner from '@/shared/ui/Spinner';
 import { useState } from 'react';
+import DeleteConfirmModal from '@/shared/ui/DeleteComfirmModal';
 
 const MorePage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const MorePage = () => {
   const { mutate: deleteUserMutation } = useDeleteUser();
   const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   // 로딩 중
   if (isUserProfileLoading) {
@@ -49,24 +51,32 @@ const MorePage = () => {
     logoutMutation();
   };
 
-  // 탈퇴하기 클릭
-  const handleDeleteAccount = () => {
-    const confirmed = window.confirm('정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.');
+  // 탈퇴하기 버튼 클릭
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true);
+  };
 
-    if (confirmed) {
-      setIsDeleting(true);
-      deleteUserMutation(undefined, {
-        onSuccess: () => {
-          alert('탈퇴가 완료되었습니다.');
-          logoutUserContext();
-          navigate('/');
-        },
-        onError: () => {
-          alert('탈퇴 처리 중 오류가 발생했습니다.');
-          setIsDeleting(false);
-        },
-      });
-    }
+  // 탈퇴 확인
+  const handleDeleteConfirm = () => {
+    setIsDeleteModalOpen(false);
+    setIsDeleting(true);
+
+    deleteUserMutation(undefined, {
+      onSuccess: () => {
+        alert('탈퇴가 완료되었습니다.');
+        logoutUserContext();
+        navigate('/');
+      },
+      onError: () => {
+        alert('탈퇴 처리 중 오류가 발생했습니다.');
+        setIsDeleting(false);
+      },
+    });
+  };
+
+  // 탈퇴 취소
+  const handleDeleteCancel = () => {
+    setIsDeleteModalOpen(false);
   };
 
   return (
@@ -106,7 +116,7 @@ const MorePage = () => {
           </button>
           {/* 탈퇴하기 버튼 */}
           <button
-            onClick={handleDeleteAccount}
+            onClick={handleDeleteClick}
             disabled={isDeleting}
             className={`w-full py-3 text-left px-4 transition-colors text-red-600 ${
               isDeleting
@@ -133,6 +143,13 @@ const MorePage = () => {
           </div>
         </div>
       </div>
+      <DeleteConfirmModal
+        isOpen={isDeleteModalOpen}
+        title="정말 탈퇴하시겠습니까?"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={isDeleting}
+      />
 
       <BottomNav />
     </div>
