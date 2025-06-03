@@ -8,6 +8,7 @@ import BottomNav from '@/shared/layout/BottomNav';
 import Spinner from '@/shared/ui/Spinner';
 import { useState } from 'react';
 import DeleteConfirmModal from '@/shared/ui/DeleteComfirmModal';
+import useModal from '@/shared/hooks/useModal';
 
 const MorePage = () => {
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ const MorePage = () => {
   const { mutate: logoutMutation } = useLogout();
   const { mutate: deleteUserMutation } = useDeleteUser();
   const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
+  const { isModalOpen, handleModalOpen } = useModal();
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   // 로딩 중
   if (isUserProfileLoading) {
@@ -53,12 +54,12 @@ const MorePage = () => {
 
   // 탈퇴하기 버튼 클릭
   const handleDeleteClick = () => {
-    setIsDeleteModalOpen(true);
+    handleModalOpen(true);
   };
 
   // 탈퇴 확인
   const handleDeleteConfirm = () => {
-    setIsDeleteModalOpen(false);
+    handleModalOpen(false);
     setIsDeleting(true);
 
     deleteUserMutation(undefined, {
@@ -76,7 +77,7 @@ const MorePage = () => {
 
   // 탈퇴 취소
   const handleDeleteCancel = () => {
-    setIsDeleteModalOpen(false);
+    handleModalOpen(false);
   };
 
   return (
@@ -144,7 +145,7 @@ const MorePage = () => {
         </div>
       </div>
       <DeleteConfirmModal
-        isOpen={isDeleteModalOpen}
+        isOpen={isModalOpen}
         title="정말 탈퇴하시겠습니까?"
         onConfirm={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
