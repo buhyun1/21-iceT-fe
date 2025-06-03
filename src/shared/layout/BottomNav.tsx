@@ -1,6 +1,7 @@
 import solutionIc from '@/assets/solutionIc.svg';
 import homeIc from '@/assets/homeIc.svg';
 import logoutIc from '@/assets/logoutIc.svg';
+import settingIc from '@/assets/settingIc.png';
 import { useNavigate } from 'react-router-dom';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 
@@ -43,6 +44,17 @@ const BottomNav = () => {
             alt="Logout icon"
           />
           <p>로그아웃</p>
+        </div>
+        <div className="group flex flex-col items-center text-xs text-text-primary gap-1 hover:text-primary-hover transition-colors duration-200">
+          <img
+            onClick={() => navigate('/more')}
+            src={settingIc}
+            width={16}
+            height={16}
+            className="group-hover:scale-150 transition-transform duration-200 cursor-pointer"
+            alt="Logout icon"
+          />
+          <p>더보기</p>
         </div>
       </nav>
     </div>

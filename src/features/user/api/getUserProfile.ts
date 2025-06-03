@@ -5,7 +5,7 @@ import { IApiResponse } from '@/shared/types/ApiResponse';
 export interface IGetUserProfileResponse {
   userId: number;
   nickname: string;
-  statusMessage: string;
+  statusMsg: string;
   profileImgUrl: string;
 }
 
