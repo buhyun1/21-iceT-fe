@@ -57,7 +57,7 @@ const MainPage = () => {
       <ProfileCard
         profileImgUrl={userProfileData.profileImgUrl}
         nickname={userProfileData.nickname}
-        statusMessage={userProfileData.statusMessage}
+        statusMessage={userProfileData.statusMsg}
       />
 
       {/* ✅ 오늘의 문제 */}

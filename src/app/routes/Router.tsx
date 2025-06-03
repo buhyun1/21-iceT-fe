@@ -9,6 +9,7 @@ import React, { Suspense } from 'react';
 import Spinner from '@/shared/ui/Spinner';
 import { AuthProtectedRoute } from './AuthProtectedRoute';
 import { AuthProvider } from '../providers/AuthContext';
+import MorePage from '@/pages/MyPage';
 
 const SurveyPage = React.lazy(() => import('@/pages/SurveyPage'));
 const ProblemListPage = React.lazy(() => import('@/pages/ProblemListPage'));
@@ -33,6 +34,7 @@ const Router = () => {
                 <Route path="/survey" element={<SurveyPage />} />
                 <Route path="/problems" element={<ProblemListPage />} />
                 <Route path="/problems/:id" element={<ProblemSolutionPage />} />
+                <Route path="/more" element={<MorePage />} />
               </Route>
             </Route>
           </Routes>

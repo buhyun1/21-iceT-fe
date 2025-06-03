@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 export default function AppLayout() {
   return (
     <div className="min-h-screen flex justify-center">
-      <main className="w-full max-w-xl bg-background">
+      <main className="w-full max-w-xl bg-background shadow-md">
         <Outlet />
       </main>
     </div>
