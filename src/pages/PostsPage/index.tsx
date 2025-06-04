@@ -1,3 +1,4 @@
+import HotPostItem from '@/features/post/components/hotPostItem';
 import PostItem from '@/features/post/components/PostItem';
 import useInput from '@/shared/hooks/useInput';
 import BottomNav from '@/shared/layout/BottomNav';
@@ -49,6 +50,11 @@ const dummyPostList = [
   },
 ];
 
+const hotPost = {
+  postId: 1,
+  title: '이 문제 어떻게 푸셨어요?',
+};
+
 const PostsPage = () => {
   const { onChange, value: searchValue, reset: resetInputValue } = useInput();
 
@@ -66,11 +72,13 @@ const PostsPage = () => {
         onChange={onChange}
         onSearch={handleSearch}
       />
+      <HotPostItem hotPost={hotPost} />
       {dummyPostList.length > 0 ? (
         dummyPostList.map(post => <PostItem key={post.postId} post={post} />)
       ) : (
         <p className="text-center">게시글이 없습니다.</p>
       )}
+
       <BottomNav />
     </div>
   );
