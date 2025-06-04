@@ -1,3 +1,4 @@
+import { formatDate } from '@/utils/formatDate';
 import { useNavigate } from 'react-router-dom';
 
 interface IAuthor {
@@ -21,26 +22,6 @@ interface IPostItemProps {
 }
 
 const PostItem = ({ post }: IPostItemProps) => {
-  // 날짜 포맷팅
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-
-    if (diffInHours < 1) {
-      return '방금 전';
-    } else if (diffInHours < 24) {
-      return `${diffInHours}시간 전`;
-    } else if (diffInHours < 24 * 7) {
-      return `${Math.floor(diffInHours / 24)}일 전`;
-    } else {
-      return date.toLocaleDateString('ko-KR', {
-        month: 'short',
-        day: 'numeric',
-      });
-    }
-  };
-
   const navigate = useNavigate();
 
   const onClickPost = () => {
@@ -65,7 +46,6 @@ const PostItem = ({ post }: IPostItemProps) => {
           <span className="text-xs text-text-secondary">·</span>
           <span className="text-xs text-text-secondary">{formatDate(post.createdAt)}</span>
         </div>
-
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
             <span className={`text-xs ${post.countLike ? 'text-red-500' : 'text-text-secondary'}`}>

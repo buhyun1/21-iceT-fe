@@ -51,9 +51,11 @@ const PostsPage = () => {
   return (
     <div className="bg-background min-h-screen">
       <PageHeader title="커뮤니티" />
-      {dummyPostList.map(post => (
-        <PostItem key={post.postId} post={post} />
-      ))}
+      {dummyPostList.length > 0 ? (
+        dummyPostList.map(post => <PostItem key={post.postId} post={post} />)
+      ) : (
+        <p className="text-center">게시글이 없습니다.</p>
+      )}
       <BottomNav />
     </div>
   );
