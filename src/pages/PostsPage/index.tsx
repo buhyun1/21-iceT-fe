@@ -3,9 +3,10 @@ import PostItem from '@/features/post/components/PostItem';
 import useInput from '@/shared/hooks/useInput';
 import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
-import { CategoryBox } from '@/shared/ui/CategoryBox';
 import FloatingButton from '@/shared/ui/FloatingButton';
 import SearchInput from '@/shared/ui/SearchInput';
+import { useState } from 'react';
+import AlgorithmDropdown from './ui/AlgorithmDropdown';
 interface IAuthor {
   userId: number;
   nickname: string;
@@ -58,11 +59,24 @@ const hotPost = {
 
 const PostsPage = () => {
   const { onChange, value: searchValue, reset: resetInputValue } = useInput();
+  const [selectedAlgorithmTypes, setSelectedAlgorithmTypes] = useState<string[]>([]);
 
   // 검색 처리 & input 값 초기화
   const handleSearch = () => {
     console.log('검색한 값', searchValue);
     resetInputValue();
+  };
+
+  // 알고리즘 유형 모두 선택 해제
+  const handleClearAllTypes = () => {
+    setSelectedAlgorithmTypes([]);
+  };
+
+  // 알고리즘 유형 선택/해제
+  const handleToggleAlgorithmType = (type: string) => {
+    setSelectedAlgorithmTypes(prev =>
+      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+    );
   };
 
   return (
@@ -74,7 +88,14 @@ const PostsPage = () => {
         onChange={onChange}
         onSearch={handleSearch}
       />
-      <CategoryBox name="구현" />
+
+      {/* 알고리즘 유형 드롭다운 */}
+      <AlgorithmDropdown
+        selectedTypes={selectedAlgorithmTypes}
+        onToggleType={handleToggleAlgorithmType}
+        onClearAll={handleClearAllTypes}
+      />
+      {/* 인기 게시글*/}
       <HotPostItem hotPost={hotPost} />
       {dummyPostList.length > 0 ? (
         dummyPostList.map(post => <PostItem key={post.postId} post={post} />)
