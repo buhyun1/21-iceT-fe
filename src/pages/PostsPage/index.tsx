@@ -1,10 +1,10 @@
-import HotPostItem from '@/features/post/components/hotPostItem';
+import HotPostItem from '@/features/post/components/HotPostItem';
 import PostItem from '@/features/post/components/PostItem';
 import useInput from '@/shared/hooks/useInput';
 import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
+import FloatingButton from '@/shared/ui/FloatingButton';
 import SearchInput from '@/shared/ui/SearchInput';
-
 interface IAuthor {
   userId: number;
   nickname: string;
@@ -58,13 +58,14 @@ const hotPost = {
 const PostsPage = () => {
   const { onChange, value: searchValue, reset: resetInputValue } = useInput();
 
+  // 검색 처리 & input 값 초기화
   const handleSearch = () => {
     console.log('검색한 값', searchValue);
     resetInputValue();
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-screen relative">
       <PageHeader title="커뮤니티" />
       <SearchInput
         className="mr-6 ml-6"
@@ -78,7 +79,7 @@ const PostsPage = () => {
       ) : (
         <p className="text-center">게시글이 없습니다.</p>
       )}
-
+      <FloatingButton to="/new-post" />
       <BottomNav />
     </div>
   );
