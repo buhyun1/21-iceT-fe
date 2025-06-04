@@ -1,6 +1,8 @@
 import PostItem from '@/features/post/components/PostItem';
+import useInput from '@/shared/hooks/useInput';
 import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
+import SearchInput from '@/shared/ui/SearchInput';
 
 interface IAuthor {
   userId: number;
@@ -48,9 +50,22 @@ const dummyPostList = [
 ];
 
 const PostsPage = () => {
+  const { onChange, value: searchValue, reset: resetInputValue } = useInput();
+
+  const handleSearch = () => {
+    console.log('검색한 값', searchValue);
+    resetInputValue();
+  };
+
   return (
     <div className="bg-background min-h-screen">
       <PageHeader title="커뮤니티" />
+      <SearchInput
+        className="mr-6 ml-6"
+        value={searchValue}
+        onChange={onChange}
+        onSearch={handleSearch}
+      />
       {dummyPostList.length > 0 ? (
         dummyPostList.map(post => <PostItem key={post.postId} post={post} />)
       ) : (
