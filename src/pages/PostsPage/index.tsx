@@ -79,7 +79,7 @@ const PostsPage = () => {
       ) : (
         <p className="text-center">게시글이 없습니다.</p>
       )}
-      <FloatingButton to="/new-post" />
+      <FloatingButton to="/new-post" tooltip="💭 나만의 풀이를 공유해보세요!" />
       <BottomNav />
     </div>
   );
