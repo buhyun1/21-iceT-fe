@@ -1,4 +1,6 @@
 import { formatBaekjoonTier } from '@/features/problemSet/utils/convertTier';
+import { getTierColor } from '@/utils/getTierColor';
+import { getTierRank } from '@/utils/getTierRank';
 
 interface IProblemItemProps {
   problemNumber: number;
@@ -8,38 +10,8 @@ interface IProblemItemProps {
 }
 
 const ProblemItem = ({ problemNumber, title, tier, onClick }: IProblemItemProps) => {
-  // 티어에서 백준 랭크명 추출
-  const getTierRank = (tier: string): string => {
-    if (!tier) return 'unrated';
-    const [rank] = tier.split(' ');
-
-    return rank || 'unrated';
-  };
   const tierWithSublevel = formatBaekjoonTier(tier);
   const tierRank = getTierRank(tierWithSublevel);
-
-  // 티어 색상 가져오기 함수
-  const getTierColor = (rank: string): string => {
-    switch (rank) {
-      case 'Bronze':
-        return '#AD5600';
-      case 'Silver':
-        return '#435F7A';
-      case 'Gold':
-        return '#EC9A00';
-      case 'Platinum':
-        return '#27E2A4';
-      case 'Diamond':
-        return '#00B4FC';
-      case 'Ruby':
-        return '#FF0062';
-      case 'Master':
-        return '#9D0191';
-      default:
-        return '#777777'; // unrated
-    }
-  };
-
   const tierColor = getTierColor(tierRank);
 
   return (

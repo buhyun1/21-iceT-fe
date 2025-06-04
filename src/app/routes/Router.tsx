@@ -10,6 +10,7 @@ import Spinner from '@/shared/ui/Spinner';
 import { AuthProtectedRoute } from './AuthProtectedRoute';
 import { AuthProvider } from '../providers/AuthContext';
 import MorePage from '@/pages/MyPage';
+import PostsPage from '@/pages/PostsPage';
 
 const SurveyPage = React.lazy(() => import('@/pages/SurveyPage'));
 const ProblemListPage = React.lazy(() => import('@/pages/ProblemListPage'));
@@ -35,6 +36,7 @@ const Router = () => {
                 <Route path="/problems" element={<ProblemListPage />} />
                 <Route path="/problems/:id" element={<ProblemSolutionPage />} />
                 <Route path="/more" element={<MorePage />} />
+                <Route path="/posts" element={<PostsPage />} />
               </Route>
             </Route>
           </Routes>
