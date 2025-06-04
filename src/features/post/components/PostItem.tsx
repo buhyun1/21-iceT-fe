@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 interface IAuthor {
   userId: number;
   nickname: string;
@@ -16,10 +18,9 @@ export interface IPostItem {
 
 interface IPostItemProps {
   post: IPostItem;
-  onClick: () => void;
 }
 
-const PostItem = ({ post, onClick }: IPostItemProps) => {
+const PostItem = ({ post }: IPostItemProps) => {
   // 날짜 포맷팅
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -40,9 +41,15 @@ const PostItem = ({ post, onClick }: IPostItemProps) => {
     }
   };
 
+  const navigate = useNavigate();
+
+  const onClickPost = () => {
+    navigate(`/post/${post.postId}`);
+  };
+
   return (
     <div
-      onClick={onClick}
+      onClick={onClickPost}
       className="bg-surface p-4 border-b border-border cursor-pointer hover:bg-gray-50 transition-colors"
     >
       {/* 제목 */}

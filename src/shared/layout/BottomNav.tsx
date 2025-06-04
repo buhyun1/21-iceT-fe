@@ -36,9 +36,9 @@ const BottomNav = () => {
       width: 18,
       height: 18,
       icon: boardsIc,
-      alt: 'boards',
+      alt: 'posts',
       onClick: () => {
-        navigate('/boards');
+        navigate('/posts');
       },
     },
     {
