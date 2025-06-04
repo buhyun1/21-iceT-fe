@@ -1,8 +1,8 @@
 import solutionIc from '@/assets/solutionIc.svg';
 import homeIc from '@/assets/homeIc.svg';
 import logoutIc from '@/assets/logoutIc.svg';
-import settingIc from '@/assets/settingIc.png';
-import boardsIc from '@/assets/boardsIc.png';
+import settingIc from '@/assets/settingIc.svg';
+import boardsIc from '@/assets/boardsIc.svg';
 import { useNavigate } from 'react-router-dom';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 
