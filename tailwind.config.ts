@@ -72,6 +72,7 @@ export default {
           master: '#9D0191', // 마스터 #9D0191
           unrated: '#777777', // 무등급 #777777
         },
+        category: '#7dd9fd', // #7dd9fd
       },
     },
   },

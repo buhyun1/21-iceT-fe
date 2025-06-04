@@ -3,6 +3,7 @@ import PostItem from '@/features/post/components/PostItem';
 import useInput from '@/shared/hooks/useInput';
 import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
+import { CategoryBox } from '@/shared/ui/CategoryBox';
 import FloatingButton from '@/shared/ui/FloatingButton';
 import SearchInput from '@/shared/ui/SearchInput';
 interface IAuthor {
@@ -73,6 +74,7 @@ const PostsPage = () => {
         onChange={onChange}
         onSearch={handleSearch}
       />
+      <CategoryBox name="구현" />
       <HotPostItem hotPost={hotPost} />
       {dummyPostList.length > 0 ? (
         dummyPostList.map(post => <PostItem key={post.postId} post={post} />)
