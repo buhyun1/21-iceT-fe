@@ -79,11 +79,14 @@ const PostsPage = () => {
       />
 
       {/* 알고리즘 유형 드롭다운 */}
-      <AlgorithmDropdown
-        selectedTypes={selectedAlgorithmTypes}
-        onToggleType={handleToggleAlgorithmType}
-        onClearAll={handleClearAllTypes}
-      />
+      <div className="px-4">
+        <AlgorithmDropdown
+          selectedTypes={selectedAlgorithmTypes}
+          onToggleType={handleToggleAlgorithmType}
+          onClearAll={handleClearAllTypes}
+        />
+      </div>
+
       {/* 인기 게시글*/}
       <HotPostItem hotPost={hotPost} />
       {dummyPostList.length > 0 ? (
