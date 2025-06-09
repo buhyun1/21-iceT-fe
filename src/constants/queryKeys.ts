@@ -21,5 +21,6 @@ export const queryKeys = {
   post: {
     all: ['posts'] as const,
     detail: (postId: number) => [...queryKeys.post.all, 'post', postId] as const,
+    like: (postId: number) => ['post', postId, 'like'],
   },
 };
