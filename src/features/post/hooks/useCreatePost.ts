@@ -19,12 +19,10 @@ export const useCreatePost = () => {
       }
     },
     onError: (error: any) => {
-      // 문제 번호가 없는 경우
       if (error.response?.data?.code === 'BAD_REQUEST') {
         const message = error.response.data.message;
-        alert(message); // "해당 문제 번호를 가진 Problem이 없습니다: 1"
+        alert(message);
       } else {
-        // 기타 에러
         alert('게시글 등록에 실패했습니다.');
       }
     },

@@ -7,10 +7,12 @@ import AlgorithmDropdown from '@/shared/ui/AlgorithmDropdown';
 import Button from '@/shared/ui/Button';
 import Input from '@/shared/ui/Input';
 import { convertKoreanToEnglish } from '@/utils/doMappingCategories';
+import MDEditor from '@uiw/react-md-editor';
 import { useMemo, useState } from 'react';
 
 const CreatePostPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [content, setContent] = useState('');
   const { value: title, onChange: titleOnChange } = useInput();
   const { value: problemNumber, onChange: problemNumberOnChange } = useInput();
   const { selectedAlgorithmTypes, handleToggleAlgorithmType, handleClearAllTypes } =
@@ -30,6 +32,7 @@ const CreatePostPage = () => {
     return null;
   }, [problemNumber]);
 
+  // 제목 유효성 검사
   const titleErr = useMemo(() => {
     if (!title) return '제목을 입력해주세요';
     if (title.length < 1 || title.length > 30) {
@@ -38,7 +41,16 @@ const CreatePostPage = () => {
 
     return null;
   }, [title]);
-  const submitErr = problemNumberErr || titleErr;
+
+  // 마크다운 유효성 검사
+  const markdownErr = useMemo(() => {
+    if (!content) return '내용을 입력해주세요';
+    if (content.length < 1 || content.length > 3000) return '게시글은 최대 3000자 작성 가능합니다';
+
+    return null;
+  }, [content]);
+
+  const submitErr = problemNumberErr || titleErr || markdownErr;
 
   const { isDisabled, buttonText } = useSubmitButton({ submitErr, isLoading });
 
@@ -48,10 +60,11 @@ const CreatePostPage = () => {
     try {
       setIsLoading(true);
       const category = convertKoreanToEnglish(selectedAlgorithmTypes);
+      console.log({ problemNumber: Number(problemNumber), title, content, category: category });
       createPostMutation.mutateAsync({
         problemNumber: Number(problemNumber),
         title,
-        content: 'ㅎㅎ',
+        content,
         category: category,
       });
     } catch {
@@ -80,6 +93,11 @@ const CreatePostPage = () => {
         </div>
         <div className="mt-4">
           <label>내용</label>
+          <MDEditor
+            value={content}
+            onChange={(value: string | undefined) => setContent(value || '')}
+            height={600}
+          />
         </div>
         <div className="mt-6 text-center">
           <Button onClick={handleCreatePost} disabled={isDisabled}>
