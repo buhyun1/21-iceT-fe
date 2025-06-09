@@ -1,8 +1,8 @@
 on:
   push:
-    branches:   
+    branches:
       - main
-  workflow_dispatch:  # 수동 실행도 가능
+  workflow_dispatch:  
 
 jobs:
   build-deploy-frontend:
@@ -39,18 +39,32 @@ jobs:
       - name: Build React App
         run: npm run build
 
-      - name: Deploy to Static Hosting S3 (koco-front-s3)
+      - name: Deploy to Static Hosting S3
         run: |
-          aws s3 sync ./dist s3://koco-front-s3 --delete
+          # 브랜치에 따라 호스팅용 S3 버킷 결정
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            BUCKET="prod-koco-front-s3"
+          else
+            BUCKET="dev-koco-front-s3"
+          fi
+          echo "[FRONTEND] Syncing ./dist → s3://$BUCKET"
+          aws s3 sync ./dist s3://$BUCKET --delete
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: "ap-northeast-2"
 
-      - name: Archive build to versioned S3 bucket (koco-frontend-builds)
+      - name: Archive build to versioned S3 bucket
         run: |
           TIMESTAMP=$(TZ=Asia/Seoul date +%Y%m%d-%H%M%S)
-          aws s3 sync ./dist s3://koco-frontend-builds/$TIMESTAMP/
+          # 브랜치에 따라 백업용 S3 버킷 결정
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            BACKUP_BUCKET="prod-koco-frontend-backup"
+          else
+            BACKUP_BUCKET="dev-koco-frontend-backup"
+          fi
+          echo "[FRONTEND] Archiving ./dist → s3://$BACKUP_BUCKET/$TIMESTAMP/"
+          aws s3 sync ./dist s3://$BACKUP_BUCKET/$TIMESTAMP/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -58,17 +72,18 @@ jobs:
 
       - name: Invalidate CloudFront cache
         run: |
+          # 도메인도 브랜치별로 분기 (예시 그대로)
           if [ "${{ github.ref_name }}" = "main" ]; then
             DOMAIN="ktbkoco.com"
           else
             DOMAIN="koco.click"
           fi
-        
+
           DIST_ID=$(aws cloudfront list-distributions \
             --query "DistributionList.Items[?Aliases.Items[?contains(@, '$DOMAIN')]].Id" \
             --output text)
-        
-          echo "Invalidating CloudFront cache for distribution ID: $DIST_ID (domain: $DOMAIN)"
+
+          echo "[FRONTEND] Invalidating CloudFront ($DOMAIN) cache → $DIST_ID"
           aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
