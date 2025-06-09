@@ -5,7 +5,7 @@ import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
 import FloatingButton from '@/shared/ui/FloatingButton';
 import SearchInput from '@/shared/ui/SearchInput';
-import AlgorithmDropdown from '../../shared/ui/AlgorithmDropdown';
+import AlgorithmDropdown from '@/shared/ui/AlgorithmDropdown';
 import useAlgorithmDropdown from '@/shared/hooks/useAlgorithmDropdown';
 interface IAuthor {
   userId: number;
