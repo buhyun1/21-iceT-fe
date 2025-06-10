@@ -1,4 +1,6 @@
 import CommentInputBox from '@/features/comment/components/commentInputBox';
+import CommentItem from '@/features/comment/components/commentItem';
+import useGetCommentList from '@/features/comment/hooks/useGetCommentList';
 import CommentCountBox from '@/features/post/components/CommentCountBox';
 import LikeBoxWithActions from '@/features/post/components/LikeBoxWithActions';
 import PostContent from '@/features/post/components/PostContent';
@@ -12,6 +14,7 @@ const PostDetailPage = () => {
   const { id } = useParams();
   const numericId = id ? parseInt(id, 10) : undefined;
   const { data: postDetailData, isLoading, isError } = useGetPostDetail(numericId as number);
+  const { data: commentListData } = useGetCommentList(numericId as number);
 
   // 로딩 중이거나 데이터가 없는 경우 로딩 표시
   if (isLoading) {
@@ -61,6 +64,18 @@ const PostDetailPage = () => {
         </article>
         <section>
           <CommentInputBox postId={postDetailData.postId} />
+          {commentListData?.comments ? (
+            commentListData.comments.map(comment => (
+              <CommentItem
+                key={comment.id}
+                content={comment.comment}
+                author={comment.author}
+                createdAt={comment.createdAt}
+              />
+            ))
+          ) : (
+            <div className="py-8 text-center">댓글이 없습니다.</div>
+          )}
         </section>
         <div />
       </main>
