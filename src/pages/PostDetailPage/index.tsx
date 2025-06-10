@@ -6,6 +6,7 @@ import LikeBoxWithActions from '@/features/post/components/LikeBoxWithActions';
 import PostContent from '@/features/post/components/PostContent';
 import PostMeta from '@/features/post/components/PostMeta';
 import useGetPostDetail from '@/features/post/hooks/useGetPostDetail';
+import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
 import { useParams } from 'react-router-dom';
@@ -15,6 +16,7 @@ const PostDetailPage = () => {
   const numericId = id ? parseInt(id, 10) : undefined;
   const { data: postDetailData, isLoading, isError } = useGetPostDetail(numericId as number);
   const { data: commentListData } = useGetCommentList(numericId as number);
+  const { data: userProfileData } = useUserProfile();
 
   // 로딩 중이거나 데이터가 없는 경우 로딩 표시
   if (isLoading) {
@@ -51,6 +53,7 @@ const PostDetailPage = () => {
             title={postDetailData.title}
             author={postDetailData.author}
             createdAt={postDetailData.createdAt}
+            isOwner={userProfileData?.userId === postDetailData.author.userId}
           />
           <PostContent content={postDetailData.content} />
           <div className=" flex gap-2 justify-end mt-4 mb-4">
@@ -71,6 +74,7 @@ const PostDetailPage = () => {
                 content={comment.comment}
                 author={comment.author}
                 createdAt={comment.createdAt}
+                isOwner={userProfileData?.userId === comment.author.userId}
               />
             ))
           ) : (

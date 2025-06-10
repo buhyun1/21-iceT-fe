@@ -1,5 +1,4 @@
 import { formatDate } from '@/utils/formatDate';
-import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 type Author = {
@@ -11,17 +10,12 @@ type Author = {
 interface ICommentProps {
   content: string;
   createdAt: string;
+  isOwner: boolean;
   author: Author;
 }
 
 const CommentItem = (data: ICommentProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const queryClient = useQueryClient();
-  const currentUserData = queryClient.getQueryData(['user']);
-  console.log(currentUserData);
-
-  const isOwner = data.author.userId;
-
   const handleToggleMenu = () => {
     setIsMenuOpen(prev => !prev);
   };
@@ -74,7 +68,7 @@ const CommentItem = (data: ICommentProps) => {
 
                   {/* 메뉴 */}
                   <div className="absolute right-0 top-8 z-20 bg-white border border-border rounded-lg shadow-lg py-1 min-w-[100px]">
-                    {isOwner && (
+                    {data.isOwner && (
                       // 본인 댓글 메뉴
                       <>
                         <button

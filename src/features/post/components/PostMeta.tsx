@@ -1,5 +1,6 @@
 import { CategoryBox } from '@/shared/ui/CategoryBox';
 import { formatDate } from '@/utils/formatDate';
+import { useState } from 'react';
 
 type Author = {
   imgUrl: string;
@@ -12,6 +13,7 @@ type Category = {
 };
 
 interface IPostMetaProps {
+  isOwner: boolean;
   title: string;
   createdAt: string;
   categories: Category[];
@@ -19,24 +21,60 @@ interface IPostMetaProps {
 }
 
 const PostMeta = (data: IPostMetaProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="border-b-[2px] border-border">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold text-text-primary mb-4">{data.title}</h2>
-        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="12" cy="12" r="1" />
-            <circle cx="19" cy="12" r="1" />
-            <circle cx="5" cy="12" r="1" />
-          </svg>
-        </button>
+        <div className="relative">
+          {data.isOwner && (
+            <button
+              onClick={() => setIsMenuOpen(prev => !prev)}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="19" cy="12" r="1" />
+                <circle cx="5" cy="12" r="1" />
+              </svg>
+            </button>
+          )}
+          {isMenuOpen && (
+            <>
+              {/* 백드롭 */}
+              <div className="fixed inset-0 z-10" onClick={() => setIsMenuOpen(false)} />
+
+              {/* 메뉴 */}
+              <div className="absolute right-0 top-8 z-20 bg-white border border-border rounded-lg shadow-lg py-1 min-w-[100px]">
+                {data.isOwner && (
+                  // 본인 댓글 메뉴
+                  <>
+                    <button
+                      //onClick={handleEdit}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-text-primary"
+                    >
+                      수정
+                    </button>
+                    <button
+                      //onClick={handleDelete}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-error"
+                    >
+                      삭제
+                    </button>
+                  </>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-3 mb-4">
