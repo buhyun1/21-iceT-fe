@@ -1,3 +1,4 @@
+import CommentItem from '@/features/comment/components/commentItem';
 import CommentCountBox from '@/features/post/components/CommentCountBox';
 import LikeBoxWithActions from '@/features/post/components/LikeBoxWithActions';
 import PostContent from '@/features/post/components/PostContent';
@@ -58,6 +59,7 @@ const PostDetailPage = () => {
             <CommentCountBox commentCount={postDetailData.commentCount} />
           </div>
         </article>
+        <div />
       </main>
     </div>
   );
