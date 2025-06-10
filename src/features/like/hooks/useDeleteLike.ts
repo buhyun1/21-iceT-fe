@@ -5,9 +5,9 @@ import deleteLike from '../api/deleteLike';
  * 좋아요 삭제
  * @param postId
  */
-const useDeleteLike = (postId: number) => {
+const useDeleteLike = () => {
   return useMutation({
-    mutationFn: () => deleteLike(postId),
+    mutationFn: (postId: number) => deleteLike(postId),
   });
 };
 

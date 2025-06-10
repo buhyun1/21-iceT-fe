@@ -6,7 +6,7 @@ interface IPostContentProps {
 
 const PostContent = ({ content }: IPostContentProps) => {
   return (
-    <div className="py-4">
+    <div className="py-6">
       <MDEditor.Markdown source={content} />
     </div>
   );

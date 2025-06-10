@@ -1,3 +1,5 @@
+import CommentCountBox from '@/features/post/components/CommentCountBox';
+import LikeBoxWithActions from '@/features/post/components/LikeBoxWithActions';
 import PostContent from '@/features/post/components/PostContent';
 import PostMeta from '@/features/post/components/PostMeta';
 import useGetPostDetail from '@/features/post/hooks/useGetPostDetail';
@@ -39,7 +41,7 @@ const PostDetailPage = () => {
     <div className="bg-background min-h-screen relative">
       <PageHeader title="게시글 상세" />
       <main className="px-6">
-        <article>
+        <article className="border-b-[2px] border-border">
           <PostMeta
             categories={postDetailData.categories}
             title={postDetailData.title}
@@ -47,6 +49,14 @@ const PostDetailPage = () => {
             createdAt={postDetailData.createdAt}
           />
           <PostContent content={postDetailData.content} />
+          <div className=" flex gap-2 justify-end mt-4 mb-4">
+            <LikeBoxWithActions
+              postId={postDetailData.postId}
+              liked={postDetailData.liked}
+              likeCount={postDetailData.likeCount}
+            />
+            <CommentCountBox commentCount={postDetailData.commentCount} />
+          </div>
         </article>
       </main>
     </div>
