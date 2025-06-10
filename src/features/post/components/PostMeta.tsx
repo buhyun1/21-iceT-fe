@@ -3,6 +3,8 @@ import { CategoryBox } from '@/shared/ui/CategoryBox';
 import ConfirmModal from '@/shared/ui/ConfirmModal';
 import { formatDate } from '@/utils/formatDate';
 import { useState } from 'react';
+import useDeletePost from '../hooks/useDeletePost';
+import { useNavigate } from 'react-router-dom';
 
 type Author = {
   imgUrl: string;
@@ -20,14 +22,29 @@ interface IPostMetaProps {
   createdAt: string;
   categories: Category[];
   author: Author;
+  postId: number;
 }
 
 const PostMeta = (data: IPostMetaProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isModalOpen, handleModalOpen } = useModal();
+  const deletePostMutation = useDeletePost();
+  const navigate = useNavigate();
 
   const onDeleteConfirm = () => {
     // 삭제
+    try {
+      deletePostMutation.mutateAsync(
+        { postId: data.postId },
+        {
+          onSuccess: () => {
+            navigate('/posts');
+          },
+        }
+      );
+    } catch {
+      alert('게시글 삭제에 실패했습니다.');
+    }
   };
   const onEditConfirm = () => {
     // 편집
