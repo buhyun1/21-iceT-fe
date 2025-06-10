@@ -46,9 +46,9 @@ const PostMeta = (data: IPostMetaProps) => {
       alert('게시글 삭제에 실패했습니다.');
     }
   };
-  const onEditConfirm = () => {
+  /*   const onEditConfirm = () => {
     // 편집
-  };
+  }; */
 
   const onCancel = () => {
     handleModalOpen(false);

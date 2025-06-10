@@ -1,5 +1,10 @@
+import useModal from '@/shared/hooks/useModal';
+import ConfirmModal from '@/shared/ui/ConfirmModal';
 import { formatDate } from '@/utils/formatDate';
 import { useState } from 'react';
+import useDeleteComment from '../hooks/useDeleteComment';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/constants/queryKeys';
 
 type Author = {
   userId: number;
@@ -8,6 +13,8 @@ type Author = {
 };
 
 interface ICommentProps {
+  postId: number;
+  commentId: number;
   content: string;
   createdAt: string;
   isOwner: boolean;
@@ -16,8 +23,32 @@ interface ICommentProps {
 
 const CommentItem = (data: ICommentProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isModalOpen, handleModalOpen } = useModal();
+  const queryClient = useQueryClient();
+  const deleteCommentMutation = useDeleteComment();
+
   const handleToggleMenu = () => {
     setIsMenuOpen(prev => !prev);
+  };
+
+  const onCancel = () => {
+    handleModalOpen(false);
+  };
+
+  const onConfirm = () => {
+    try {
+      deleteCommentMutation.mutateAsync(
+        { postId: data.postId, commentId: data.commentId },
+        {
+          onSuccess: () => {
+            onCancel();
+            queryClient.invalidateQueries({ queryKey: queryKeys.post.comment(data.postId) });
+          },
+        }
+      );
+    } catch {
+      alert('댓글 삭제에 실패했습니다.');
+    }
   };
 
   return (
@@ -78,7 +109,7 @@ const CommentItem = (data: ICommentProps) => {
                           수정
                         </button>
                         <button
-                          //onClick={handleDelete}
+                          onClick={() => handleModalOpen(true)}
                           className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-error"
                         >
                           삭제
@@ -95,6 +126,13 @@ const CommentItem = (data: ICommentProps) => {
           <p className="text-text-primary text-sm leading-relaxed mb-3">{data.content}</p>
         </div>
       </div>
+      <ConfirmModal
+        isOpen={isModalOpen}
+        title="댓글을 삭제하시겠습니까?"
+        text="삭제 이력은 복구할 수 없습니다."
+        onCancel={onCancel}
+        onConfirm={onConfirm}
+      />
     </div>
   );
 };

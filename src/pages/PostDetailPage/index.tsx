@@ -71,6 +71,8 @@ const PostDetailPage = () => {
           {commentListData?.comments ? (
             commentListData.comments.map(comment => (
               <CommentItem
+                postId={postDetailData.postId}
+                commentId={comment.id}
                 key={comment.id}
                 content={comment.comment}
                 author={comment.author}
