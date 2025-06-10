@@ -1,14 +1,16 @@
+import { convertEnglishCategoryToKorean } from '@/utils/doMappingCategories';
+
 interface ICategoryBox {
   name: string;
-  className?: string;
 }
 
-export const CategoryBox = ({ name, className = '' }: ICategoryBox) => {
+export const CategoryBox = ({ name }: ICategoryBox) => {
   return (
     <div
-      className={`inline-block bg-category border border-border-focused rounded-2xl px-2 py-1 text-sm ${className}`}
+      key={name}
+      className="flex items-center gap-1 bg-secondary text-white px-3 py-1 rounded-full text-sm whitespace-nowrap"
     >
-      {name}
+      <span> {convertEnglishCategoryToKorean(name)}</span>
     </div>
   );
 };

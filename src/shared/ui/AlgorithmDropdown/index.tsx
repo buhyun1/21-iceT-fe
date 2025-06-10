@@ -1,5 +1,6 @@
 // src/shared/ui/AlgorithmDropdown/index.tsx
-import { ALGORITHM_TYPES } from '@/constants/algorithmnCategories';
+
+import { KOREAN_ALGORITHM_CATEGORIES } from '@/utils/doMappingCategories';
 import { useState, useRef, useEffect } from 'react';
 
 interface IAlgorithmDropdownProps {
@@ -32,7 +33,7 @@ const AlgorithmDropdown = ({
   }, []);
 
   return (
-    <div className="flex items-center gap-2 mt-3 px-4">
+    <div className="flex items-center gap-2 mt-3">
       {/* 드롭다운 버튼 */}
       <div className="relative" ref={dropdownRef}>
         <button
@@ -80,7 +81,7 @@ const AlgorithmDropdown = ({
                 )}
               </div>
               <div className="space-y-1">
-                {ALGORITHM_TYPES.map(type => (
+                {KOREAN_ALGORITHM_CATEGORIES.map(type => (
                   <button
                     key={type}
                     onClick={() => onToggleType(type)}

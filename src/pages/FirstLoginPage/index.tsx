@@ -132,7 +132,10 @@ export default function FirstLoginPage() {
         placeholder="상태메세지를 작성해주세요"
         className="bg-input w-full max-w-md rounded-lg py-3 px-4 outline-none text-sm "
       />
-      <p className="text-text-error text-xs text-left h-8">{statusErr && statusErr}</p>
+
+      <p className="text-text-error text-xs w-full max-w-md py-3 px-4 h-8">
+        {statusErr && statusErr}
+      </p>
 
       {/* 가입 버튼 */}
       <Button
