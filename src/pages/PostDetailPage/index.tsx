@@ -1,3 +1,5 @@
+import PostContent from '@/features/post/components/PostContent';
+import PostMeta from '@/features/post/components/PostMeta';
 import useGetPostDetail from '@/features/post/hooks/useGetPostDetail';
 import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
@@ -36,7 +38,17 @@ const PostDetailPage = () => {
   return (
     <div className="bg-background min-h-screen relative">
       <PageHeader title="게시글 상세" />
-      <div className="px-6">{postDetailData.author.nickname}</div>
+      <main className="px-6">
+        <article>
+          <PostMeta
+            categories={postDetailData.categories}
+            title={postDetailData.title}
+            author={postDetailData.author}
+            createdAt={postDetailData.createdAt}
+          />
+          <PostContent content={postDetailData.content} />
+        </article>
+      </main>
     </div>
   );
 };

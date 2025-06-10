@@ -19,8 +19,15 @@ export const convertKoreanToEnglish = (koreanCategories: string[]): string[] => 
 };
 
 /**
- * 영어 카테고리를 한글로 변환
+ * 영어 카테고리 배열을 한글로 변환
  */
 export const convertEnglishToKorean = (englishCategories: string[]): string[] => {
   return englishCategories.map(english => ALGORITHM_CATEGORY_MAPPING[english]).filter(Boolean); // undefined 제거
+};
+
+/**
+ * 영어 카테고리를 한글로 변환
+ */
+export const convertEnglishCategoryToKorean = (englishCategory: string): string => {
+  return ALGORITHM_CATEGORY_MAPPING[englishCategory]; // undefined 제거
 };
