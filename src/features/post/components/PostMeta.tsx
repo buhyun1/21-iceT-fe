@@ -1,4 +1,6 @@
+import useModal from '@/shared/hooks/useModal';
 import { CategoryBox } from '@/shared/ui/CategoryBox';
+import ConfirmModal from '@/shared/ui/ConfirmModal';
 import { formatDate } from '@/utils/formatDate';
 import { useState } from 'react';
 
@@ -22,6 +24,18 @@ interface IPostMetaProps {
 
 const PostMeta = (data: IPostMetaProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isModalOpen, handleModalOpen } = useModal();
+
+  const onDeleteConfirm = () => {
+    // 삭제
+  };
+  const onEditConfirm = () => {
+    // 편집
+  };
+
+  const onCancel = () => {
+    handleModalOpen(false);
+  };
 
   return (
     <div className="border-b-[2px] border-border">
@@ -55,16 +69,12 @@ const PostMeta = (data: IPostMetaProps) => {
               {/* 메뉴 */}
               <div className="absolute right-0 top-8 z-20 bg-white border border-border rounded-lg shadow-lg py-1 min-w-[100px]">
                 {data.isOwner && (
-                  // 본인 댓글 메뉴
                   <>
-                    <button
-                      //onClick={handleEdit}
-                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-text-primary"
-                    >
+                    <button className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-text-primary">
                       수정
                     </button>
                     <button
-                      //onClick={handleDelete}
+                      onClick={() => handleModalOpen(true)}
                       className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-error"
                     >
                       삭제
@@ -99,6 +109,14 @@ const PostMeta = (data: IPostMetaProps) => {
           ))}
         </div>
       )}
+      <ConfirmModal
+        isOpen={isModalOpen}
+        title="게시글을 삭제하시겠습니까?"
+        text="삭제한 이력은 복구할 수 없습니다."
+        onConfirm={onDeleteConfirm}
+        onCancel={onCancel}
+        isLoading={false}
+      />
     </div>
   );
 };
