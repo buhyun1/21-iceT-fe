@@ -1,6 +1,7 @@
 import useInput from '@/shared/hooks/useInput';
 import useRegisterComment from '../hooks/useRegisterComment';
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ICommentInputBoxProps {
   postId: number;
@@ -11,12 +12,21 @@ const CommentInputBox = ({ postId }: ICommentInputBoxProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const canSubmit = value.length > 0;
 
+  const queryClient = useQueryClient();
+
   const CommentMutation = useRegisterComment();
 
   const handleRegisterComment = async () => {
     setIsLoading(true);
     try {
-      await CommentMutation.mutateAsync({ content: value, postId: postId });
+      await CommentMutation.mutateAsync(
+        { content: value, postId: postId },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['post', postId, 'comment'] });
+          },
+        }
+      );
       reset();
     } catch {
       alert('댓글 등록에 실패했습니다');
