@@ -17,4 +17,10 @@ export const queryKeys = {
     all: ['auth'] as const,
     status: ['auth', 'status'] as const,
   },
+
+  post: {
+    all: ['posts'] as const,
+    detail: (postId: number) => [...queryKeys.post.all, 'post', postId] as const,
+    like: (postId: number) => ['post', postId, 'like'],
+  },
 };
