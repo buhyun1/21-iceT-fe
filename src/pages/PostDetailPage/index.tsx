@@ -7,6 +7,7 @@ import PostContent from '@/features/post/components/PostContent';
 import PostMeta from '@/features/post/components/PostMeta';
 import useGetPostDetail from '@/features/post/hooks/useGetPostDetail';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
 import { useParams } from 'react-router-dom';
@@ -15,8 +16,20 @@ const PostDetailPage = () => {
   const { id } = useParams();
   const numericId = id ? parseInt(id, 10) : undefined;
   const { data: postDetailData, isLoading, isError } = useGetPostDetail(numericId as number);
-  const { data: commentListData } = useGetCommentList(numericId as number);
   const { data: userProfileData } = useUserProfile();
+  const {
+    data: commentListData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isCommentsLoading,
+  } = useGetCommentList(numericId as number);
+
+  const lastCommentRef = useInfiniteScroll({
+    isLoading: isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  });
 
   // 로딩 중이거나 데이터가 없는 경우 로딩 표시
   if (isLoading) {
@@ -30,6 +43,9 @@ const PostDetailPage = () => {
       </div>
     );
   }
+
+  // 모든 페이지의 댓글을 하나의 배열로 변환
+  const allComments = commentListData?.pages?.flatMap(page => page.comments) || [];
 
   if (isError || !postDetailData) {
     return (
@@ -68,20 +84,53 @@ const PostDetailPage = () => {
         </article>
         <section>
           <CommentInputBox postId={postDetailData.postId} />
-          {commentListData?.comments ? (
-            commentListData.comments.map(comment => (
-              <CommentItem
-                postId={postDetailData.postId}
-                commentId={comment.id}
-                key={comment.id}
-                content={comment.comment}
-                author={comment.author}
-                createdAt={comment.createdAt}
-                isOwner={userProfileData?.userId === comment.author.userId}
-              />
-            ))
-          ) : (
-            <div className="py-8 text-center">댓글이 없습니다.</div>
+          {/* 댓글 목록 */}
+          {allComments.length > 0
+            ? allComments.map((comment, index) => {
+                // 마지막 댓글에 ref 추가하여 무한스크롤 트리거
+                if (allComments.length === index + 1) {
+                  return (
+                    <div key={comment.id} ref={lastCommentRef}>
+                      <CommentItem
+                        postId={postDetailData.postId}
+                        commentId={comment.id}
+                        content={comment.comment}
+                        author={comment.author}
+                        createdAt={comment.createdAt}
+                        isOwner={userProfileData?.userId === comment.author.userId}
+                      />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <CommentItem
+                      key={comment.id}
+                      postId={postDetailData.postId}
+                      commentId={comment.id}
+                      content={comment.comment}
+                      author={comment.author}
+                      createdAt={comment.createdAt}
+                      isOwner={userProfileData?.userId === comment.author.userId}
+                    />
+                  );
+                }
+              })
+            : !isCommentsLoading && <div className="py-8 text-center">댓글이 없습니다.</div>}
+
+          {/* 댓글 로딩 상태 */}
+          {isCommentsLoading && allComments.length === 0 && (
+            <div className="py-8 text-center">
+              <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-primary" />
+              <p className="mt-2 text-sm text-gray-500">댓글을 불러오는 중...</p>
+            </div>
+          )}
+
+          {/* 추가 댓글 로딩 상태 */}
+          {isFetchingNextPage && (
+            <div className="py-4 text-center">
+              <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-primary" />
+              <p className="mt-2 text-sm text-gray-500">더 많은 댓글을 불러오는 중...</p>
+            </div>
           )}
         </section>
         <div />

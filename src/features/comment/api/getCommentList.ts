@@ -16,15 +16,22 @@ type Author = {
 };
 interface ICommentListResponse {
   postId: number;
-  nextCursorId: number;
+  nextCursorId: number | null;
   hasNext: boolean;
   comments: Comment[];
 }
 
-const getCommentList = async (postId: number) => {
-  const response = await axiosInstance.get<IApiResponse<ICommentListResponse>>(
-    `${API_SUB_URLS_V3}/posts/${postId}/comments`
-  );
+interface IGetCommentListProps {
+  pageParam: number | null;
+  postId: number;
+}
+
+const getCommentList = async ({ pageParam, postId }: IGetCommentListProps) => {
+  const url = pageParam
+    ? `${API_SUB_URLS_V3}/posts/${postId}/comments?cursorId=${pageParam}`
+    : `${API_SUB_URLS_V3}/posts/${postId}/comments`;
+
+  const response = await axiosInstance.get<IApiResponse<ICommentListResponse>>(url);
 
   return response.data.data;
 };
