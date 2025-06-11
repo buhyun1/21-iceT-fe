@@ -60,7 +60,12 @@ const CreatePostPage = () => {
     try {
       setIsLoading(true);
       const category = convertKoreanToEnglish(selectedAlgorithmTypes);
-      console.log({ problemNumber: Number(problemNumber), title, content, category: category });
+      // console.log({
+      //   problemNumber: Number(problemNumber),
+      //   title,
+      //   content,
+      //   category: category,
+      // });
       createPostMutation.mutateAsync({
         problemNumber: Number(problemNumber),
         title,
