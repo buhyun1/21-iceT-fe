@@ -1,3 +1,5 @@
+name: Deploy Frontend React s3 static hosting
+
 on:
   push:
   workflow_dispatch:  
