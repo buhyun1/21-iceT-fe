@@ -19,6 +19,10 @@ const MainPage = () => {
   const today = new Date().toISOString().split('T')[0];
   const { data: todayProblemData, isLoading: isTodayProblemLoading } = useProblemSet(today);
 
+  const handleOpenGame = () => {
+    window.open('/game/', '_blank');
+  };
+
   // ⏳ 로딩 중
   if (isUserProfileLoading || isUserStudyStatLoading || isTodayProblemLoading) {
     return (
@@ -82,7 +86,7 @@ const MainPage = () => {
       </div>
 
       <TotalStudyCard studyStats={userStudyStatData.studyStats} />
-      <ChunsikCard />
+      <ChunsikCard onClick={handleOpenGame} />
       <BottomNav />
     </div>
   );
