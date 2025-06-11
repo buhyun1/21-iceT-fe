@@ -1,13 +1,17 @@
 import { queryKeys } from '@/constants/queryKeys';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import getCommentList from '../api/getCommentList';
 
 const useGetCommentList = (postId: number) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: queryKeys.post.comment(postId),
-    queryFn: () => getCommentList(postId),
+    queryFn: ({ pageParam }) => getCommentList({ pageParam, postId }),
+    initialPageParam: null as number | null,
+    getNextPageParam: lastPage => {
+      return lastPage.hasNext ? lastPage.nextCursorId : undefined;
+    },
     staleTime: 0,
-    gcTime: 1000 * 60,
+    gcTime: 0,
     refetchOnMount: true,
   });
 };
