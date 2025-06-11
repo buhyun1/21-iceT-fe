@@ -1,0 +1,92 @@
+
+name: Deploy Frontend React s3 static hosting
+
+on:
+  push:
+  workflow_dispatch:  
+
+jobs:
+  build-deploy-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.19.1'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate .env file for Vite (based on branch)
+        run: |
+          echo "[FRONTEND] Generating .env file for branch: ${{ github.ref_name }}"
+          
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "VITE_IS_QA=prod" >> .env
+            echo "VITE_API_BASE_URL=https://ktbkoco.com/" >> .env
+            echo "VITE_REDIRECT_URL=https://ktbkoco.com/oauth/kakao/callback" >> .env
+            echo "VITE_KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
+          else
+            echo "VITE_IS_QA=dev" >> .env
+            echo "VITE_API_BASE_URL=https://koco.click/" >> .env
+            echo "VITE_REDIRECT_URL=https://koco.click/oauth/kakao/callback" >> .env
+            echo "VITE_KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
+          fi
+
+      - name: Build React App
+        run: npm run build
+
+      - name: Deploy to Static Hosting S3
+        run: |
+          # 브랜치에 따라 호스팅용 S3 버킷 결정
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            BUCKET="prod-koco-front-s3"
+          else
+            BUCKET="dev-koco-front-s3"
+          fi
+          echo "[FRONTEND] Syncing ./dist → s3://$BUCKET"
+          aws s3 sync ./dist s3://$BUCKET --delete
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "ap-northeast-2"
+
+      - name: Archive build to versioned S3 bucket
+        run: |
+          TIMESTAMP=$(TZ=Asia/Seoul date +%Y%m%d-%H%M%S)
+          # 브랜치에 따라 백업용 S3 버킷 결정
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            BACKUP_BUCKET="prod-koco-frontend-backup"
+          else
+            BACKUP_BUCKET="dev-koco-frontend-backup"
+          fi
+          echo "[FRONTEND] Archiving ./dist → s3://$BACKUP_BUCKET/$TIMESTAMP/"
+          aws s3 sync ./dist s3://$BACKUP_BUCKET/$TIMESTAMP/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "ap-northeast-2"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          # 도메인도 브랜치별로 분기 (예시 그대로)
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            DOMAIN="ktbkoco.com"
+          else
+            DOMAIN="koco.click"
+          fi
+
+          DIST_ID=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?Aliases.Items[?contains(@, '$DOMAIN')]].Id" \
+            --output text)
+
+          echo "[FRONTEND] Invalidating CloudFront ($DOMAIN) cache → $DIST_ID"
+          aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "ap-northeast-2"
