@@ -41,9 +41,12 @@ const getPostList = async ({ keyword, category, pageParam }: IGetPostListProps) 
     `${API_SUB_URLS_V3}/posts`,
     {
       params: {
-        category: category || '',
+        category,
         keyword: keyword || '',
         cursorId: pageParam || '',
+      },
+      paramsSerializer: {
+        indexes: null,
       },
     }
   );
