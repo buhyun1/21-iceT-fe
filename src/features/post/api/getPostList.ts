@@ -1,11 +1,6 @@
 import { API_SUB_URLS_V3 } from '@/constants/apiConfig';
 import axiosInstance from '@/shared/lib/axios';
 import { IApiResponse } from '@/shared/types/ApiResponse';
-export interface IGetPostListProps {
-  category?: string;
-  keyword?: string;
-  cursorId?: number;
-}
 
 export type Category = {
   cagegoryId: number;
@@ -35,19 +30,25 @@ export interface IGetPostListResponse {
   posts: Posts[];
 }
 
-const getPostList = async (data: IGetPostListProps) => {
-  const response = await axiosInstance.get<IApiResponse<IGetPostListProps>>(
+export interface IGetPostListProps {
+  category?: string[];
+  keyword?: string;
+  pageParam?: number | null;
+}
+
+const getPostList = async ({ keyword, category, pageParam }: IGetPostListProps) => {
+  const response = await axiosInstance.get<IApiResponse<IGetPostListResponse>>(
     `${API_SUB_URLS_V3}/posts`,
     {
       params: {
-        category: data.category || '',
-        keyword: data.keyword || '',
-        cursorId: data.cursorId || '',
+        category: category || '',
+        keyword: keyword || '',
+        cursorId: pageParam || '',
       },
     }
   );
 
-  return response.data;
+  return response.data.data;
 };
 
 export default getPostList;

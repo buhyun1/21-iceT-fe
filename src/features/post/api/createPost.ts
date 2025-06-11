@@ -6,7 +6,7 @@ export interface ICreatePostRequest {
   problemNumber: number;
   title: string;
   content: string;
-  category: string[];
+  category?: string[];
 }
 
 /**
@@ -14,6 +14,7 @@ export interface ICreatePostRequest {
  * @body
  */
 export const createPost = async (data: ICreatePostRequest) => {
+  console.log(data);
   const response = await axiosInstance.post<IApiResponse<{ postId: number }>>(
     `${API_SUB_URLS_V3}/posts`,
     data

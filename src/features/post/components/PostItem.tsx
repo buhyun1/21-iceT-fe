@@ -1,24 +1,9 @@
 import { formatDate } from '@/utils/formatDate';
 import { useNavigate } from 'react-router-dom';
-
-interface IAuthor {
-  userId: number;
-  nickname: string;
-  imgUrl: string;
-}
-
-export interface IPostItem {
-  postId: number;
-  title: string;
-  content: string;
-  author: IAuthor;
-  countLike: number;
-  countComment: number;
-  createdAt: string;
-}
+import { Posts } from '../api/getPostList';
 
 interface IPostItemProps {
-  post: IPostItem;
+  post: Posts;
 }
 
 const PostItem = ({ post }: IPostItemProps) => {
@@ -36,9 +21,6 @@ const PostItem = ({ post }: IPostItemProps) => {
       {/* 제목 */}
       <h3 className="text-base font-semibold text-text-primary mb-2 line-clamp-2">{post.title}</h3>
 
-      {/* 내용 미리보기 */}
-      <p className="text-sm text-text-secondary mb-3 line-clamp-2">{post.content}</p>
-
       {/* 하단 정보 */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -48,14 +30,14 @@ const PostItem = ({ post }: IPostItemProps) => {
         </div>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
-            <span className={`text-xs ${post.countLike ? 'text-red-500' : 'text-text-secondary'}`}>
-              {post.countLike ? '❤️' : '🤍'}
+            <span className={`text-xs ${post.likeCount ? 'text-red-500' : 'text-text-secondary'}`}>
+              {post.likeCount ? '❤️' : '🤍'}
             </span>
-            <span className="text-xs text-text-secondary">{post.countLike}</span>
+            <span className="text-xs text-text-secondary">{post.likeCount}</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-xs text-text-secondary">💬</span>
-            <span className="text-xs text-text-secondary">{post.countComment}</span>
+            <span className="text-xs text-text-secondary">{post.commentCount}</span>
           </div>
         </div>
       </div>
