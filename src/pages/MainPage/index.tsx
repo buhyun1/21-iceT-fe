@@ -20,7 +20,7 @@ const MainPage = () => {
   const { data: todayProblemData, isLoading: isTodayProblemLoading } = useProblemSet(today);
 
   const handleOpenGame = () => {
-    window.open('/game/', '_blank');
+    window.open('/game/index.html', '_blank');
   };
 
   // ⏳ 로딩 중
