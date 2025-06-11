@@ -19,7 +19,9 @@ const PostItem = ({ post }: IPostItemProps) => {
       className="bg-surface p-4 border-b border-border cursor-pointer hover:bg-gray-50 transition-colors"
     >
       {/* 제목 */}
-      <h3 className="text-base font-semibold text-text-primary mb-2 line-clamp-2">{post.title}</h3>
+      <h3 className="text-base font-semibold text-text-primary mb-2 line-clamp-2">
+        [{post.problemNumber}] {post.title}
+      </h3>
 
       {/* 하단 정보 */}
       <div className="flex items-center justify-between">
