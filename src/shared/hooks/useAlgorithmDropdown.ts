@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const useAlgorithmDropdown = () => {
-  const [selectedAlgorithmTypes, setSelectedAlgorithmTypes] = useState<string[]>([]);
+const useAlgorithmDropdown = (initialTypes: string[] = []) => {
+  const [selectedAlgorithmTypes, setSelectedAlgorithmTypes] = useState<string[]>(initialTypes);
 
   // 알고리즘 유형 모두 선택 해제
   const handleClearAllTypes = () => {

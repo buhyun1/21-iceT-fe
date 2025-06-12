@@ -10,11 +10,12 @@ import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const PostDetailPage = () => {
   const { id } = useParams();
   const numericId = id ? parseInt(id, 10) : undefined;
+  const navigate = useNavigate();
   const { data: postDetailData, isLoading, isError } = useGetPostDetail(numericId as number);
   const { data: userProfileData } = useUserProfile();
   const {
@@ -59,6 +60,23 @@ const PostDetailPage = () => {
     );
   }
 
+  // 편집 페이지 이동
+  const onEditConfirm = () => {
+    navigate(`/post/${id}/edit`, {
+      state: {
+        initialData: {
+          postId: id,
+          post: {
+            problemNumber: 23,
+            title: postDetailData.title,
+            content: postDetailData.content,
+            category: postDetailData.categories,
+          },
+        },
+      },
+    });
+  };
+
   return (
     <div className="bg-background min-h-screen relative">
       <PageHeader title="게시글 상세" />
@@ -71,6 +89,7 @@ const PostDetailPage = () => {
             author={postDetailData.author}
             createdAt={postDetailData.createdAt}
             isOwner={userProfileData?.userId === postDetailData.author.userId}
+            onEditConfirm={onEditConfirm}
           />
           <PostContent content={postDetailData.content} />
           <div className=" flex gap-2 justify-end mt-4 mb-4">
@@ -135,6 +154,7 @@ const PostDetailPage = () => {
         </section>
         <div />
       </main>
+      <BottomNav />
     </div>
   );
 };
