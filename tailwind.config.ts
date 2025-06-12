@@ -73,6 +73,12 @@ export default {
           unrated: '#777777', // 무등급 #777777
         },
         category: '#7dd9fd', // #7dd9fd
+        alarm: {
+          unread: {
+            bg: '#eff6ff', // #eff6ff
+            border: '#bfdbfe', // #bfdbfe
+          },
+        },
       },
     },
   },
