@@ -10,7 +10,6 @@ interface IFloatingButtonProps {
 
 const FloatingButton = ({ to, className = '', tooltip = '' }: IFloatingButtonProps) => {
   const navigate = useNavigate();
-
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
@@ -18,7 +17,10 @@ const FloatingButton = ({ to, className = '', tooltip = '' }: IFloatingButtonPro
   };
 
   return (
-    <div className="absolute bottom-24 right-6">
+    <div
+      className="fixed bottom-24 right-7 z-50"
+      style={{ right: 'max(1.5rem, calc(50vw - 17.5rem))' }}
+    >
       {/* 툴팁 말풍선 */}
       <div
         className={`
@@ -50,7 +52,6 @@ const FloatingButton = ({ to, className = '', tooltip = '' }: IFloatingButtonPro
           hover:scale-110 
           active:scale-95
           transition-all duration-200 
-          z-50
           text-white text-xl
           ${className}
         `}
