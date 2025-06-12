@@ -125,6 +125,7 @@ const PostsPage = () => {
           <p className="mt-2 text-sm text-gray-500">더 많은 게시글을 불러오는 중...</p>
         </div>
       )}
+
       <FloatingButton to="/new-post" tooltip="💭 나만의 풀이를 공유해보세요!" />
       <BottomNav />
     </div>

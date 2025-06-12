@@ -1,14 +1,11 @@
 import solutionIc from '@/assets/solutionIc.svg';
 import homeIc from '@/assets/homeIc.svg';
-import logoutIc from '@/assets/logoutIc.svg';
 import settingIc from '@/assets/settingIc.svg';
 import boardsIc from '@/assets/boardsIc.svg';
 import { useNavigate } from 'react-router-dom';
-import { useLogout } from '@/features/auth/hooks/useLogout';
 
 const BottomNav = () => {
   const navigate = useNavigate();
-  const { mutate: logoutMutation } = useLogout();
 
   const menuItem = [
     {
@@ -39,16 +36,6 @@ const BottomNav = () => {
       alt: 'posts',
       onClick: () => {
         navigate('/posts');
-      },
-    },
-    {
-      title: '로그아웃',
-      width: 16,
-      height: 16,
-      icon: logoutIc,
-      alt: 'logout',
-      onClick: () => {
-        logoutMutation();
       },
     },
     {

@@ -44,7 +44,7 @@ const MorePage = () => {
 
   // 내 정보 수정 클릭
   const handleEditProfile = () => {
-    navigate('/complete-profile');
+    navigate('/complete-profile', { state: { isEditMode: true } });
   };
 
   // 로그아웃 클릭
