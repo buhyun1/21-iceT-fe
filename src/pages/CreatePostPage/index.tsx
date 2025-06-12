@@ -1,77 +1,45 @@
+import PostForm, { IPostFormData } from '@/features/post/components/PostForm';
 import { useCreatePost } from '@/features/post/hooks/useCreatePost';
-import useAlgorithmDropdown from '@/shared/hooks/useAlgorithmDropdown';
-import useInput from '@/shared/hooks/useInput';
-import useSubmitButton from '@/shared/hooks/useSubmitButton';
 import PageHeader from '@/shared/layout/PageHeader';
-import AlgorithmDropdown from '@/shared/ui/AlgorithmDropdown';
-import Button from '@/shared/ui/Button';
-import Input from '@/shared/ui/Input';
 import { convertKoreanToEnglish } from '@/utils/doMappingCategories';
-import MDEditor from '@uiw/react-md-editor';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePostPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [content, setContent] = useState('');
-  const { value: title, onChange: titleOnChange } = useInput();
-  const { value: problemNumber, onChange: problemNumberOnChange } = useInput();
-  const { selectedAlgorithmTypes, handleToggleAlgorithmType, handleClearAllTypes } =
-    useAlgorithmDropdown();
   const createPostMutation = useCreatePost();
+  const navigate = useNavigate();
 
-  // 문제 번호 유효성 검사
-  const problemNumberErr = useMemo(() => {
-    if (!problemNumber) return '문제 번호를 입력해주세요.';
-    if (problemNumber.length < 1 || problemNumber.length > 6) {
-      return '문제 번호는 1-6자리 숫자여야 합니다.';
-    }
-    if (!/^\d+$/.test(problemNumber)) {
-      return '숫자만 입력 가능합니다.';
-    }
-
-    return null;
-  }, [problemNumber]);
-
-  // 제목 유효성 검사
-  const titleErr = useMemo(() => {
-    if (!title) return '제목을 입력해주세요';
-    if (title.length < 1 || title.length > 30) {
-      return '제목은 1-30자까지 입력 가능합니다.';
-    }
-
-    return null;
-  }, [title]);
-
-  // 마크다운 유효성 검사
-  const markdownErr = useMemo(() => {
-    if (!content) return '내용을 입력해주세요';
-    if (content.length < 1 || content.length > 3000) return '게시글은 최대 3000자 작성 가능합니다';
-
-    return null;
-  }, [content]);
-
-  const submitErr = problemNumberErr || titleErr || markdownErr;
-
-  const { isDisabled, buttonText } = useSubmitButton({ submitErr, isLoading });
-
-  const handleCreatePost = () => {
-    if (submitErr) return;
-
+  const handleCreatePost = (data: IPostFormData) => {
     try {
       setIsLoading(true);
-      const category = convertKoreanToEnglish(selectedAlgorithmTypes);
-      // console.log({
-      //   problemNumber: Number(problemNumber),
-      //   title,
-      //   content,
-      //   category: category,
-      // });
-      createPostMutation.mutateAsync({
-        problemNumber: Number(problemNumber),
-        title,
-        content,
-        category: category,
-      });
+
+      createPostMutation.mutateAsync(
+        {
+          problemNumber: data.post.problemNumber,
+          title: data.post.title,
+          content: data.post.content,
+          category: data.post.category && convertKoreanToEnglish(data.post.category),
+        },
+        {
+          onSuccess: response => {
+            // response에서 postId 추출하여 해당 게시글 상세 페이지로 이동
+            if (response?.postId) {
+              navigate(`/post/${response.postId}`);
+            } else {
+              navigate('/posts');
+            }
+          },
+          onError: (error: any) => {
+            if (error.response?.data?.code === 'BAD_REQUEST') {
+              const message = error.response.data.message;
+              alert(message);
+            } else {
+              alert('게시글 등록에 실패했습니다.');
+            }
+          },
+        }
+      );
     } catch {
       alert('게시글 등록에 실패했습니다');
     } finally {
@@ -82,7 +50,11 @@ const CreatePostPage = () => {
   return (
     <div className="bg-background min-h-screen relative">
       <PageHeader title="게시글 작성" />
-      <div className="p-4">
+      <PostForm onSubmit={handleCreatePost} submitButtonText="등록하기" isLoading={isLoading} />
+    </div>
+  );
+};
+/* <div className="p-4">
         <div className="flex space-y-2 gap-4 items-center">
           <label className="text-sm font-medium text-text-primary">문제 번호</label>
           <Input value={problemNumber} onChange={problemNumberOnChange} className="w-[100px]" />
@@ -109,9 +81,6 @@ const CreatePostPage = () => {
             {buttonText}{' '}
           </Button>
         </div>
-      </div>
-    </div>
-  );
-};
+      </div> */
 
 export default CreatePostPage;
