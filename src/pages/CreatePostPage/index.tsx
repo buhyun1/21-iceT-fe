@@ -14,6 +14,8 @@ const CreatePostPage = () => {
     try {
       setIsLoading(true);
 
+      console.log('게시물 생성시 데이터', data);
+
       createPostMutation.mutateAsync(
         {
           problemNumber: data.post.problemNumber,

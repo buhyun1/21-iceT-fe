@@ -59,17 +59,12 @@ const PostsPage = () => {
     fetchNextPage,
   });
 
-  console.log(selectedAlgorithmTypes);
-
   // 검색 처리 & input 값 초기화
   const handleSearch = () => {
     console.log('검색한 값', searchValue);
     setAppliedKeyword(searchValue.trim());
     resetInputValue();
   };
-  console.log('선택된 알고리즘 타입 (한글):', selectedAlgorithmTypes);
-  console.log('변환된 영어 카테고리:', englishCategories);
-  console.log('적용된 검색어:', appliedKeyword);
 
   // 모든 페이지의 게시글을 하나의 배열로 합치기
   const allPosts = PostListData?.pages?.flatMap(page => page.posts) || [];
