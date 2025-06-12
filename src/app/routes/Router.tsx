@@ -13,6 +13,7 @@ import MorePage from '@/pages/MyPage';
 import PostsPage from '@/pages/PostsPage';
 import CreatePostPage from '@/pages/CreatePostPage';
 import PostDetailPage from '@/pages/PostDetailPage';
+import AlarmListPage from '@/pages/AlarmListPage';
 
 const SurveyPage = React.lazy(() => import('@/pages/SurveyPage'));
 const ProblemListPage = React.lazy(() => import('@/pages/ProblemListPage'));
@@ -41,6 +42,7 @@ const Router = () => {
                 <Route path="/new-post" element={<CreatePostPage />} />
                 <Route path="/posts" element={<PostsPage />} />
                 <Route path="/post/:id" element={<PostDetailPage />} />
+                <Route path="/alarms" element={<AlarmListPage />} />
               </Route>
             </Route>
           </Routes>
