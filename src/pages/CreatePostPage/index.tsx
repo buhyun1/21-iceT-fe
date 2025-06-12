@@ -54,33 +54,5 @@ const CreatePostPage = () => {
     </div>
   );
 };
-/* <div className="p-4">
-        <div className="flex space-y-2 gap-4 items-center">
-          <label className="text-sm font-medium text-text-primary">문제 번호</label>
-          <Input value={problemNumber} onChange={problemNumberOnChange} className="w-[100px]" />
-        </div>
-        <AlgorithmDropdown
-          selectedTypes={selectedAlgorithmTypes}
-          onToggleType={handleToggleAlgorithmType}
-          onClearAll={handleClearAllTypes}
-        />
-        <div className="mt-4">
-          <label className="mt-2">제목</label>
-          <Input value={title} onChange={titleOnChange} className="w-full" />
-        </div>
-        <div className="mt-4">
-          <label>내용</label>
-          <MDEditor
-            value={content}
-            onChange={(value: string | undefined) => setContent(value || '')}
-            height={600}
-          />
-        </div>
-        <div className="mt-6 text-center">
-          <Button onClick={handleCreatePost} disabled={isDisabled}>
-            {buttonText}{' '}
-          </Button>
-        </div>
-      </div> */
 
 export default CreatePostPage;

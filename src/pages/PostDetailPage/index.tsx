@@ -154,6 +154,7 @@ const PostDetailPage = () => {
         </section>
         <div />
       </main>
+      <BottomNav />
     </div>
   );
 };
