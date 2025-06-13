@@ -23,6 +23,7 @@ interface IPostMetaProps {
   categories: Category[];
   author: Author;
   postId: number;
+  onEditConfirm: () => void;
 }
 
 const PostMeta = (data: IPostMetaProps) => {
@@ -46,9 +47,6 @@ const PostMeta = (data: IPostMetaProps) => {
       alert('게시글 삭제에 실패했습니다.');
     }
   };
-  /*   const onEditConfirm = () => {
-    // 편집
-  }; */
 
   const onCancel = () => {
     handleModalOpen(false);
@@ -87,7 +85,10 @@ const PostMeta = (data: IPostMetaProps) => {
               <div className="absolute right-0 top-8 z-20 bg-white border border-border rounded-lg shadow-lg py-1 min-w-[100px]">
                 {data.isOwner && (
                   <>
-                    <button className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-text-primary">
+                    <button
+                      onClick={data.onEditConfirm}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-text-primary"
+                    >
                       수정
                     </button>
                     <button

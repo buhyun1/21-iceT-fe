@@ -50,6 +50,7 @@ const getPostList = async ({ keyword, category, pageParam }: IGetPostListProps) 
       },
     }
   );
+  console.log(response.data.data);
 
   return response.data.data;
 };

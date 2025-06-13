@@ -14,6 +14,7 @@ type Author = {
 };
 
 export interface IGetPostDetailResponse {
+  problemNumber: number;
   postId: number;
   title: string;
   createdAt: string;
