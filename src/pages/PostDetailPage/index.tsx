@@ -67,7 +67,7 @@ const PostDetailPage = () => {
         initialData: {
           postId: id,
           post: {
-            problemNumber: 23,
+            problemNumber: postDetailData.problemNumber,
             title: postDetailData.title,
             content: postDetailData.content,
             category: postDetailData.categories,
