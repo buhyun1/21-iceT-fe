@@ -56,7 +56,7 @@ const MainPage = () => {
 
   return (
     <div className="flex flex-col gap-6 p-6 pb-30">
-      <Header />
+      <Header hasNotification={true} />
 
       <ProfileCard
         profileImgUrl={userProfileData.profileImgUrl}
