@@ -25,4 +25,7 @@ export const queryKeys = {
     comment: (postId: number) => ['post', postId, 'comment'],
     my: ['posts', 'my'],
   },
+  alarm: {
+    all: ['alarms'] as const,
+  },
 };

@@ -9,18 +9,19 @@ interface IGetAlarmListProps {
 
 type Alarm = {
   id: number;
-  post_id: number;
-  sender_id: number;
-  sender_name: string;
-  type: string;
-  is_read: boolean;
-  created_at: string;
+  senderId: number;
+  postId: number;
+  senderNickname: string;
+  postTitle: string;
+  createdAt: string;
+  alarmType: string;
 };
 
 interface IGetAlarmListResponse {
   alarms: Alarm[];
-  last_alarm_id: number;
-  has_next: boolean;
+  cursorId: number;
+  hasNext: boolean;
+  totalCount: number;
 }
 
 const getAlarmList = async (data: IGetAlarmListProps) => {

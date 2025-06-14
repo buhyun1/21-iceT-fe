@@ -2,14 +2,15 @@ import KocoImage from '@/assets/kocoImage.png';
 import { useNavigate } from 'react-router-dom';
 
 interface IHeaderProps {
+  receiverId?: number;
   hasNotification?: boolean;
 }
 
-const Header = ({ hasNotification }: IHeaderProps) => {
+const Header = ({ hasNotification, receiverId }: IHeaderProps) => {
   const navigate = useNavigate();
 
   const handleNotificationClick = () => {
-    navigate('/alarms');
+    navigate('/alarms', { state: { receiverId } });
   };
 
   return (
