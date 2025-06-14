@@ -1,6 +1,7 @@
 import PostItem from '@/features/post/components/PostItem';
 import useGetMyPosts from '@/features/post/hooks/useGetMyPosts';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import BottomNav from '@/shared/layout/BottomNav';
 import PageHeader from '@/shared/layout/PageHeader';
 
 const MyPostPage = () => {
@@ -22,7 +23,7 @@ const MyPostPage = () => {
   console.log(allPosts);
 
   return (
-    <div className="bg-background min-h-screen relative">
+    <div className="bg-background min-h-screen relative pb-20">
       <PageHeader title="나의 게시글" />
       {allPosts.length > 0
         ? allPosts.map((post, index) => {
@@ -53,6 +54,7 @@ const MyPostPage = () => {
           <p className="mt-2 text-sm text-gray-500">더 많은 게시글을 불러오는 중...</p>
         </div>
       )}
+      <BottomNav />
     </div>
   );
 };
