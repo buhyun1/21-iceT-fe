@@ -24,6 +24,7 @@ export const queryKeys = {
     like: (postId: number) => ['post', postId, 'like'],
     comment: (postId: number) => ['post', postId, 'comment'],
     my: ['posts', 'my'],
+    hot: ['posts', 'hot'],
   },
   alarm: {
     all: ['alarms'] as const,
