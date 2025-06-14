@@ -61,7 +61,6 @@ const PostsPage = () => {
 
   // 검색 처리 & input 값 초기화
   const handleSearch = () => {
-    console.log('검색한 값', searchValue);
     setAppliedKeyword(searchValue.trim());
     resetInputValue();
   };
