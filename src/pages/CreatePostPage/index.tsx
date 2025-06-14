@@ -1,7 +1,6 @@
 import PostForm, { IPostFormData } from '@/features/post/components/PostForm';
 import { useCreatePost } from '@/features/post/hooks/useCreatePost';
 import PageHeader from '@/shared/layout/PageHeader';
-import { convertKoreanToEnglish } from '@/utils/doMappingCategories';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,15 +12,12 @@ const CreatePostPage = () => {
   const handleCreatePost = (data: IPostFormData) => {
     try {
       setIsLoading(true);
-
-      console.log('게시물 생성시 데이터', data);
-
       createPostMutation.mutateAsync(
         {
           problemNumber: data.post.problemNumber,
           title: data.post.title,
           content: data.post.content,
-          category: data.post.category && convertKoreanToEnglish(data.post.category),
+          category: data.post.category,
         },
         {
           onSuccess: response => {

@@ -37,11 +37,12 @@ export interface IGetPostListProps {
 }
 
 const getPostList = async ({ keyword, category, pageParam }: IGetPostListProps) => {
+  console.log(category);
   const response = await axiosInstance.get<IApiResponse<IGetPostListResponse>>(
     `${API_SUB_URLS_V3}/posts`,
     {
       params: {
-        category,
+        ...(category && category.length > 0 && { category }),
         keyword: keyword || '',
         cursorId: pageParam || '',
       },
