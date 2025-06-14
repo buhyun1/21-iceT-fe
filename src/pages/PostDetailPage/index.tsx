@@ -101,7 +101,7 @@ const PostDetailPage = () => {
             <CommentCountBox commentCount={postDetailData.commentCount} />
           </div>
         </article>
-        <section>
+        <section className="pb-20">
           <CommentInputBox postId={postDetailData.postId} />
           {/* 댓글 목록 */}
           {allComments.length > 0
