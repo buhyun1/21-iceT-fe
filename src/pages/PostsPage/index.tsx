@@ -65,8 +65,6 @@ const PostsPage = () => {
   // 모든 페이지의 게시글을 하나의 배열로 합치기
   const allPosts = PostListData?.pages?.flatMap(page => page.posts) || [];
 
-  console.log(hotPostData);
-
   return (
     <div className="bg-background min-h-screen relative">
       <PageHeader title="커뮤니티" />
@@ -87,7 +85,7 @@ const PostsPage = () => {
       </div>
 
       {/* 인기 게시글*/}
-      {hotPostData && hotPostData.length > 0 && <HotPostItem hotPostData={hotPostData} />}
+      {hotPostData && <HotPostItem hotPostData={hotPostData} />}
       {/* 게시글 목록 */}
       {allPosts.length > 0
         ? allPosts.map((post, index) => {
