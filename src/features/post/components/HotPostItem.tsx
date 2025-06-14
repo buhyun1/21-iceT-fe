@@ -1,18 +1,32 @@
+import { useState, useEffect } from 'react';
 import hotIc from '@/assets/hotIc.png';
 import { useNavigate } from 'react-router-dom';
+import { Posts } from '../api/getPostList';
 
 interface IHotPostItemProps {
-  hotPost: {
-    postId: number;
-    title: string;
-  };
+  hotPostData: Posts[];
 }
 
-const HotPostItem = ({ hotPost }: IHotPostItemProps) => {
+const HotPostItem = ({ hotPostData }: IHotPostItemProps) => {
   const navigate = useNavigate();
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (hotPostData.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex(prevIndex => (prevIndex === hotPostData.length - 1 ? 0 : prevIndex + 1));
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [hotPostData.length]);
+
+  if (!hotPostData || hotPostData.length === 0) return null;
+
+  const currentPost = hotPostData[currentIndex];
 
   const onClickPostItem = () => {
-    navigate(`/post/${hotPost.postId}`);
+    navigate(`/post/${currentPost.postId}`);
   };
 
   return (
@@ -33,7 +47,14 @@ const HotPostItem = ({ hotPost }: IHotPostItemProps) => {
           </span>
           <p className="text-sm font-medium text-red-700">이번주의 인기 게시물</p>
         </div>
-        <p className="text-base font-semibold text-gray-800 truncate">{hotPost.title}</p>
+        <p className="text-base font-semibold text-gray-800 truncate animate-fade-in-out">
+          {currentPost.title}
+        </p>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-xs text-gray-500">❤️ {currentPost.likeCount}</span>
+          <span className="text-xs text-gray-500">💬 {currentPost.commentCount}</span>
+          <span className="text-xs text-gray-500">#{currentPost.problemNumber}번</span>
+        </div>
       </div>
 
       {/* 화살표 아이콘 */}

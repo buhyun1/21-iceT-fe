@@ -85,7 +85,7 @@ const PostsPage = () => {
       </div>
 
       {/* 인기 게시글*/}
-      {hotPostData && <HotPostItem hotPost={hotPostData} />}
+      {hotPostData && <HotPostItem hotPostData={hotPostData} />}
       {/* 게시글 목록 */}
       {allPosts.length > 0
         ? allPosts.map((post, index) => {
