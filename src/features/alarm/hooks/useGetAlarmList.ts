@@ -4,11 +4,11 @@ import getAlarmList from '../api/getAlarmList';
 
 const useGetAlarmList = (receiverId: number) => {
   return useInfiniteQuery({
-    queryKey: queryKeys.post.my,
+    queryKey: queryKeys.alarm.all,
     queryFn: ({ pageParam }) => getAlarmList({ pageParam, receiverId }),
     initialPageParam: null as number | null,
     getNextPageParam: lastPage => {
-      return lastPage.has_next ? lastPage.last_alarm_id : undefined;
+      return lastPage.hasNext ? lastPage.cursorId : undefined;
     },
     staleTime: 0,
     gcTime: 0,
