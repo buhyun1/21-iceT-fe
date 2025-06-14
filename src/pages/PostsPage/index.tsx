@@ -66,7 +66,7 @@ const PostsPage = () => {
   const allPosts = PostListData?.pages?.flatMap(page => page.posts) || [];
 
   return (
-    <div className="bg-background min-h-screen relative">
+    <div className="bg-background min-h-screen relative pb-20">
       <PageHeader title="커뮤니티" />
       <SearchInput
         className="mr-6 ml-6"
