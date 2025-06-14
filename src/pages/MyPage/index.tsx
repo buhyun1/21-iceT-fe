@@ -142,6 +142,15 @@ const MorePage = () => {
               문제 리스트
             </button>
           </div>
+          <div className="space-y-2">
+            {/* 문제 리스트 */}
+            <button
+              onClick={() => navigate('/my-posts')}
+              className="w-full bg-surface py-3 text-left px-4 hover:bg-gray-50 transition-colors"
+            >
+              내 게시글
+            </button>
+          </div>
         </div>
       </div>
       <DeleteConfirmModal

@@ -3,7 +3,7 @@ import axiosInstance from '@/shared/lib/axios';
 import { IApiResponse } from '@/shared/types/ApiResponse';
 
 export type Category = {
-  cagegoryId: number;
+  categoryId: number;
   categoryName: string;
 };
 
