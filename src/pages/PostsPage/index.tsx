@@ -11,6 +11,7 @@ import useGetPostList from '@/features/post/hooks/useGetPostList';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { useMemo, useState } from 'react';
 import { convertKoreanToEnglish } from '@/utils/doMappingCategories';
+import useGetHotPost from '@/features/post/hooks/useGetHotPost';
 interface IAuthor {
   userId: number;
   nickname: string;
@@ -27,16 +28,12 @@ export interface IPostItem {
   createdAt: string;
 }
 
-const hotPost = {
-  postId: 1,
-  title: '이 문제 어떻게 푸셨어요?',
-};
-
 const PostsPage = () => {
   const [appliedKeyword, setAppliedKeyword] = useState('');
   const { onChange, value: searchValue, reset: resetInputValue } = useInput();
   const { selectedAlgorithmTypes, handleToggleAlgorithmType, handleClearAllTypes } =
     useAlgorithmDropdown();
+  const { data: hotPostData } = useGetHotPost();
 
   // 한글 카테고리를 영어로 변환
   const englishCategories = useMemo(() => {
@@ -88,7 +85,7 @@ const PostsPage = () => {
       </div>
 
       {/* 인기 게시글*/}
-      <HotPostItem hotPost={hotPost} />
+      {hotPostData && <HotPostItem hotPost={hotPostData} />}
       {/* 게시글 목록 */}
       {allPosts.length > 0
         ? allPosts.map((post, index) => {
