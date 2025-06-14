@@ -6,8 +6,8 @@ const useGetHotPost = () => {
   return useQuery({
     queryKey: queryKeys.post.hot,
     queryFn: () => getHotPosts(),
-    staleTime: 1000 * 60,
-    gcTime: 1000 * 60 * 3,
+    staleTime: Infinity,
+    gcTime: 1000 * 60 * 60 * 3,
   });
 };
 
