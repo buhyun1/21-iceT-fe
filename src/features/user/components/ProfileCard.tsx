@@ -1,5 +1,6 @@
 import Button from '@/shared/ui/Button';
 import Card from '@/shared/ui/Card';
+import defaultProfileImage from '@/assets/defaultProfileImage.png';
 import { useNavigate } from 'react-router-dom';
 
 interface IProfileCardProps {
@@ -17,7 +18,7 @@ const ProfileCard = ({ profileImgUrl, nickname, statusMessage }: IProfileCardPro
       <div className="flex flex-col gap-2">
         <div className="flex gap-8 p-2">
           <img
-            src={profileImgUrl}
+            src={profileImgUrl ? profileImgUrl : defaultProfileImage}
             alt=""
             className="w-20 h-20 rounded-full object-cover bg-[#EFEFEF]"
           />

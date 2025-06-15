@@ -9,6 +9,7 @@ import Spinner from '@/shared/ui/Spinner';
 import { useState } from 'react';
 import DeleteConfirmModal from '@/shared/ui/DeleteComfirmModal';
 import useModal from '@/shared/hooks/useModal';
+import defaultProfileImage from '@/assets/defaultProfileImage.png';
 
 const MorePage = () => {
   const navigate = useNavigate();
@@ -88,7 +89,9 @@ const MorePage = () => {
         {/* 프로필 정보 */}
         <div className="bg-surface p-4 mb-4 flex items-center gap-4">
           <img
-            src={userProfileData.profileImgUrl}
+            src={
+              userProfileData.profileImgUrl ? userProfileData.profileImgUrl : defaultProfileImage
+            }
             alt="프로필 이미지"
             className="w-24 h-24 rounded-full object-cover bg-gray-200 mr-4"
           />

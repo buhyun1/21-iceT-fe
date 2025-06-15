@@ -5,6 +5,7 @@ import { useState } from 'react';
 import useDeleteComment from '../hooks/useDeleteComment';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/constants/queryKeys';
+import defaultProfileImage from '@/assets/defaultProfileImage.png';
 
 type Author = {
   userId: number;
@@ -56,7 +57,7 @@ const CommentItem = (data: ICommentProps) => {
       <div className="flex gap-3">
         {/* 프로필 이미지 */}
         <img
-          src={data.author.imgUrl}
+          src={data.author.imgUrl ? data.author.imgUrl : defaultProfileImage}
           alt={data.author.nickname}
           className="w-8 h-8 rounded-full object-cover flex-shrink-0"
         />
