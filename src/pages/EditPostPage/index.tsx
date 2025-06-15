@@ -19,15 +19,17 @@ const EditPostPage = () => {
   }
 
   const handleUpdatePost = (postFormData: IPostFormData) => {
-    console.log('수정 요청');
     setIsLoading(true);
 
     if (!numericId) return;
     try {
-      editPostMutation.mutateAsync({
-        postId: numericId,
-        post: postFormData.post,
-      });
+      editPostMutation.mutateAsync(
+        {
+          postId: numericId,
+          post: postFormData.post,
+        },
+        { onSuccess: () => navigate(`/post/${numericId}`) }
+      );
     } catch {
       alert('수정 요청이 실패하였습니다.');
     } finally {

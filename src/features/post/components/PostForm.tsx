@@ -8,6 +8,8 @@ import Input from '@/shared/ui/Input';
 import { convertKoreanToEnglish } from '@/utils/doMappingCategories';
 import MDEditor from '@uiw/react-md-editor';
 import { useMemo, useState } from 'react';
+import { Category } from '../api/getPostList';
+import { convertEnglishToKorean } from '@/utils/doMappingCategories';
 
 export type Post = {
   problemNumber: number;
@@ -20,8 +22,19 @@ export interface IPostFormData {
   post: Post;
 }
 
+export type PostFormInitialData = {
+  problemNumber: number;
+  title: string;
+  content: string;
+  category: Category[];
+};
+
+export interface IPostFormInitialData {
+  post: PostFormInitialData;
+}
+
 interface IPostFormProps {
-  initialData?: IPostFormData;
+  initialData?: IPostFormInitialData;
   onSubmit: (post: IPostFormData) => Promise<void> | void;
   submitButtonText: string;
   isLoading?: boolean;
@@ -38,8 +51,12 @@ const PostForm = ({
   const { value: problemNumber, onChange: problemNumberOnChange } = useInput(
     initialData?.post.problemNumber?.toString() || ''
   );
+  const categoryNames = initialData?.post.category
+    ? Object.values(initialData.post.category).map(item => item.categoryName)
+    : [];
+
   const { selectedAlgorithmTypes, handleToggleAlgorithmType, handleClearAllTypes } =
-    useAlgorithmDropdown();
+    useAlgorithmDropdown(convertEnglishToKorean(categoryNames));
 
   // 문제 번호 유효성 검사
   const problemNumberErr = useMemo(() => {
@@ -92,7 +109,6 @@ const PostForm = ({
         category: category,
       },
     };
-    //console.log(formData);
 
     await onSubmit(postData);
   };
