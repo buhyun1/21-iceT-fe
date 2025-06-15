@@ -5,6 +5,7 @@ import { formatDate } from '@/utils/formatDate';
 import { useState } from 'react';
 import useDeletePost from '../hooks/useDeletePost';
 import { useNavigate } from 'react-router-dom';
+import defaultProfileImage from '@/assets/defaultProfileImage.png';
 
 type Author = {
   imgUrl: string;
@@ -107,7 +108,7 @@ const PostMeta = (data: IPostMetaProps) => {
 
       <div className="flex items-center gap-3 mb-4">
         <img
-          src={data.author.imgUrl}
+          src={data.author.imgUrl ? data.author.imgUrl : defaultProfileImage}
           alt={data.author.nickname}
           className="w-8 h-8 rounded-full object-cover"
         />
