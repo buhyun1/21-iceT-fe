@@ -14,7 +14,7 @@ const Header = ({ hasNotification, receiverId }: IHeaderProps) => {
   };
 
   return (
-    <header className="relative text-center h-16 flex items-center justify-center px-6 py-8 bg-orange-300">
+    <header className="relative text-center h-16 flex items-center justify-center px-6 py-8 bg-[#FFEFC3] ">
       <div className="flex items-center gap-3 relative z-10">
         <img
           src={KocoImage}
@@ -24,7 +24,7 @@ const Header = ({ hasNotification, receiverId }: IHeaderProps) => {
           className="hover:scale-105 transition-transform duration-300"
         />
         <h1
-          className="text-3xl font-semibold text-white drop-shadow-md"
+          className="text-3xl font-semibold text-[#4D290A] drop-shadow-md"
           style={{ fontFamily: 'Jua', fontWeight: 500 }}
         >
           코코
