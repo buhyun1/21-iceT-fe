@@ -85,7 +85,7 @@ const MorePage = () => {
     <div className="bg-background min-h-screen">
       <PageHeader title="더보기" />
 
-      <div className="px-6">
+      <div className="px-6 pb-20">
         {/* 프로필 정보 */}
         <div className="bg-surface p-4 mb-4 flex items-center gap-4">
           <img

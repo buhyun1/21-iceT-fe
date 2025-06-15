@@ -73,54 +73,56 @@ const CommentItem = (data: ICommentProps) => {
             </div>
 
             {/* 메뉴 버튼 */}
-            <div className="relative">
-              <button
-                onClick={handleToggleMenu}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors text-text-secondary hover:text-text-primary"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+            {data.isOwner && (
+              <div className="relative">
+                <button
+                  onClick={handleToggleMenu}
+                  className="p-1 hover:bg-gray-100 rounded-full transition-colors text-text-secondary hover:text-text-primary"
                 >
-                  <circle cx="12" cy="12" r="1" />
-                  <circle cx="19" cy="12" r="1" />
-                  <circle cx="5" cy="12" r="1" />
-                </svg>
-              </button>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <circle cx="12" cy="12" r="1" />
+                    <circle cx="19" cy="12" r="1" />
+                    <circle cx="5" cy="12" r="1" />
+                  </svg>
+                </button>
 
-              {/* 드롭다운 메뉴 */}
-              {isMenuOpen && (
-                <>
-                  {/* 백드롭 */}
-                  <div className="fixed inset-0 z-10" onClick={() => setIsMenuOpen(false)} />
+                {/* 드롭다운 메뉴 */}
+                {isMenuOpen && (
+                  <>
+                    {/* 백드롭 */}
+                    <div className="fixed inset-0 z-10" onClick={() => setIsMenuOpen(false)} />
 
-                  {/* 메뉴 */}
-                  <div className="absolute right-0 top-8 z-20 bg-white border border-border rounded-lg shadow-lg py-1 min-w-[100px]">
-                    {data.isOwner && (
-                      // 본인 댓글 메뉴
-                      <>
-                        <button
-                          //onClick={handleEdit}
-                          className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-text-primary"
-                        >
-                          수정
-                        </button>
-                        <button
-                          onClick={() => handleModalOpen(true)}
-                          className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-error"
-                        >
-                          삭제
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
+                    {/* 메뉴 */}
+                    <div className="absolute right-0 top-8 z-20 bg-white border border-border rounded-lg shadow-lg py-1 min-w-[100px]">
+                      {data.isOwner && (
+                        // 본인 댓글 메뉴
+                        <>
+                          <button
+                            //onClick={handleEdit}
+                            className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-text-primary"
+                          >
+                            수정
+                          </button>
+                          <button
+                            onClick={() => handleModalOpen(true)}
+                            className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-error"
+                          >
+                            삭제
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </div>
 
           {/* 댓글 내용 */}

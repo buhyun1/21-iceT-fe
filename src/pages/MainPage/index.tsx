@@ -55,40 +55,41 @@ const MainPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-6 p-6 pb-30">
-      <Header hasNotification={true} receiverId={userProfileData.userId} />
+    <>
+      <Header hasNotification={false} receiverId={userProfileData.userId} />
+      <div className="flex flex-col gap-6 p-6 pb-30">
+        <ProfileCard
+          profileImgUrl={userProfileData.profileImgUrl}
+          nickname={userProfileData.nickname}
+          statusMessage={userProfileData.statusMsg}
+        />
 
-      <ProfileCard
-        profileImgUrl={userProfileData.profileImgUrl}
-        nickname={userProfileData.nickname}
-        statusMessage={userProfileData.statusMsg}
-      />
+        {/* ✅ 오늘의 문제 */}
+        <div className="flex flex-col gap-2">
+          <h2 className="text-lg font-semibold">오늘의 문제</h2>
+          {Array.isArray(todayProblemData?.problems) && todayProblemData.problems.length > 0 ? (
+            todayProblemData.problems.map(problem => (
+              <ProblemItem
+                key={problem.problemNumber}
+                onClick={() => {
+                  const url = `https://www.acmicpc.net/problem/${problem.problemNumber}`;
+                  window.open(url, '_blank');
+                }}
+                problemNumber={problem.problemNumber}
+                title={problem.title}
+                tier={problem.tier}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-gray-500">오늘 출제된 문제가 없습니다.</p>
+          )}
+        </div>
 
-      {/* ✅ 오늘의 문제 */}
-      <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold">오늘의 문제</h2>
-        {Array.isArray(todayProblemData?.problems) && todayProblemData.problems.length > 0 ? (
-          todayProblemData.problems.map(problem => (
-            <ProblemItem
-              key={problem.problemNumber}
-              onClick={() => {
-                const url = `https://www.acmicpc.net/problem/${problem.problemNumber}`;
-                window.open(url, '_blank');
-              }}
-              problemNumber={problem.problemNumber}
-              title={problem.title}
-              tier={problem.tier}
-            />
-          ))
-        ) : (
-          <p className="text-sm text-gray-500">오늘 출제된 문제가 없습니다.</p>
-        )}
+        <TotalStudyCard studyStats={userStudyStatData.studyStats} />
+        <ChunsikCard onClick={handleOpenGame} />
+        <BottomNav />
       </div>
-
-      <TotalStudyCard studyStats={userStudyStatData.studyStats} />
-      <ChunsikCard onClick={handleOpenGame} />
-      <BottomNav />
-    </div>
+    </>
   );
 };
 
