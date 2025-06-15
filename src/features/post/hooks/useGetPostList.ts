@@ -2,8 +2,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import getPostList from '../api/getPostList';
 
 const useGetPostList = ({ category, keyword }: { category: string[]; keyword: string }) => {
-  console.log(keyword);
-
   return useInfiniteQuery({
     queryKey: ['posts', category, keyword],
     queryFn: ({ pageParam }) => getPostList({ pageParam, category, keyword }),
