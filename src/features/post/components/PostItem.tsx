@@ -1,6 +1,7 @@
 import { formatDate } from '@/utils/formatDate';
 import { useNavigate } from 'react-router-dom';
 import { Posts } from '../api/getPostList';
+import { convertEnglishCategoryToKorean } from '@/utils/doMappingCategories';
 
 interface IPostItemProps {
   post: Posts;
@@ -18,11 +19,21 @@ const PostItem = ({ post }: IPostItemProps) => {
       onClick={onClickPost}
       className="bg-surface p-4 border-b border-border cursor-pointer hover:bg-gray-50 transition-colors"
     >
+      <div className="flex flex-wrap gap-2 mb-2 text-xs text-gray-500">
+        {post.categories.map((category, index) => (
+          <span key={category.categoryId}>
+            {convertEnglishCategoryToKorean(category.categoryName)}
+            {index < post.categories.length - 1 && <span className="text-gray-300 ml-2">•</span>}
+          </span>
+        ))}
+      </div>
       {/* 제목 */}
-      <h3 className="text-base font-semibold text-text-primary mb-2 line-clamp-2">
-        [{post.problemNumber}] {post.title}
+      <h3 className="text-base font-semibold text-text-primary mb-2 line-clamp-2 flex items-start gap-2">
+        <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md text-xs font-medium shrink-0">
+          #{post.problemNumber}
+        </span>
+        <span>{post.title}</span>
       </h3>
-
       {/* 하단 정보 */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -30,6 +41,7 @@ const PostItem = ({ post }: IPostItemProps) => {
           <span className="text-xs text-text-secondary">·</span>
           <span className="text-xs text-text-secondary">{formatDate(post.createdAt)}</span>
         </div>
+
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
             <span className={`text-xs ${post.likeCount ? 'text-red-500' : 'text-text-secondary'}`}>
