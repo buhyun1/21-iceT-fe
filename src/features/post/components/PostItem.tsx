@@ -19,11 +19,13 @@ const PostItem = ({ post }: IPostItemProps) => {
       onClick={onClickPost}
       className="bg-surface p-4 border-b border-border cursor-pointer hover:bg-gray-50 transition-colors"
     >
-      <div className="flex flex-wrap gap-2 mb-2 text-xs text-gray-500">
-        {post.categories.map((category, index) => (
-          <span key={category.categoryId}>
+      <div className="flex flex-wrap gap-1 mb-2">
+        {post.categories.map(category => (
+          <span
+            key={category.categoryId}
+            className="bg-gray-100 text-gray-600 px-2 py-1 rounded-xl text-xs font-medium"
+          >
             {convertEnglishCategoryToKorean(category.categoryName)}
-            {index < post.categories.length - 1 && <span className="text-gray-300 ml-2">•</span>}
           </span>
         ))}
       </div>
