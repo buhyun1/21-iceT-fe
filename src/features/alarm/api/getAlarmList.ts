@@ -1,21 +1,12 @@
 import { API_SUB_URLS_V3 } from '@/constants/apiConfig';
 import axiosInstance from '@/shared/lib/axios';
 import { IApiResponse } from '@/shared/types/ApiResponse';
+import { Alarm } from '../types/alarm';
 
 interface IGetAlarmListProps {
   receiverId: number;
   pageParam: number | null;
 }
-
-export type Alarm = {
-  id: number;
-  senderId: number;
-  postId: number;
-  senderNickname: string;
-  postTitle: string;
-  createdAt: string;
-  alarmType: string;
-};
 
 interface IGetAlarmListResponse {
   alarms: Alarm[];

@@ -1,14 +1,10 @@
-import useConfirmAlarm from '@/features/alarm/hooks/useConfirmAlarm';
+import AlarmItem from '@/features/alarm/components/AlarmItem';
 import useGetAlarmList from '@/features/alarm/hooks/useGetAlarmList';
-import { getAlarmMessage } from '@/features/alarm/utils/getAlarmMessage';
-import { getNotificationIcon } from '@/features/alarm/utils/getNotificationIcon';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import PageHeader from '@/shared/layout/PageHeader';
-import { formatDate } from '@/utils/formatDate';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const AlarmListPage = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const receiverId = location.state.receiverId || undefined;
 
@@ -26,24 +22,8 @@ const AlarmListPage = () => {
     fetchNextPage,
   });
 
-  const AlarmConfirmMutation = useConfirmAlarm();
   const alarmLength = AlarmListData?.pages[0].totalCount;
   const allAlarms = AlarmListData?.pages?.flatMap(page => page.alarms) || [];
-
-  const handleAlarmClick = (postId: number, alarmId: number) => {
-    try {
-      AlarmConfirmMutation.mutate(
-        { alarmId, userId: receiverId },
-        {
-          onSuccess: () => {
-            navigate(`/post/${postId}`);
-          },
-        }
-      );
-    } catch {
-      alert('존재하지 않는 알람입니다');
-    }
-  };
 
   return (
     <div className="bg-background min-h-screen relative">
@@ -64,34 +44,8 @@ const AlarmListPage = () => {
                 const isLastAlarm = index === allAlarms.length - 1;
 
                 return (
-                  <div
-                    key={alarm.id}
-                    ref={isLastAlarm ? lastAlarmRef : null}
-                    onClick={() => handleAlarmClick(alarm.postId, alarm.id)}
-                    className={`
-                  p-4 rounded-lg border cursor-pointer transition-colors
-                  bg-blue-50 border-blue-200
-                  hover:bg-gray-50
-                `}
-                  >
-                    <div className="flex items-start gap-3">
-                      {/* 알람 아이콘 */}
-                      <div className="flex-shrink-0 text-xl">
-                        {getNotificationIcon(alarm.alarmType)}
-                      </div>
-
-                      {/* 알람 내용 */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-sm text-gray-900">
-                            {getAlarmMessage(alarm)}
-                          </h3>
-
-                          <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
-                        </div>
-                        <p className="text-xs text-gray-400 mt-1">{formatDate(alarm.createdAt)}</p>
-                      </div>
-                    </div>
+                  <div key={alarm.id} ref={isLastAlarm ? lastAlarmRef : null}>
+                    <AlarmItem {...alarm} />
                   </div>
                 );
               })}
