@@ -7,6 +7,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/constants/queryKeys';
 import defaultProfileImage from '@/assets/defaultProfileImage.png';
 import { CommentAuthor } from '../types/comment';
+import Input from '@/shared/ui/Input';
+import useInput from '@/shared/hooks/useInput';
 
 interface ICommentProps {
   postId: number;
@@ -19,7 +21,9 @@ interface ICommentProps {
 
 const CommentItem = (data: ICommentProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const { isModalOpen, handleModalOpen } = useModal();
+  const { value, onChange } = useInput(data?.content);
   const queryClient = useQueryClient();
   const deleteCommentMutation = useDeleteComment();
 
@@ -31,7 +35,7 @@ const CommentItem = (data: ICommentProps) => {
     handleModalOpen(false);
   };
 
-  const onConfirm = () => {
+  const onDeleteConfirm = () => {
     try {
       deleteCommentMutation.mutateAsync(
         { postId: data.postId, commentId: data.commentId },
@@ -44,6 +48,18 @@ const CommentItem = (data: ICommentProps) => {
       );
     } catch {
       alert('댓글 삭제에 실패했습니다.');
+    }
+  };
+
+  const handleEditMode = () => {
+    setIsEditOpen(prev => !prev);
+  };
+
+  const onEditConfirm = () => {
+    try {
+      console.log('편집 모드');
+    } catch {
+      alert('댓글 편집에 실패했습니다.');
     }
   };
 
@@ -100,8 +116,8 @@ const CommentItem = (data: ICommentProps) => {
                         // 본인 댓글 메뉴
                         <>
                           <button
-                            //onClick={handleEdit}
                             className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors text-text-primary"
+                            onClick={handleEditMode}
                           >
                             수정
                           </button>
@@ -121,7 +137,25 @@ const CommentItem = (data: ICommentProps) => {
           </div>
 
           {/* 댓글 내용 */}
-          <p className="text-text-primary text-sm leading-relaxed mb-3">{data.content}</p>
+          {!isEditOpen ? (
+            <p className="text-text-primary text-sm leading-relaxed mb-3">{data.content}</p>
+          ) : (
+            <div className="flex gap-2">
+              <Input value={value} onChange={onChange} className="w-80" />
+              <button
+                onClick={onEditConfirm}
+                className="px-4 py-2 bg-success hover:bg-success-hover text-white text-sm font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2"
+              >
+                수정
+              </button>
+              <button
+                onClick={handleEditMode}
+                className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              >
+                취소
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <ConfirmModal
@@ -129,7 +163,7 @@ const CommentItem = (data: ICommentProps) => {
         title="댓글을 삭제하시겠습니까?"
         text="삭제 이력은 복구할 수 없습니다."
         onCancel={onCancel}
-        onConfirm={onConfirm}
+        onConfirm={onDeleteConfirm}
       />
     </div>
   );
