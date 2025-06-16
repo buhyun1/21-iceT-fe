@@ -10,18 +10,12 @@ import { useRegisterSurvey } from '@/features/survey/hooks/useRegisterSurvey';
 import { useProblemSet } from '@/features/problemSet/hooks/useProblemSet';
 import { IProblemSurveyRequest } from '@/features/survey/api/registerSurvey';
 import useSubmitButton from '@/shared/hooks/useSubmitButton';
+import { Problem } from '@/features/problemSet/types/problem';
 interface ISurveyData {
   problemId: number;
   isSolved: boolean | null;
   difficultyLevel: string;
 }
-
-type Problem = {
-  problemId: number;
-  problemNumber: number;
-  title: string;
-  tier: string;
-};
 
 export interface IProblemSetResponse {
   date: string;
