@@ -1,16 +1,11 @@
 // src/hooks/mutations/useProblemMutations.ts
 import { useMutation } from '@tanstack/react-query';
 import { registerSurvey } from '../api/registerSurvey';
-
-export interface IProblemSurvey {
-  problemId: number;
-  isSolved: boolean;
-  difficultyLevel: string;
-}
+import { ProblemSurvey } from '../types/problemSurvey';
 
 export interface IProblemSurveyRequest {
   problemSetId: number;
-  responses: IProblemSurvey[];
+  responses: ProblemSurvey[];
 }
 
 /**
