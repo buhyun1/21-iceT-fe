@@ -7,7 +7,7 @@ interface IGetAlarmListProps {
   pageParam: number | null;
 }
 
-type Alarm = {
+export type Alarm = {
   id: number;
   senderId: number;
   postId: number;
