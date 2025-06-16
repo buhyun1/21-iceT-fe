@@ -8,16 +8,16 @@ const axiosInstance = axios.create({
 });
 
 //토큰 갱신 전용 axios 인스턴스
-// const refreshAxios = axios.create({
-//   baseURL: axiosInstance.defaults.baseURL,
-//   withCredentials: true,
-//   timeout: 5000, // 토큰 갱신은 좀 더 짧게
-// });
+const refreshAxios = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  timeout: 5000, // 토큰 갱신은 좀 더 짧게
+});
 
 // 토큰 갱신 함수
 const refreshToken = async () => {
   try {
-    const response = await axiosInstance.post('/api/backend/v1/auth/refresh');
+    const response = await refreshAxios.post('/api/backend/v1/auth/refresh');
 
     return response.status === 200;
   } catch {
