@@ -1,16 +1,13 @@
 import useConfirmAlarm from '@/features/alarm/hooks/useConfirmAlarm';
 import useGetAlarmList from '@/features/alarm/hooks/useGetAlarmList';
+import { getAlarmMessage } from '@/features/alarm/utils/getAlarmMessage';
+import { getNotificationIcon } from '@/features/alarm/utils/getNotificationIcon';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import PageHeader from '@/shared/layout/PageHeader';
 import { formatDate } from '@/utils/formatDate';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 // 알람 데이터 타입 정의 (실제 API 응답 구조에 맞춤)
-interface IAlarm {
-  senderNickname: string;
-  alarmType: string;
-  createdAt: string;
-}
 
 const AlarmListPage = () => {
   const navigate = useNavigate();
@@ -24,7 +21,6 @@ const AlarmListPage = () => {
     isFetchingNextPage,
     isLoading: isAlarmsLoading,
   } = useGetAlarmList(receiverId);
-  console.log(AlarmListData);
 
   const lastAlarmRef = useInfiniteScroll({
     isLoading: isFetchingNextPage,
@@ -38,35 +34,6 @@ const AlarmListPage = () => {
 
   // 모든 페이지의 알람을 하나의 배열로 합치기
   const allAlarms = AlarmListData?.pages?.flatMap(page => page.alarms) || [];
-
-  // 알람 타입별 아이콘 반환
-  const getNotificationIcon = (type: string) => {
-    switch (type) {
-      case 'COMMENT':
-        return '💬';
-      case 'LIKE':
-        return '❤️';
-      default:
-        return '📢';
-    }
-  };
-
-  // 알람 메시지 생성 ex) "Helen님이 댓글을 남겼습니다" 형식
-  const getNotificationMessage = (alarm: IAlarm) => {
-    return `${alarm.senderNickname}님이 ${getNotificationText(alarm.alarmType)} 남겼습니다`;
-  };
-
-  // 알람 타입 한글 -> 영어 변환
-  const getNotificationText = (type: string) => {
-    switch (type) {
-      case 'COMMENT':
-        return '댓글을';
-      case 'LIKE':
-        return '좋아요를';
-      default:
-        return '공지';
-    }
-  };
 
   const handleAlarmClick = (postId: number, alarmId: number) => {
     try {
@@ -123,7 +90,7 @@ const AlarmListPage = () => {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="font-semibold text-sm text-gray-900">
-                            {getNotificationMessage(alarm)}
+                            {getAlarmMessage(alarm)}
                           </h3>
 
                           <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
