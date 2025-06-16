@@ -7,8 +7,6 @@ import PageHeader from '@/shared/layout/PageHeader';
 import { formatDate } from '@/utils/formatDate';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-// 알람 데이터 타입 정의 (실제 API 응답 구조에 맞춤)
-
 const AlarmListPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,10 +27,7 @@ const AlarmListPage = () => {
   });
 
   const AlarmConfirmMutation = useConfirmAlarm();
-
   const alarmLength = AlarmListData?.pages[0].totalCount;
-
-  // 모든 페이지의 알람을 하나의 배열로 합치기
   const allAlarms = AlarmListData?.pages?.flatMap(page => page.alarms) || [];
 
   const handleAlarmClick = (postId: number, alarmId: number) => {
@@ -48,7 +43,6 @@ const AlarmListPage = () => {
     } catch {
       alert('존재하지 않는 알람입니다');
     }
-    navigate(`/post/${postId}`);
   };
 
   return (
