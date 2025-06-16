@@ -9,6 +9,7 @@ import defaultProfileImage from '@/assets/defaultProfileImage.png';
 import { CommentAuthor } from '../types/comment';
 import Input from '@/shared/ui/Input';
 import useInput from '@/shared/hooks/useInput';
+import useEditComment from '../hooks/useEditComment';
 
 interface ICommentProps {
   postId: number;
@@ -26,6 +27,7 @@ const CommentItem = (data: ICommentProps) => {
   const { value, onChange } = useInput(data?.content);
   const queryClient = useQueryClient();
   const deleteCommentMutation = useDeleteComment();
+  const editCommentMutation = useEditComment();
 
   const handleToggleMenu = () => {
     setIsMenuOpen(prev => !prev);
@@ -57,9 +59,22 @@ const CommentItem = (data: ICommentProps) => {
 
   const onEditConfirm = () => {
     try {
-      console.log('편집 모드');
+      editCommentMutation.mutateAsync(
+        {
+          postId: data.postId,
+          commentId: data.commentId,
+          content: value,
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: queryKeys.post.comment(data?.postId) });
+          },
+        }
+      );
     } catch {
       alert('댓글 편집에 실패했습니다.');
+    } finally {
+      handleEditMode();
     }
   };
 
