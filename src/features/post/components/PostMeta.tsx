@@ -6,16 +6,8 @@ import { useState } from 'react';
 import useDeletePost from '../hooks/useDeletePost';
 import { useNavigate } from 'react-router-dom';
 import defaultProfileImage from '@/assets/defaultProfileImage.png';
-
-type Author = {
-  imgUrl: string;
-  nickname: string;
-};
-
-type Category = {
-  categoryName: string;
-  categoryId: number;
-};
+import { Category } from '../types/Category';
+import { Author } from '../types/author';
 
 interface IPostMetaProps {
   isOwner: boolean;

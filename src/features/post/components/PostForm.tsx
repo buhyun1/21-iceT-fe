@@ -8,8 +8,8 @@ import Input from '@/shared/ui/Input';
 import { convertKoreanToEnglish } from '@/utils/doMappingCategories';
 import MDEditor from '@uiw/react-md-editor';
 import { useMemo, useState } from 'react';
-import { Category } from '../api/getPostList';
 import { convertEnglishToKorean } from '@/utils/doMappingCategories';
+import { Category } from '../types/Category';
 
 export type Post = {
   problemNumber: number;

@@ -1,10 +1,10 @@
 import { formatDate } from '@/utils/formatDate';
 import { useNavigate } from 'react-router-dom';
-import { Posts } from '../api/getPostList';
 import { convertEnglishCategoryToKorean } from '@/utils/doMappingCategories';
+import { Post } from '../types/post';
 
 interface IPostItemProps {
-  post: Posts;
+  post: Post;
 }
 
 const PostItem = ({ post }: IPostItemProps) => {
