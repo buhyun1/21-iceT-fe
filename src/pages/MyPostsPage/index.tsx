@@ -20,7 +20,6 @@ const MyPostPage = () => {
   });
 
   const allPosts = myPostListData?.pages?.flatMap(page => page.posts) || [];
-  console.log(allPosts);
 
   return (
     <div className="bg-background min-h-screen relative pb-20">

@@ -1,16 +1,11 @@
 import { IApiResponse } from '@/shared/types/ApiResponse';
 import axiosInstance from '@/shared/lib/axios';
 import { API_SUB_URLS } from '@/constants/apiConfig';
-
-export interface IProblemSurvey {
-  problemId: number;
-  isSolved: boolean;
-  difficultyLevel: string;
-}
+import { ProblemSurvey } from '../types/problemSurvey';
 
 export interface IProblemSurveyRequest {
   problemSetId: number;
-  responses: IProblemSurvey[];
+  responses: ProblemSurvey[];
 }
 /**
  * POST) 설문 등록

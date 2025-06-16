@@ -6,12 +6,7 @@ import useDeleteComment from '../hooks/useDeleteComment';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/constants/queryKeys';
 import defaultProfileImage from '@/assets/defaultProfileImage.png';
-
-type Author = {
-  userId: number;
-  imgUrl: string;
-  nickname: string;
-};
+import { CommentAuthor } from '../types/comment';
 
 interface ICommentProps {
   postId: number;
@@ -19,7 +14,7 @@ interface ICommentProps {
   content: string;
   createdAt: string;
   isOwner: boolean;
-  author: Author;
+  author: CommentAuthor;
 }
 
 const CommentItem = (data: ICommentProps) => {

@@ -1,15 +1,10 @@
+import { StudyStat } from '@/features/user/types/studystat';
 import Card from '@/shared/ui/Card';
 import Spinner from '@/shared/ui/Spinner';
 import { lazy, Suspense } from 'react';
 
-interface IStudyStat {
-  categoryId: number;
-  categoryName: string;
-  correctRate: number;
-}
-
 interface ITotalStudyCardProps {
-  studyStats: IStudyStat[];
+  studyStats: StudyStat[];
 }
 
 const RadarChart = lazy(() => import('../../../../features/user/components/StudyStatsRadarChart'));

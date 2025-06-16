@@ -1,17 +1,8 @@
 import { API_SUB_URLS_V3 } from '@/constants/apiConfig';
 import axiosInstance from '@/shared/lib/axios';
 import { IApiResponse } from '@/shared/types/ApiResponse';
-
-type Category = {
-  categoryId: number;
-  categoryName: string;
-};
-
-type Author = {
-  userId: number;
-  nickname: string;
-  imgUrl: string;
-};
+import { Author } from '../types/author';
+import { Category } from '../types/Category';
 
 export interface IGetPostDetailResponse {
   problemNumber: number;

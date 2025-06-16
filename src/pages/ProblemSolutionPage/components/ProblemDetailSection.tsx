@@ -3,7 +3,6 @@ import { processMathHtml } from '@/features/problemSet/utils/processMathHtml';
 import { processMathText } from '@/features/problemSet/utils/processMathText';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { useEffect } from 'react';
-//import { useEffect } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 const ProblemDetailSection = (data: IGetProblemSolutionResponse) => {

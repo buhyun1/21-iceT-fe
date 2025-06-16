@@ -1,33 +1,12 @@
 import { API_SUB_URLS_V3 } from '@/constants/apiConfig';
 import axiosInstance from '@/shared/lib/axios';
 import { IApiResponse } from '@/shared/types/ApiResponse';
-
-export type Category = {
-  categoryId: number;
-  categoryName: string;
-};
-
-export type Author = {
-  userId: number;
-  nickname: string;
-  imgUrl: string;
-};
-
-export type Posts = {
-  postId: number;
-  problemNumber: number;
-  title: string;
-  createdAt: string;
-  categories: Category[];
-  author: Author;
-  commentCount: number;
-  likeCount: number;
-};
+import { Post } from '../types/post';
 
 export interface IGetPostListResponse {
   nextCursorId: number;
   hasNext: boolean;
-  posts: Posts[];
+  posts: Post[];
 }
 
 export interface IGetPostListProps {

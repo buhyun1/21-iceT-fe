@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import hotIc from '@/assets/hotIc.png';
 import { useNavigate } from 'react-router-dom';
-import { Posts } from '../api/getPostList';
+import { Post } from '../types/post';
 
 interface IHotPostItemProps {
-  hotPostData: Posts[];
+  hotPostData: Post[];
 }
 
 const HotPostItem = ({ hotPostData }: IHotPostItemProps) => {

@@ -1,19 +1,13 @@
 import { API_SUB_URLS } from '@/constants/apiConfig';
 import axiosInstance from '@/shared/lib/axios';
 import { IApiResponse } from '@/shared/types/ApiResponse';
-
-export interface IProblemItem {
-  problemId: number;
-  problemNumber: number;
-  title: string;
-  tier: string;
-}
+import { Problem } from '../types/problem';
 
 export interface IGetProblemSetResponse {
   date: string;
   problemSetId: number;
   isAnswered: boolean;
-  problems: IProblemItem[];
+  problems: Problem[];
 }
 
 /**

@@ -12,21 +12,6 @@ import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { useMemo, useState } from 'react';
 import { convertKoreanToEnglish } from '@/utils/doMappingCategories';
 import useGetHotPost from '@/features/post/hooks/useGetHotPost';
-interface IAuthor {
-  userId: number;
-  nickname: string;
-  imgUrl: string;
-}
-
-export interface IPostItem {
-  postId: number;
-  title: string;
-  content: string;
-  author: IAuthor;
-  countLike: number;
-  countComment: number;
-  createdAt: string;
-}
 
 const PostsPage = () => {
   const [appliedKeyword, setAppliedKeyword] = useState('');

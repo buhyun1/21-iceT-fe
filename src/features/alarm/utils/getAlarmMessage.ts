@@ -1,4 +1,5 @@
-import { Alarm } from '../api/getAlarmList';
+import { Alarm } from '../types/alarm';
+
 /**
  * 알람 타입에 따라 한글+전치사로 변환하는 함수
  * @param type
