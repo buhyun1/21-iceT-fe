@@ -106,24 +106,12 @@ const PostDetailPage = () => {
           {/* 댓글 목록 */}
           {allComments.length > 0
             ? allComments.map((comment, index) => {
+                const isLastComment = index === allComments.length - 1;
                 // 마지막 댓글에 ref 추가하여 무한스크롤 트리거
-                if (allComments.length === index + 1) {
-                  return (
-                    <div key={comment.id} ref={lastCommentRef}>
-                      <CommentItem
-                        postId={postDetailData.postId}
-                        commentId={comment.id}
-                        content={comment.comment}
-                        author={comment.author}
-                        createdAt={comment.createdAt}
-                        isOwner={userProfileData?.userId === comment.author.userId}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
+
+                return (
+                  <div key={comment.id} ref={isLastComment ? lastCommentRef : null}>
                     <CommentItem
-                      key={comment.id}
                       postId={postDetailData.postId}
                       commentId={comment.id}
                       content={comment.comment}
@@ -131,8 +119,8 @@ const PostDetailPage = () => {
                       createdAt={comment.createdAt}
                       isOwner={userProfileData?.userId === comment.author.userId}
                     />
-                  );
-                }
+                  </div>
+                );
               })
             : !isCommentsLoading && <div className="py-8 text-center">댓글이 없습니다.</div>}
 
