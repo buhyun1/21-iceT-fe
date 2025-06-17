@@ -123,13 +123,15 @@ export const useNotificationStore = create<IAlarmState>((set, get) => ({
       duration: 4000,
     });
 
-    // 읽지 않은 알림 상태 업데이트
+    // // 읽지 않은 알림 상태 업데이트
     set({ hasUnreadNotifications: true });
   },
 
   // 읽음 처리
   markAsRead: () => {
-    set({ hasUnreadNotifications: false });
+    set({
+      hasUnreadNotifications: false,
+    });
   },
 
   // 토스트 추가
