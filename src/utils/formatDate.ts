@@ -1,7 +1,7 @@
 /**
  *
  * @param dateString
- * @returns '방금 전', '5분 전', '3시간 전', '2일 전', '6월 4일' 형식
+ * @returns '방금 전', '5분 전', '3시간 전', '2일 전', '6월 4일', '2025년 6월 4일' 형식
  */
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -20,9 +20,20 @@ export const formatDate = (dateString: string) => {
   } else if (diffDays < 7) {
     return `${diffDays}일 전`;
   } else {
-    return new Intl.DateTimeFormat('ko-KR', {
-      month: 'long', // '6월'
-      day: 'numeric', // '4일'
-    }).format(date);
+    // 올해가 아니면 연도도 포함
+    const isThisYear = date.getFullYear() === now.getFullYear();
+
+    if (isThisYear) {
+      return new Intl.DateTimeFormat('ko-KR', {
+        month: 'long',
+        day: 'numeric',
+      }).format(date);
+    } else {
+      return new Intl.DateTimeFormat('ko-KR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(date);
+    }
   }
 };
