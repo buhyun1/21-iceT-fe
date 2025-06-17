@@ -9,7 +9,6 @@ import Spinner from '@/shared/ui/Spinner';
 import { useAuth } from '@/app/providers/AuthContext';
 import { useUserStats } from '@/features/user/hooks/useUserStats';
 import { useProblemSet } from '@/features/problemSet/hooks/useProblemSet';
-import { useNotification } from '@/shared/hooks/useNotification';
 
 const MainPage = () => {
   const { logoutUserContext } = useAuth();
@@ -17,8 +16,6 @@ const MainPage = () => {
   const { data: userStudyStatData, isLoading: isUserStudyStatLoading } = useUserStats();
   const today = new Date().toISOString().split('T')[0];
   const { data: todayProblemData, isLoading: isTodayProblemLoading } = useProblemSet(today);
-
-  useNotification(); // 알람 시스템 초기화 (sse 구독)
 
   const handleOpenGame = () => {
     window.open('/game/index.html', '_blank');

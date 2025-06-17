@@ -1,6 +1,5 @@
 import KocoImage from '@/assets/kocoImage.png';
 import { useNavigate } from 'react-router-dom';
-import { useNotification } from '../hooks/useNotification';
 
 interface IHeaderProps {
   receiverId?: number;
@@ -9,10 +8,9 @@ interface IHeaderProps {
 
 const Header = ({ receiverId }: IHeaderProps) => {
   const navigate = useNavigate();
-  const { hasUnreadNotifications, markAsRead } = useNotification();
+  const hasUnreadNotifications = false;
 
   const handleNotificationClick = () => {
-    markAsRead();
     navigate('/alarms', { state: { receiverId } });
   };
 
