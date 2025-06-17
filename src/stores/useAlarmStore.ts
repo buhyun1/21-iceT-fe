@@ -54,7 +54,7 @@ export const useNotificationStore = create<IAlarmState>((set, get) => ({
     }
 
     try {
-      const eventSource = new EventSource(`${API_BASE_URL}${API_SUB_URLS_V3}/alarms/subscribe`, {
+      const eventSource = new EventSource(`${API_SUB_URLS_V3}/alarms/subscribe`, {
         withCredentials: true,
       });
 
