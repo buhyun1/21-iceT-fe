@@ -4,10 +4,13 @@ import { Alarm } from '../types/alarm';
 import { getNotificationIcon } from '../utils/getNotificationIcon';
 import { getAlarmMessage } from '../utils/getAlarmMessage';
 import { formatDate } from '@/utils/formatDate';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/constants/queryKeys';
 
 const AlarmItem = (alarm: Alarm) => {
   const navigate = useNavigate();
   const AlarmConfirmMutation = useConfirmAlarm();
+  const queryClient = useQueryClient();
   const handleAlarmClick = (postId: number, alarmId: number) => {
     try {
       AlarmConfirmMutation.mutate(
@@ -15,6 +18,9 @@ const AlarmItem = (alarm: Alarm) => {
         {
           onSuccess: () => {
             navigate(`/post/${postId}`);
+            queryClient.refetchQueries({
+              queryKey: [...queryKeys.alarm.all, 'count-only', alarm.receiverId],
+            });
           },
         }
       );
