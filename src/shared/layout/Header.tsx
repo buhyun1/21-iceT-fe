@@ -1,6 +1,6 @@
 import KocoImage from '@/assets/kocoImage.png';
+import useGetAlarmCount from '@/features/alarm/hooks/useGetAlarmCount';
 import { useNavigate } from 'react-router-dom';
-import { useNotification } from '../hooks/useNotification';
 
 interface IHeaderProps {
   receiverId?: number;
@@ -9,10 +9,8 @@ interface IHeaderProps {
 
 const Header = ({ receiverId }: IHeaderProps) => {
   const navigate = useNavigate();
-  const { hasUnreadNotifications, markAsRead } = useNotification();
-
+  const { data: alarmCountData } = useGetAlarmCount(receiverId || 0);
   const handleNotificationClick = () => {
-    markAsRead();
     navigate('/alarms', { state: { receiverId } });
   };
 
@@ -45,7 +43,7 @@ const Header = ({ receiverId }: IHeaderProps) => {
           />
         </svg>
 
-        {hasUnreadNotifications && (
+        {alarmCountData?.unreadCount !== 0 && Number(alarmCountData?.unreadCount) > 0 && (
           <div className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white animate-pulse" />
         )}
       </button>
