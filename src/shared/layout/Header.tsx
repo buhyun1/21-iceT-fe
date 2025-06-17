@@ -1,15 +1,18 @@
 import KocoImage from '@/assets/kocoImage.png';
 import { useNavigate } from 'react-router-dom';
+import { useNotification } from '../hooks/useNotification';
 
 interface IHeaderProps {
   receiverId?: number;
   hasNotification?: boolean;
 }
 
-const Header = ({ hasNotification, receiverId }: IHeaderProps) => {
+const Header = ({ receiverId }: IHeaderProps) => {
   const navigate = useNavigate();
+  const { hasUnreadNotifications, markAsRead } = useNotification();
 
   const handleNotificationClick = () => {
+    markAsRead();
     navigate('/alarms', { state: { receiverId } });
   };
 
@@ -42,7 +45,7 @@ const Header = ({ hasNotification, receiverId }: IHeaderProps) => {
           />
         </svg>
 
-        {hasNotification && (
+        {hasUnreadNotifications && (
           <div className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white animate-pulse" />
         )}
       </button>
