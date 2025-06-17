@@ -1,23 +1,28 @@
 /**
  *
  * @param dateString
- * @returns 6월 4일
+ * @returns '방금 전', '5분 전', '3시간 전', '2일 전', '6월 4일' 형식
  */
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   const now = new Date();
-  const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+  const diffMs = now.getTime() - date.getTime();
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMinutes / 60);
+  const diffDays = Math.floor(diffHours / 24);
 
-  if (diffInHours < 1) {
+  if (diffMinutes < 1) {
     return '방금 전';
-  } else if (diffInHours < 24) {
-    return `${diffInHours}시간 전`;
-  } else if (diffInHours < 24 * 7) {
-    return `${Math.floor(diffInHours / 24)}일 전`;
+  } else if (diffMinutes < 60) {
+    return `${diffMinutes}분 전`;
+  } else if (diffHours < 24) {
+    return `${diffHours}시간 전`;
+  } else if (diffDays < 7) {
+    return `${diffDays}일 전`;
   } else {
-    return date.toLocaleDateString('ko-KR', {
-      month: 'short',
-      day: 'numeric',
-    });
+    return new Intl.DateTimeFormat('ko-KR', {
+      month: 'long', // '6월'
+      day: 'numeric', // '4일'
+    }).format(date);
   }
 };
