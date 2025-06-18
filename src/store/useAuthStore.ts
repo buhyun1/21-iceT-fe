@@ -33,7 +33,6 @@ export const useAuthStore = create<IAuthState>(set => ({
       isAuthenticated: isAuth,
       isLoading: false,
     });
-    console.log(authFlag, isAuth);
   },
 
   setLoading: (loading: boolean) => {
