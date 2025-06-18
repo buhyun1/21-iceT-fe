@@ -8,10 +8,16 @@ import ProblemItem from '@/features/problemSet/components/ProblemItem';
 import Spinner from '@/shared/ui/Spinner';
 import { useUserStats } from '@/features/user/hooks/useUserStats';
 import { useProblemSet } from '@/features/problemSet/hooks/useProblemSet';
+import { useUserStore } from '@/store/useUserStore';
+import { useEffect } from 'react';
 
 const MainPage = () => {
-  //const { logoutUser } = useAuthStore();
-  const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
+  const { setUser } = useUserStore();
+  const {
+    data: userProfileData,
+    isLoading: isUserProfileLoading,
+    isSuccess: isGetProfileSuccess,
+  } = useUserProfile();
   const { data: userStudyStatData, isLoading: isUserStudyStatLoading } = useUserStats();
   const today = new Date().toISOString().split('T')[0];
   const { data: todayProblemData, isLoading: isTodayProblemLoading } = useProblemSet(today);
@@ -19,6 +25,12 @@ const MainPage = () => {
   const handleOpenGame = () => {
     window.open('/game/index.html', '_blank');
   };
+
+  useEffect(() => {
+    if (isGetProfileSuccess && userProfileData) {
+      setUser(userProfileData);
+    }
+  }, [userProfileData, setUser, isGetProfileSuccess]);
 
   // ⏳ 로딩 중
   if (isUserProfileLoading || isUserStudyStatLoading || isTodayProblemLoading) {

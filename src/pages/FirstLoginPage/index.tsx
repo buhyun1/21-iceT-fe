@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DEFAULT_IMG from '@/assets/defaultProfileImage.png';
 import useInput from '@/shared/hooks/useInput';
@@ -9,19 +9,38 @@ import { useUploadS3 } from '@/features/user/hooks/useUploadS3';
 import { getPresignedUrl } from '@/features/user/api/getPresignedUrl';
 import useSubmitButton from '@/shared/hooks/useSubmitButton';
 import PageHeader from '@/shared/layout/PageHeader';
+import { useUserStore } from '@/store/useUserStore';
 
 export default function FirstLoginPage() {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, setUser } = useUserStore();
   const { isEditMode } = location.state || false;
 
-  const { value: nickname, onChange: onChangeNickname } = useInput();
-  const { value: statusMsg, onChange: onChangeStatusMessage } = useInput();
-  const { preview, onChange: onChangeFile } = useFileInput();
+  const {
+    value: nickname,
+    onChange: onChangeNickname,
+    setInputValue: setNicknameValue,
+  } = useInput();
+  const {
+    value: statusMsg,
+    onChange: onChangeStatusMessage,
+    setInputValue: setStatusMessageValue,
+  } = useInput();
+  const { preview, onChange: onChangeFile, setFileIntialValue } = useFileInput();
 
   const completeProfileMutation = useCompleteProfile();
   const s3UploadMutation = useUploadS3();
+
+  // 초기화
+  useEffect(() => {
+    if (user) {
+      setNicknameValue(user.nickname);
+      setStatusMessageValue(user.statusMsg);
+      setFileIntialValue(user.profileImgUrl);
+    }
+  }, [user, setUser]);
 
   /** 제출 전 검사 */
   const nicknameErr = useMemo(() => {
@@ -48,6 +67,7 @@ export default function FirstLoginPage() {
       setIsLoading(true);
 
       // S3 업로드 로직
+
       let profileImgUrl = '';
 
       if (file) {
@@ -71,6 +91,11 @@ export default function FirstLoginPage() {
             return;
           }
         }
+      }
+
+      // 유저가 올린 파일이 없고, 유저의 프로필 이미지 url은 있는 경우, 그대로 사용
+      if (!file && user?.profileImgUrl) {
+        profileImgUrl = user.profileImgUrl;
       }
 
       // 파일이 없는 경우 바로 프로필 완성 API 호출

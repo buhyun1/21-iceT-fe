@@ -2,7 +2,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { loginWithKakao } from '../api/loginWithKakao';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@/store/useUserStore';
+import { useAuthStore } from '@/store/useAuthStore';
 
 /**
  * 카카오 로그인 뮤테이션 훅

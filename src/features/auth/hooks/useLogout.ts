@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../api/logout';
-import { useAuthStore } from '@/store/useUserStore';
+import { useAuthStore } from '@/store/useAuthStore';
 
 /**
  * 로그아웃 뮤테이션 훅

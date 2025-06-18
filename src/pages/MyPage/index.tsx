@@ -9,7 +9,7 @@ import { useState } from 'react';
 import DeleteConfirmModal from '@/shared/ui/DeleteComfirmModal';
 import useModal from '@/shared/hooks/useModal';
 import defaultProfileImage from '@/assets/defaultProfileImage.png';
-import { useAuthStore } from '@/store/useUserStore';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const MorePage = () => {
   const navigate = useNavigate();

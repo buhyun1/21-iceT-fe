@@ -2,7 +2,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import Spinner from '@/shared/ui/Spinner';
 import { useEffect } from 'react';
-import { useAuthStore } from '@/store/useUserStore';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export const AuthProtectedRoute = () => {
   const { isAuthenticated, isLoading, checkAuthStatus } = useAuthStore();

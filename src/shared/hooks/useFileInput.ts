@@ -30,7 +30,11 @@ const useFileInput = () => {
     setPreview(URL.createObjectURL(chosen));
   };
 
-  return { preview, file, onChange };
+  const setFileIntialValue = (url: string) => {
+    setPreview(url);
+  };
+
+  return { preview, file, onChange, setFileIntialValue };
 };
 
 export default useFileInput;

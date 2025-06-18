@@ -1,5 +1,5 @@
 import LoginCard from '@/features/auth/components/LoginCard';
-import { useAuthStore } from '@/store/useUserStore';
+import { useAuthStore } from '@/store/useAuthStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

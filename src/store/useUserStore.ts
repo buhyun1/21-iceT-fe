@@ -1,42 +1,18 @@
-// src/stores/useAuthStore.ts
+import { User } from '@/features/user/types/user';
 import { create } from 'zustand';
 
-interface IAuthState {
-  isAuthenticated: boolean;
-  isLoading: boolean;
-
-  // Actions
-  loginUser: () => void;
-  logoutUser: () => void;
-  checkAuthStatus: () => void;
-  setLoading: (loading: boolean) => void;
+interface IUserStore {
+  user: User | null;
+  setUser: (data: User) => void;
+  deleteUser: () => void;
 }
 
-export const useAuthStore = create<IAuthState>(set => ({
-  isAuthenticated: false,
-  isLoading: true,
-
-  loginUser: () => {
-    localStorage.setItem('koco_auth_flag', 'true');
-    set({ isAuthenticated: true });
+export const useUserStore = create<IUserStore>(set => ({
+  user: null,
+  setUser: (data: User) => {
+    set({ user: data });
   },
-
-  logoutUser: () => {
-    localStorage.removeItem('koco_auth_flag');
-    set({ isAuthenticated: false });
-  },
-
-  checkAuthStatus: () => {
-    const authFlag = localStorage.getItem('koco_auth_flag');
-    const isAuth = !!authFlag;
-    set({
-      isAuthenticated: isAuth,
-      isLoading: false,
-    });
-    console.log(authFlag, isAuth);
-  },
-
-  setLoading: (loading: boolean) => {
-    set({ isLoading: loading });
+  deleteUser: () => {
+    set({ user: null });
   },
 }));
