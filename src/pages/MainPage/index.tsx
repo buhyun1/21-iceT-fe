@@ -6,12 +6,11 @@ import ChunsikCard from './components/ChunsikCard';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 import ProblemItem from '@/features/problemSet/components/ProblemItem';
 import Spinner from '@/shared/ui/Spinner';
-import { useAuth } from '@/app/providers/AuthContext';
 import { useUserStats } from '@/features/user/hooks/useUserStats';
 import { useProblemSet } from '@/features/problemSet/hooks/useProblemSet';
 
 const MainPage = () => {
-  const { logoutUserContext } = useAuth();
+  //const { logoutUser } = useAuthStore();
   const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
   const { data: userStudyStatData, isLoading: isUserStudyStatLoading } = useUserStats();
   const today = new Date().toISOString().split('T')[0];
@@ -23,6 +22,8 @@ const MainPage = () => {
 
   // ⏳ 로딩 중
   if (isUserProfileLoading || isUserStudyStatLoading || isTodayProblemLoading) {
+    //logoutUser();
+
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
         <Spinner text="로딩중..." />
@@ -31,7 +32,7 @@ const MainPage = () => {
   }
 
   if (!userProfileData) {
-    logoutUserContext();
+    //logoutUser();
 
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
@@ -42,7 +43,7 @@ const MainPage = () => {
   }
 
   if (!userStudyStatData) {
-    logoutUserContext();
+    //logoutUser();
 
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">

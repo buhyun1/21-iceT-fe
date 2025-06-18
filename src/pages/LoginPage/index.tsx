@@ -1,11 +1,16 @@
-import { useAuth } from '@/app/providers/AuthContext';
 import LoginCard from '@/features/auth/components/LoginCard';
+import { useAuthStore } from '@/store/useUserStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, checkAuthStatus } = useAuthStore();
+
+  useEffect(() => {
+    // 페이지 로드 시 인증 상태 확인
+    checkAuthStatus();
+  }, [checkAuthStatus]);
 
   useEffect(() => {
     if (isAuthenticated) {

@@ -1,13 +1,17 @@
 // src/components/ProtectedRoute.tsx
 import { Navigate, Outlet } from 'react-router-dom';
-
 import Spinner from '@/shared/ui/Spinner';
-import { useAuth } from '../providers/AuthContext';
+import { useEffect } from 'react';
+import { useAuthStore } from '@/store/useUserStore';
 
 export const AuthProtectedRoute = () => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, isLoading, checkAuthStatus } = useAuthStore();
 
-  if (loading) {
+  useEffect(() => {
+    checkAuthStatus();
+  }, [checkAuthStatus]);
+
+  if (isLoading) {
     return <Spinner text="로그인 시도 중..." />;
   }
 

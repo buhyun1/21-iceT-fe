@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { useDeleteUser } from '@/features/user/hooks/useDeleteUser';
-import { useAuth } from '@/app/providers/AuthContext';
 import PageHeader from '@/shared/layout/PageHeader';
 import BottomNav from '@/shared/layout/BottomNav';
 import Spinner from '@/shared/ui/Spinner';
@@ -10,10 +9,11 @@ import { useState } from 'react';
 import DeleteConfirmModal from '@/shared/ui/DeleteComfirmModal';
 import useModal from '@/shared/hooks/useModal';
 import defaultProfileImage from '@/assets/defaultProfileImage.png';
+import { useAuthStore } from '@/store/useUserStore';
 
 const MorePage = () => {
   const navigate = useNavigate();
-  const { logoutUserContext } = useAuth();
+  const { logoutUser } = useAuthStore();
   const { mutate: logoutMutation } = useLogout();
   const { mutate: deleteUserMutation } = useDeleteUser();
   const { data: userProfileData, isLoading: isUserProfileLoading } = useUserProfile();
@@ -32,7 +32,7 @@ const MorePage = () => {
   }
 
   if (!userProfileData) {
-    logoutUserContext();
+    logoutUser();
 
     return (
       <div className="flex flex-col gap-6 p-6 pb-30">
@@ -66,7 +66,7 @@ const MorePage = () => {
     deleteUserMutation(undefined, {
       onSuccess: () => {
         alert('탈퇴가 완료되었습니다.');
-        logoutUserContext();
+        logoutUser();
         navigate('/');
       },
       onError: () => {

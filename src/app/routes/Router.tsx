@@ -8,7 +8,6 @@ import GoogleAnalytics from '@/utils/GoogleAnalytics';
 import React, { Suspense } from 'react';
 import Spinner from '@/shared/ui/Spinner';
 import { AuthProtectedRoute } from './AuthProtectedRoute';
-import { AuthProvider } from '../providers/AuthContext';
 import MorePage from '@/pages/MyPage';
 import PostsPage from '@/pages/PostsPage';
 import CreatePostPage from '@/pages/CreatePostPage';
@@ -24,34 +23,32 @@ const ProblemSolutionPage = React.lazy(() => import('@/pages/ProblemSolutionPage
 const Router = () => {
   return (
     <BrowserRouter basename={'/'}>
-      <AuthProvider>
-        <GoogleAnalytics />
-        <Suspense fallback={<Spinner text="로딩중..." />}>
-          <Routes>
-            <Route element={<AppLayout />}>
-              <Route index element={<LoginPage />} />
-              <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
+      <GoogleAnalytics />
+      <Suspense fallback={<Spinner text="로딩중..." />}>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<LoginPage />} />
+            <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
 
-              {/* 로그인 시 접근 가능한 페이지들 */}
+            {/* 로그인 시 접근 가능한 페이지들 */}
 
-              <Route element={<AuthProtectedRoute />}>
-                <Route path="/complete-profile" element={<FirstLoginPage />} />
-                <Route path="/home" element={<MainPage />} />{' '}
-                <Route path="/survey" element={<SurveyPage />} />
-                <Route path="/problems" element={<ProblemListPage />} />
-                <Route path="/problems/:id" element={<ProblemSolutionPage />} />
-                <Route path="/more" element={<MorePage />} />
-                <Route path="/new-post" element={<CreatePostPage />} />
-                <Route path="/posts" element={<PostsPage />} />
-                <Route path="/post/:id" element={<PostDetailPage />} />
-                <Route path="/alarms" element={<AlarmListPage />} />
-                <Route path="/post/:id/edit" element={<EditPostPage />} />
-                <Route path="/my-posts" element={<MyPostPage />} />
-              </Route>
+            <Route element={<AuthProtectedRoute />}>
+              <Route path="/complete-profile" element={<FirstLoginPage />} />
+              <Route path="/home" element={<MainPage />} />{' '}
+              <Route path="/survey" element={<SurveyPage />} />
+              <Route path="/problems" element={<ProblemListPage />} />
+              <Route path="/problems/:id" element={<ProblemSolutionPage />} />
+              <Route path="/more" element={<MorePage />} />
+              <Route path="/new-post" element={<CreatePostPage />} />
+              <Route path="/posts" element={<PostsPage />} />
+              <Route path="/post/:id" element={<PostDetailPage />} />
+              <Route path="/alarms" element={<AlarmListPage />} />
+              <Route path="/post/:id/edit" element={<EditPostPage />} />
+              <Route path="/my-posts" element={<MyPostPage />} />
             </Route>
-          </Routes>
-        </Suspense>
-      </AuthProvider>
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 };
