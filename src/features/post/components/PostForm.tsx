@@ -10,6 +10,7 @@ import MDEditor from '@uiw/react-md-editor';
 import { useMemo, useState } from 'react';
 import { convertEnglishToKorean } from '@/utils/doMappingCategories';
 import { Category } from '../types/Category';
+import Helpertext from '@/shared/ui/Helpertext';
 
 export type Post = {
   problemNumber: number;
@@ -129,6 +130,7 @@ const PostForm = ({
       <div className="mt-4">
         <label className="mt-2">제목</label>
         <Input value={title} onChange={titleOnChange} className="w-full" />
+        <div className="h-4 mt-1">{titleErr && <Helpertext text={titleErr} />}</div>
       </div>
 
       <div className="mt-4">
@@ -139,6 +141,7 @@ const PostForm = ({
           height={600}
         />
       </div>
+      <div className="h-4 mt-1">{markdownErr && <Helpertext text={markdownErr} />}</div>
 
       <div className="mt-6 text-center">
         <Button onClick={handleSubmit} disabled={isDisabled}>
