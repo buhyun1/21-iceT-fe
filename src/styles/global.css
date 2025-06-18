@@ -3,6 +3,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* 기본 여백 제거 */
