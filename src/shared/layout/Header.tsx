@@ -24,12 +24,7 @@ const Header = ({ receiverId }: IHeaderProps) => {
           alt="KOCO 로고"
           className="hover:scale-105 transition-transform duration-300"
         />
-        <h1
-          className="text-3xl font-semibold text-[#4D290A] drop-shadow-md"
-          style={{ fontFamily: 'Jua', fontWeight: 500 }}
-        >
-          코코
-        </h1>
+        <h1 className="text-3xl font-jua text-[#4D290A] drop-shadow-md">코코</h1>
       </div>
 
       <button
