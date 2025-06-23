@@ -1,0 +1,46 @@
+/** Pretendard */
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('/fonts/Pretendard/Pretendard-Regular.subset.woff2') format('woff2'),
+    url('/fonts/Pretendard/Pretendard-Regular.subset.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('/fonts/Pretendard/Pretendard-Medium.subset.woff2') format('woff2'),
+    url('/fonts/Pretendard/Pretendard-Medium.subset.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('/fonts/Pretendard/Pretendard-SemiBold.subset.woff2') format('woff2'),
+    url('/fonts/Pretendard/Pretendard-SemiBold.subset.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('/fonts/Pretendard/Pretendard-Bold.subset.woff2') format('woff2'),
+    url('/fonts/Pretendard/Pretendard-Bold.subset.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/** Jua */
+@font-face {
+  font-family: 'Jua';
+  src:
+    url('/fonts/Jua/Jua-Regular.woff2') format('woff2'),
+    url('/fonts/Jua/Jua-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

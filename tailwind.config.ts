@@ -7,6 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Pretendard', ...defaultTheme.fontFamily.sans],
+        jua: ['Jua', 'sans-serif'],
       },
       fontSize: {
         'regular-12': ['12px', { lineHeight: '18px', fontWeight: '400' }],
