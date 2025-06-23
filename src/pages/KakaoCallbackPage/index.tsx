@@ -1,8 +1,8 @@
 // src/pages/KakaoCallback/index.tsx
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useKakaoLogin } from '@/hooks/mutations/useAuthMutations';
-import Spinner from '@/components/ui/Spinner';
+import Spinner from '@/shared/ui/Spinner';
+import { useKakaoLogin } from '@/features/auth/hooks/useKakaoLogin';
 
 const KakaoCallback = () => {
   const location = useLocation();

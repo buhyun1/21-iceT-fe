@@ -1,4 +1,4 @@
-import Card from '@/components/ui/Card';
+import Card from '@/shared/ui/Card';
 import ContinuousIc from '@/assets/continuousIc.svg';
 
 interface IContinuousDayCard {

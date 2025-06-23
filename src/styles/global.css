@@ -3,6 +3,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* 기본 여백 제거 */
@@ -17,6 +19,7 @@ body {
 /* 기본 폰트 설정 */
 body {
   font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
   line-height: 1.5;
   background-color: #f8f9fa;
   color: #111827; /* Tailwind gray-900 */
@@ -95,4 +98,24 @@ mjx-container {
   white-space: normal !important;
   overflow-wrap: break-word !important;
   word-wrap: break-word !important;
+  position: static !important;
+}
+
+.MathJax_Display,
+.math-content {
+  position: static !important;
+}
+
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
 }

@@ -1,11 +1,11 @@
-import PageHeader from '@/components/layout/PageHeader';
-import Calendar from './components/Calendar';
-import ProblemItem from './components/ProblemItem';
-import { useProblemSet } from '@/hooks/queries/useProblemQueries';
+import PageHeader from '@/shared/layout/PageHeader';
+import Calendar from '@/shared/ui/Calendar';
+import { useProblemSet } from '@/features/problemSet/hooks/useProblemSet';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
-import BottomNav from '@/components/layout/BottomNav';
+import BottomNav from '@/shared/layout/BottomNav';
+import ProblemItem from '@/features/problemSet/components/ProblemItem';
 
 const ProblemListPage = () => {
   const todayDate = new Date().toISOString().split('T')[0];
@@ -15,7 +15,7 @@ const ProblemListPage = () => {
 
   // 초기 날짜 설정 - URL의 date 파라미터를 우선적으로 사용
   const [date, setDate] = useState(dateFromUrl || todayDate);
-  const { data: problemListData, error, refetch } = useProblemSet(date);
+  const { data: problemListData, error } = useProblemSet(date);
 
   // URL의 date 파라미터가 변경되면 date 상태도 업데이트
   useEffect(() => {
@@ -29,9 +29,6 @@ const ProblemListPage = () => {
     setDate(newDate);
 
     navigate(`/problems?date=${encodeURIComponent(newDate)}`, { replace: true });
-
-    // 날짜가 변경되면 명시적으로 데이터 다시 가져오기
-    refetch();
   };
 
   if ((error as AxiosError)?.response?.status === 403) {
@@ -54,12 +51,19 @@ const ProblemListPage = () => {
       {problemListData?.problems.map(problem => (
         <ProblemItem
           key={problem.problemId}
-          date={problemListData?.date}
-          problemSetId={problemListData?.problemSetId}
-          isAnswered={problemListData?.isAnswered}
-          problemNumber={problem.problemNumber}
           title={problem.title}
           tier={problem.tier}
+          problemNumber={problem.problemNumber}
+          onClick={() => {
+            if (problemListData?.isAnswered) {
+              navigate(`/problems/${problem.problemNumber}`);
+            } else {
+              alert('설문이 기록되지 않았습니다. 설문페이지로 이동합니다');
+              navigate('/survey', {
+                state: { problemSetId: problemListData?.problemSetId, date: date },
+              });
+            }
+          }}
         />
       ))}
       <BottomNav />

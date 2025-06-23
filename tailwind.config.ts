@@ -7,6 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Pretendard', ...defaultTheme.fontFamily.sans],
+        jua: ['Jua', 'sans-serif'],
       },
       fontSize: {
         'regular-12': ['12px', { lineHeight: '18px', fontWeight: '400' }],
@@ -22,7 +23,7 @@ export default {
         'bold-16': ['16px', { lineHeight: '24px', fontWeight: '700' }],
       },
       colors: {
-        background: '#f8f9fa', // 전체 배경, 피그마:#F9FAFB #fff9f5 #f8f9fa
+        background: '#FFFFFF', // 전체 배경, 피그마:#F9FAFB #fff9f5 #f8f9fa #f8f9fa
         surface: '#FFFFFF', // 카드 배경, 피그마: #FFFFFF
         input: '#F9F9F6', // input 배경 #F9F9F6
 
@@ -51,8 +52,7 @@ export default {
           hover: '#16A34A', // #16A34A
         },
         warning: {
-          DEFAULT: '#FACC15', // 경고 색 #FACC15
-          hover: '#EAB308', // #EAB308
+          DEFAULT: '#EAB308', // #EAB308
         },
         error: {
           DEFAULT: '#EF4444', // 에러 색 #EF4444
@@ -72,6 +72,13 @@ export default {
           ruby: '#FF0062', // 루비 #FF0062
           master: '#9D0191', // 마스터 #9D0191
           unrated: '#777777', // 무등급 #777777
+        },
+        category: '#7dd9fd', // #7dd9fd
+        alarm: {
+          unread: {
+            bg: '#eff6ff', // #eff6ff
+            border: '#bfdbfe', // #bfdbfe
+          },
         },
       },
     },

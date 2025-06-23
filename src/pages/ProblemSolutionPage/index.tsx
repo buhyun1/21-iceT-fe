@@ -1,8 +1,8 @@
-import BottomNav from '@/components/layout/BottomNav';
-import PageHeader from '@/components/layout/PageHeader';
+import BottomNav from '@/shared/layout/BottomNav';
+import PageHeader from '@/shared/layout/PageHeader';
 import ProblemDetailSection from './components/ProblemDetailSection';
 import ProblemSolutionSection from './components/ProblemSolutionSection';
-import { useProblemSolution } from '@/hooks/queries/useProblemQueries';
+import { useProblemSolution } from '@/features/problemSet/hooks/useProblemSolution';
 import { useParams } from 'react-router-dom';
 
 const ProblemSolutionPage = () => {
