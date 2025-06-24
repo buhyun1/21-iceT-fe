@@ -30,8 +30,8 @@ jobs:
             echo "VITE_KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
           else
             echo "VITE_IS_QA=dev" >> .env
-            echo "VITE_API_BASE_URL=https://koco.click/" >> .env
-            echo "VITE_REDIRECT_URL=https://koco.click/oauth/kakao/callback" >> .env
+            echo "VITE_API_BASE_URL=https://kooco.click/" >> .env
+            echo "VITE_REDIRECT_URL=https://kocoo.click/oauth/kakao/callback" >> .env
             echo "VITE_KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
           fi
 
@@ -60,7 +60,7 @@ jobs:
           if [ "${{ github.ref_name }}" = "main" ]; then
             BACKUP_BUCKET="prod-koco-frontend-backup"
           else
-            BACKUP_BUCKET="dev-koco-frontend-backup"
+            BACKUP_BUCKET="eks-koco-s3"
           fi
           echo "[FRONTEND] Archiving ./dist → s3://$BACKUP_BUCKET/$TIMESTAMP/"
           aws s3 sync ./dist s3://$BACKUP_BUCKET/$TIMESTAMP/
@@ -75,7 +75,7 @@ jobs:
           if [ "${{ github.ref_name }}" = "main" ]; then
             DOMAIN="ktbkoco.com"
           else
-            DOMAIN="koco.click"
+            DOMAIN="kooco.click"
           fi
 
           DIST_ID=$(aws cloudfront list-distributions \
