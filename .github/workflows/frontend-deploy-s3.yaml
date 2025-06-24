@@ -44,7 +44,7 @@ jobs:
           if [ "${{ github.ref_name }}" = "main" ]; then
             BUCKET="prod-koco-front-s3"
           else
-            BUCKET="dev-koco-front-s3"
+            BUCKET="eks-koco-s3"
           fi
           echo "[FRONTEND] Syncing ./dist → s3://$BUCKET"
           aws s3 sync ./dist s3://$BUCKET --delete
@@ -53,21 +53,21 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: "ap-northeast-2"
 
-      - name: Archive build to versioned S3 bucket
-        run: |
-          TIMESTAMP=$(TZ=Asia/Seoul date +%Y%m%d-%H%M%S)
-          # 브랜치에 따라 백업용 S3 버킷 결정
-          if [ "${{ github.ref_name }}" = "main" ]; then
-            BACKUP_BUCKET="prod-koco-frontend-backup"
-          else
-            BACKUP_BUCKET="eks-koco-s3"
-          fi
-          echo "[FRONTEND] Archiving ./dist → s3://$BACKUP_BUCKET/$TIMESTAMP/"
-          aws s3 sync ./dist s3://$BACKUP_BUCKET/$TIMESTAMP/
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "ap-northeast-2"
+      # - name: Archive build to versioned S3 bucket
+      #   run: |
+      #     TIMESTAMP=$(TZ=Asia/Seoul date +%Y%m%d-%H%M%S)
+      #     # 브랜치에 따라 백업용 S3 버킷 결정
+      #     if [ "${{ github.ref_name }}" = "main" ]; then
+      #       BACKUP_BUCKET="prod-koco-frontend-backup"
+      #     else
+      #       BACKUP_BUCKET="eks-koco-s3"
+      #     fi
+      #     echo "[FRONTEND] Archiving ./dist → s3://$BACKUP_BUCKET/$TIMESTAMP/"
+      #     aws s3 sync ./dist s3://$BACKUP_BUCKET/$TIMESTAMP/
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     AWS_REGION: "ap-northeast-2"
 
       - name: Invalidate CloudFront cache
         run: |
